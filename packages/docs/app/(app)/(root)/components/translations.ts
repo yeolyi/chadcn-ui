@@ -1,0 +1,197 @@
+export type Locale = "en" | "ko"
+
+export const translations = {
+  index: {
+    en: { appearanceSettings: "Appearance Settings" },
+    ko: { appearanceSettings: "외관 설정" },
+  },
+  appearanceSettings: {
+    en: {
+      computeEnvironment: "Compute Environment",
+      computeEnvironmentDesc: "Select the compute environment for your cluster.",
+      kubernetes: "Kubernetes",
+      kubernetesDesc: "Run GPU workloads on a K8s configured cluster. This is the default.",
+      virtualMachine: "Virtual Machine",
+      virtualMachineDesc: "Access a VM configured cluster to run workloads. (Coming soon)",
+      numberOfGpus: "Number of GPUs",
+      numberOfGpusDesc: "You can add more later.",
+      wallpaperTinting: "Wallpaper Tinting",
+      wallpaperTintingDesc: "Allow the wallpaper to be tinted.",
+    },
+    ko: {
+      computeEnvironment: "컴퓨팅 환경",
+      computeEnvironmentDesc: "클러스터에 사용할 컴퓨팅 환경을 선택하세요.",
+      kubernetes: "Kubernetes",
+      kubernetesDesc: "K8s 클러스터에서 GPU 워크로드를 실행합니다. 기본값입니다.",
+      virtualMachine: "가상 머신",
+      virtualMachineDesc: "VM 클러스터에서 워크로드를 실행합니다. (준비 중)",
+      numberOfGpus: "GPU 수",
+      numberOfGpusDesc: "나중에 추가할 수 있습니다.",
+      wallpaperTinting: "배경화면 틴팅",
+      wallpaperTintingDesc: "배경화면에 색조를 적용합니다.",
+    },
+  },
+  emptyAvatarGroup: {
+    en: {
+      title: "No Team Members",
+      description: "Invite your team to collaborate on this project.",
+      inviteMembers: "Invite Members",
+    },
+    ko: {
+      title: "팀 멤버 없음",
+      description: "팀원을 초대해서 함께 작업하세요.",
+      inviteMembers: "멤버 초대",
+    },
+  },
+  fieldCheckbox: {
+    en: { label: "I agree to the terms and conditions" },
+    ko: { label: "이용약관에 동의합니다" },
+  },
+  fieldDemo: {
+    en: {
+      paymentMethod: "Payment Method",
+      paymentMethodDesc: "All transactions are secure and encrypted",
+      nameOnCard: "Name on Card",
+      nameOnCardPlaceholder: "John Doe",
+      cardNumber: "Card Number",
+      cardNumberPlaceholder: "1234 5678 9012 3456",
+      cardNumberDesc: "Enter your 16-digit number.",
+      cvv: "CVV",
+      month: "Month",
+      year: "Year",
+      billingAddress: "Billing Address",
+      billingAddressDesc: "The billing address associated with your payment method",
+      sameAsShipping: "Same as shipping address",
+      comments: "Comments",
+      commentsPlaceholder: "Add any additional comments",
+      submit: "Submit",
+      cancel: "Cancel",
+    },
+    ko: {
+      paymentMethod: "결제 수단",
+      paymentMethodDesc: "모든 거래는 안전하게 암호화됩니다",
+      nameOnCard: "카드 명의",
+      nameOnCardPlaceholder: "홍길동",
+      cardNumber: "카드 번호",
+      cardNumberPlaceholder: "1234 5678 9012 3456",
+      cardNumberDesc: "16자리 카드 번호를 입력하세요.",
+      cvv: "CVV",
+      month: "월",
+      year: "연도",
+      billingAddress: "청구 주소",
+      billingAddressDesc: "결제 수단에 등록된 청구 주소",
+      sameAsShipping: "배송 주소와 동일",
+      comments: "비고",
+      commentsPlaceholder: "추가 사항을 입력하세요",
+      submit: "제출",
+      cancel: "취소",
+    },
+  },
+  fieldHear: {
+    en: {
+      legend: "How did you hear about us?",
+      description: "Select the option that best describes how you heard about us.",
+      socialMedia: "Social Media",
+      searchEngine: "Search Engine",
+      referral: "Referral",
+      other: "Other",
+    },
+    ko: {
+      legend: "어떻게 알게 되셨나요?",
+      description: "가장 해당하는 항목을 선택하세요.",
+      socialMedia: "소셜 미디어",
+      searchEngine: "검색 엔진",
+      referral: "지인 추천",
+      other: "기타",
+    },
+  },
+  fieldSlider: {
+    en: {
+      title: "Price Range",
+      description: "Set your budget range",
+    },
+    ko: {
+      title: "가격 범위",
+      description: "예산 범위를 설정하세요",
+    },
+  },
+  // New component translations
+  buttonVariantRow: {
+    en: { primary: "Primary", secondary: "Secondary", outline: "Outline" },
+    ko: { primary: "기본", secondary: "보조", outline: "아웃라인" },
+  },
+  inputSubscribe: {
+    en: { placeholder: "you@example.com", subscribe: "Subscribe" },
+    ko: { placeholder: "you@example.com", subscribe: "구독" },
+  },
+  inputFormStack: {
+    en: {
+      search: "Search...",
+      selectCategory: "Select a category",
+      bug: "Bug Report",
+      feature: "Feature Request",
+      docs: "Documentation",
+      other: "Other",
+      message: "Type a message...",
+      username: "@username",
+    },
+    ko: {
+      search: "검색...",
+      selectCategory: "카테고리 선택",
+      bug: "버그 리포트",
+      feature: "기능 요청",
+      docs: "문서",
+      other: "기타",
+      message: "메시지를 입력하세요...",
+      username: "@사용자이름",
+    },
+  },
+  inputUrl: {
+    en: { placeholder: "https://example.com" },
+    ko: { placeholder: "https://example.com" },
+  },
+  checkboxItemList: {
+    en: {
+      twoFactor: "Two-factor authentication",
+      twoFactorDesc: "Verify via email or phone number.",
+      enable: "Enable",
+      profileVerified: "Your profile has been verified.",
+    },
+    ko: {
+      twoFactor: "2단계 인증",
+      twoFactorDesc: "이메일 또는 전화번호로 인증합니다.",
+      enable: "활성화",
+      profileVerified: "프로필이 인증되었습니다.",
+    },
+  },
+  contactForm: {
+    en: {
+      message: "Message",
+      placeholder: "Ask, search, or make anything...",
+      namePlaceholder: "Your name",
+      send: "Send",
+    },
+    ko: {
+      message: "메시지",
+      placeholder: "질문, 검색, 뭐든 만들어 보세요...",
+      namePlaceholder: "이름",
+      send: "전송",
+    },
+  },
+  buttonToolbar: {
+    en: { archive: "Archive", report: "Report", snooze: "Snooze" },
+    ko: { archive: "보관", report: "신고", snooze: "다시 알림" },
+  },
+  emptySetup: {
+    en: {
+      title: "Ready to launch",
+      description: "Set up your preferences to get started. It only takes a moment.",
+      getStarted: "Get Started",
+    },
+    ko: {
+      title: "시작 준비 완료",
+      description: "환경 설정을 완료하고 시작하세요. 잠깐이면 됩니다.",
+      getStarted: "시작하기",
+    },
+  },
+} as const

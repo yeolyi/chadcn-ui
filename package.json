@@ -1,0 +1,33 @@
+{
+  "name": "chadcn-ui",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "author": {
+    "name": "chadcn"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "pnpm --filter=@chadcn/ui dev & pnpm --filter=docs dev",
+    "build": "pnpm --filter=docs build",
+    "lint": "biome check .",
+    "lint:fix": "biome check --fix .",
+    "format": "biome format --write ."
+  },
+  "packageManager": "pnpm@9.0.6",
+  "dependencies": {
+    "turbo": "^1.9.9"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.7",
+    "typescript": "^5.5.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "19.2.2",
+      "@types/react-dom": "19.2.2"
+    }
+  }
+}
