@@ -40,11 +40,16 @@ export default async function CheckboxPage() {
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
             How it works
           </h2>
-          <p className="text-[0.95rem] leading-7 text-muted-foreground">
-            The checkbox automatically toggles when scrolled out of the viewport. This ensures
-            users don&apos;t accidentally uncheck important marketing consent options by scrolling
-            past them.
-          </p>
+          <ul className="list-disc space-y-2 pl-6 text-[0.95rem] leading-7 text-muted-foreground">
+            <li>
+              The checkbox automatically checks itself when scrolled out of the viewport. This ensures
+              users don&apos;t accidentally skip important consent options.
+            </li>
+            <li>
+              Once checked, the checkbox cannot be unchecked. This prevents accidental opt-outs from
+              critical agreements.
+            </li>
+          </ul>
         </section>
 
         <section className="space-y-4">

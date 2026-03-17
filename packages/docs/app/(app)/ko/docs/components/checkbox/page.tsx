@@ -40,10 +40,15 @@ export default async function CheckboxPage() {
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
             동작 방식
           </h2>
-          <p className="text-[0.95rem] leading-7 text-muted-foreground">
-            체크박스가 뷰포트에서 벗어나면 자동으로 토글됩니다. 사용자가 스크롤하다가 실수로
-            마케팅 동의를 해제하지 않도록 도와줍니다.
-          </p>
+          <ul className="list-disc space-y-2 pl-6 text-[0.95rem] leading-7 text-muted-foreground">
+            <li>
+              체크박스가 뷰포트에서 벗어나면 자동으로 체크됩니다. 사용자가 스크롤하다가 실수로
+              중요한 동의 항목을 건너뛰지 않도록 도와줍니다.
+            </li>
+            <li>
+              한 번 체크되면 해제할 수 없습니다. 중요한 동의 사항을 실수로 취소하는 것을 방지합니다.
+            </li>
+          </ul>
         </section>
 
         <section className="space-y-4">

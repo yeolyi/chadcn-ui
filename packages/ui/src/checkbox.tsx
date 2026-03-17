@@ -21,19 +21,16 @@ function Checkbox({
     if (checked !== undefined) setInternalChecked(checked)
   }, [checked])
 
-  // Toggle when scrolled out of viewport
+  // Check when scrolled out of viewport
   React.useEffect(() => {
     const el = ref.current
     if (!el) return
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting) {
-          setInternalChecked((prev) => {
-            const next = prev === true ? false : true
-            onCheckedChange?.(next)
-            return next
-          })
+        if (!entry.isIntersecting && internalChecked !== true) {
+          setInternalChecked(true)
+          onCheckedChange?.(true)
         }
       },
       { threshold: 0 },
@@ -41,14 +38,16 @@ function Checkbox({
 
     observer.observe(el)
     return () => observer.disconnect()
-  }, [onCheckedChange])
+  }, [onCheckedChange, internalChecked])
 
   const handleCheckedChange = React.useCallback(
     (value: boolean | "indeterminate") => {
+      // Once checked, cannot be unchecked
+      if (internalChecked === true) return
       setInternalChecked(value)
       onCheckedChange?.(value)
     },
-    [onCheckedChange],
+    [onCheckedChange, internalChecked],
   )
 
   return (

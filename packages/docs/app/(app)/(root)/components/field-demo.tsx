@@ -1,5 +1,4 @@
 import { Button } from "@chadcn/ui"
-import { Checkbox } from "@chadcn/ui"
 import {
   Field,
   FieldDescription,
@@ -94,21 +93,6 @@ export function FieldDemo({ locale = "en" }: { locale?: Locale }) {
                   </Select>
                 </Field>
               </div>
-            </FieldGroup>
-          </FieldSet>
-          <FieldSeparator />
-          <FieldSet>
-            <FieldLegend>{t.billingAddress}</FieldLegend>
-            <FieldDescription>
-              {t.billingAddressDesc}
-            </FieldDescription>
-            <FieldGroup>
-              <Field orientation="horizontal">
-                <Checkbox id="checkout-7j9-same-as-shipping-wgm" defaultChecked />
-                <FieldLabel htmlFor="checkout-7j9-same-as-shipping-wgm" className="font-normal">
-                  {t.sameAsShipping}
-                </FieldLabel>
-              </Field>
             </FieldGroup>
           </FieldSet>
           <FieldSeparator />

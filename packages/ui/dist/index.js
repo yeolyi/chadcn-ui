@@ -418,25 +418,23 @@ function Checkbox({
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting) {
-          setInternalChecked((prev) => {
-            const next = prev === true ? false : true;
-            onCheckedChange?.(next);
-            return next;
-          });
+        if (!entry.isIntersecting && internalChecked !== true) {
+          setInternalChecked(true);
+          onCheckedChange?.(true);
         }
       },
       { threshold: 0 }
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, [onCheckedChange]);
+  }, [onCheckedChange, internalChecked]);
   const handleCheckedChange = React4.useCallback(
     (value) => {
+      if (internalChecked === true) return;
       setInternalChecked(value);
       onCheckedChange?.(value);
     },
-    [onCheckedChange]
+    [onCheckedChange, internalChecked]
   );
   return /* @__PURE__ */ jsx4(
     CheckboxPrimitive.Root,
@@ -582,18 +580,13 @@ function Switch({
   size = "default",
   ...props
 }) {
-  const isDefault = size === "default";
-  const circleR = isDefault ? 8 : 6;
-  const circleCx = isDefault ? 9 : 7;
-  const extraW = isDefault ? 14 : 10;
-  const mask = `radial-gradient(circle ${circleR}px at ${circleCx}px 50%, transparent ${circleR}px, black ${circleR}px)`;
   return /* @__PURE__ */ jsx7(
     SwitchPrimitive.Root,
     {
       "data-slot": "switch",
       "data-size": size,
       className: cn(
-        "peer group/switch inline-flex shrink-0 items-center overflow-hidden rounded-full border border-transparent bg-background shadow-xs outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 data-[size=default]:h-[1.15rem] data-[size=default]:w-8 data-[size=sm]:h-3.5 data-[size=sm]:w-6",
+        "peer group/switch inline-flex shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 data-[size=default]:h-[1.15rem] data-[size=default]:w-8 data-[size=sm]:h-3.5 data-[size=sm]:w-6 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input dark:data-[state=unchecked]:bg-input/80",
         className
       ),
       ...props,
@@ -602,14 +595,8 @@ function Switch({
         {
           "data-slot": "switch-thumb",
           className: cn(
-            "pointer-events-none block h-full rounded-full ring-0 transition-transform data-[state=checked]:bg-primary data-[state=unchecked]:bg-input data-[state=unchecked]:translate-x-0 dark:data-[state=unchecked]:bg-input/80",
-            isDefault ? "data-[state=checked]:-translate-x-3.5" : "data-[state=checked]:-translate-x-2.5"
-          ),
-          style: {
-            width: `calc(100% + ${extraW}px)`,
-            maskImage: mask,
-            WebkitMaskImage: mask
-          }
+            "pointer-events-none block rounded-full bg-background ring-0 transition-transform group-data-[size=default]/switch:size-4 group-data-[size=sm]/switch:size-3 data-[state=checked]:translate-x-[calc(100%-2px)] data-[state=unchecked]:translate-x-0 dark:data-[state=checked]:bg-primary-foreground dark:data-[state=unchecked]:bg-foreground"
+          )
         }
       )
     }

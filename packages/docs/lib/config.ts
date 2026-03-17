@@ -6,7 +6,7 @@ export const siteConfig = {
     "Beautifully designed components with unforgettable interactions. A drop-in replacement for shadcn/ui.",
   links: {
     twitter: "https://twitter.com/shadcn",
-    github: "https://github.com/shadcn-ui/ui",
+    github: "https://github.com/yeolyi/chadcn-ui",
   },
   navItems: [],
 }

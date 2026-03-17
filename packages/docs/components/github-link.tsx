@@ -19,7 +19,7 @@ export function GitHubLink() {
 }
 
 export async function StarsCount() {
-  const data = await fetch("https://api.github.com/repos/shadcn-ui/ui", {
+  const data = await fetch("https://api.github.com/repos/yeolyi/chadcn-ui", {
     next: { revalidate: 86400 },
   })
   const json = await data.json()

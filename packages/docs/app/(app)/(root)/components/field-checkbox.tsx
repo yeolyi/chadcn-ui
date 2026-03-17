@@ -7,7 +7,7 @@ export function FieldCheckbox({ locale = "en" }: { locale?: Locale }) {
   return (
     <FieldLabel htmlFor="checkbox-demo">
       <Field orientation="horizontal">
-        <Checkbox id="checkbox-demo" defaultChecked />
+        <Checkbox id="checkbox-demo" />
         <FieldLabel htmlFor="checkbox-demo" className="line-clamp-1">
           {t.label}
         </FieldLabel>
