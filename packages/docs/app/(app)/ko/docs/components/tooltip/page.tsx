@@ -75,7 +75,8 @@ export default function RootLayout({ children }) {
             사용법
           </h2>
           <CodeBlock
-            code={`import {
+            code={`import "@chadcn/ui/styles.css"
+import {
   Tooltip,
   TooltipContent,
   TooltipProvider,

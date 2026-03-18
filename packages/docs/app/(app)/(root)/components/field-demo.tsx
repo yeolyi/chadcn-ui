@@ -12,7 +12,6 @@ import { Input } from "@chadcn/ui"
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -57,7 +56,6 @@ export function FieldDemo({ locale = "en" }: { locale?: Locale }) {
                       <SelectValue placeholder="MM" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectGroup>
                         <SelectItem value="01">01</SelectItem>
                         <SelectItem value="02">02</SelectItem>
                         <SelectItem value="03">03</SelectItem>
@@ -70,7 +68,6 @@ export function FieldDemo({ locale = "en" }: { locale?: Locale }) {
                         <SelectItem value="10">10</SelectItem>
                         <SelectItem value="11">11</SelectItem>
                         <SelectItem value="12">12</SelectItem>
-                      </SelectGroup>
                     </SelectContent>
                   </Select>
                 </Field>
@@ -81,14 +78,12 @@ export function FieldDemo({ locale = "en" }: { locale?: Locale }) {
                       <SelectValue placeholder="YYYY" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectGroup>
                         <SelectItem value="2024">2024</SelectItem>
                         <SelectItem value="2025">2025</SelectItem>
                         <SelectItem value="2026">2026</SelectItem>
                         <SelectItem value="2027">2027</SelectItem>
                         <SelectItem value="2028">2028</SelectItem>
                         <SelectItem value="2029">2029</SelectItem>
-                      </SelectGroup>
                     </SelectContent>
                   </Select>
                 </Field>

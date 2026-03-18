@@ -48,6 +48,10 @@ export default async function CheckboxPage() {
             <li>
               한 번 체크되면 해제할 수 없습니다. 중요한 동의 사항을 실수로 취소하는 것을 방지합니다.
             </li>
+            <li>
+              비활성화 상태에서는 항상 체크된 상태로 고정됩니다. 필드가 비활성화되어 있어도 사용자가
+              마케팅 동의를 놓치지 않도록 보장합니다.
+            </li>
           </ul>
         </section>
 
@@ -60,7 +64,7 @@ export default async function CheckboxPage() {
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
             사용법
           </h2>
-          <CodeBlock code={`import { Checkbox } from "@chadcn/ui"`} lang="tsx" />
+          <CodeBlock code={`import "@chadcn/ui/styles.css"\nimport { Checkbox } from "@chadcn/ui"`} lang="tsx" />
           <CodeBlock code={`<Checkbox />`} lang="tsx" />
         </section>
 

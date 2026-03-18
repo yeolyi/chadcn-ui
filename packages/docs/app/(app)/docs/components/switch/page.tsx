@@ -51,7 +51,7 @@ export default async function SwitchPage() {
 
         <section className="space-y-4">
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">Usage</h2>
-          <CodeBlock code={`import { Switch } from "@chadcn/ui"`} lang="tsx" />
+          <CodeBlock code={`import "@chadcn/ui/styles.css"\nimport { Switch } from "@chadcn/ui"`} lang="tsx" />
           <CodeBlock code={`<Switch />`} lang="tsx" />
         </section>
 

@@ -49,6 +49,10 @@ export default async function CheckboxPage() {
               Once checked, the checkbox cannot be unchecked. This prevents accidental opt-outs from
               critical agreements.
             </li>
+            <li>
+              When disabled, the checkbox is always checked. This ensures users never miss important
+              marketing consent — even when the field is not interactive.
+            </li>
           </ul>
         </section>
 
@@ -61,7 +65,7 @@ export default async function CheckboxPage() {
 
         <section className="space-y-4">
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">Usage</h2>
-          <CodeBlock code={`import { Checkbox } from "@chadcn/ui"`} lang="tsx" />
+          <CodeBlock code={`import "@chadcn/ui/styles.css"\nimport { Checkbox } from "@chadcn/ui"`} lang="tsx" />
           <CodeBlock code={`<Checkbox />`} lang="tsx" />
         </section>
 

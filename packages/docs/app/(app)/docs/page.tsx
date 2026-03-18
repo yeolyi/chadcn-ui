@@ -34,7 +34,7 @@ export default async function IntroductionPage() {
             path and everything still works — just differently.
           </p>
           <CodeBlock
-            code={`// before\nimport { Button } from "@/components/ui/button"\n\n// after\nimport { Button } from "@chadcn/ui"`}
+            code={`import "@chadcn/ui/styles.css"\nimport { Button } from "@chadcn/ui"`}
             lang="tsx"
           />
 

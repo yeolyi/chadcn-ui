@@ -47,21 +47,19 @@ import {
 
         <section className="space-y-4">
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
-            Tailwind Config
+            Styles
           </h2>
           <p className="text-[0.95rem] leading-7 text-muted-foreground">
-            Add the package to your Tailwind content configuration:
+            Import the stylesheet.
           </p>
           <CodeBlock
-            code={`/* Tailwind v4 */\n@source "node_modules/@chadcn/ui/dist";`}
-            lang="css"
-            title="globals.css"
+            code={`import "@chadcn/ui/styles.css"`}
+            lang="tsx"
           />
-          <CodeBlock
-            code={`// Tailwind v3\ncontent: [\n  "./node_modules/@chadcn/ui/dist/**/*.js",\n]`}
-            lang="js"
-            title="tailwind.config.js"
-          />
+          <p className="text-[0.95rem] leading-7 text-muted-foreground">
+            The stylesheet includes all component styles with default light/dark theme variables.
+            You can override them with CSS custom properties.
+          </p>
         </section>
       </div>
     </div>

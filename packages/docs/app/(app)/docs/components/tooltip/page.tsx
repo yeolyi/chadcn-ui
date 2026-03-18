@@ -77,7 +77,8 @@ export default function RootLayout({ children }) {
         <section className="space-y-4">
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">Usage</h2>
           <CodeBlock
-            code={`import {
+            code={`import "@chadcn/ui/styles.css"
+import {
   Tooltip,
   TooltipContent,
   TooltipProvider,

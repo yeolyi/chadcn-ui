@@ -33,7 +33,7 @@ export default async function IntroductionPage() {
             바꾸면 모든 것이 그대로 작동합니다 — 다만 조금 다르게.
           </p>
           <CodeBlock
-            code={`// 변경 전\nimport { Button } from "@/components/ui/button"\n\n// 변경 후\nimport { Button } from "@chadcn/ui"`}
+            code={`import "@chadcn/ui/styles.css"\nimport { Button } from "@chadcn/ui"`}
             lang="tsx"
           />
 

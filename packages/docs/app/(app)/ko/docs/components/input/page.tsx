@@ -37,7 +37,7 @@ export default async function InputPage() {
         <ExamplePreview
           code={
             <CodeBlock
-              code={`import { Input } from "@chadcn/ui"\nimport { Field, FieldLabel, FieldDescription } from "@chadcn/ui"\n\nexport function InputDemo() {\n  return (\n    <div className="w-full max-w-sm">\n      <Field>\n        <FieldLabel>API 키</FieldLabel>\n        <Input type="text" placeholder="API 키를 입력하세요..." />\n        <FieldDescription>\n          API 키는 암호화되어 안전하게 저장됩니다.\n        </FieldDescription>\n      </Field>\n    </div>\n  )\n}`}
+              code={`import { Input } from "@chadcn/ui"\nimport { Field, FieldLabel, FieldDescription } from "@chadcn/ui"\n\nexport function InputDemo() {\n  return (\n    <div className="w-full max-w-sm">\n      <Field>\n        <FieldLabel>API 키</FieldLabel>\n        <Input type="password" placeholder="API 키를 입력하세요..." />\n        <FieldDescription>\n          API 키는 암호화되어 안전하게 저장됩니다.\n        </FieldDescription>\n      </Field>\n    </div>\n  )\n}`}
               lang="tsx"
             />
           }
@@ -49,17 +49,18 @@ export default async function InputPage() {
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
             동작 방식
           </h2>
-          <p className="text-[0.95rem] leading-7 text-muted-foreground">
-            이 컴포넌트는 shadcn/ui Input과 동일한 props를 받지만, type이 반전됩니다:{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">
-              type=&quot;password&quot;
-            </code>
-            는 평문으로 표시되고{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">
-              type=&quot;text&quot;
-            </code>
-            는 마스킹 처리됩니다.
-          </p>
+          <ul className="list-disc space-y-2 pl-6 text-[0.95rem] leading-7 text-muted-foreground">
+            <li>
+              <code className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">
+                type=&quot;password&quot;
+              </code>{" "}
+              필드가 사용자 편의를 위해 평문으로 표시됩니다.
+            </li>
+            <li>
+              입력하는 모든 글자를 Web Speech API로 소리내어 읽어줍니다. 화면을 보지 않고도 입력
+              내용을 확인할 수 있습니다.
+            </li>
+          </ul>
         </section>
 
         <section className="space-y-4">
@@ -71,7 +72,7 @@ export default async function InputPage() {
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
             사용법
           </h2>
-          <CodeBlock code={`import { Input } from "@chadcn/ui"`} lang="tsx" />
+          <CodeBlock code={`import "@chadcn/ui/styles.css"\nimport { Input } from "@chadcn/ui"`} lang="tsx" />
           <CodeBlock code={`<Input />`} lang="tsx" />
         </section>
 

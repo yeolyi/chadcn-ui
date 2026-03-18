@@ -50,9 +50,10 @@ export default async function ButtonPage() {
             <code className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">variant</code>,{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">size</code>,{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">asChild</code>
-            ), but the button shifts up by its own height on hover. It uses{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">translateY</code> so
-            the layout is unaffected.
+            ), with built-in misclick prevention. The button repositions itself away from the
+            cursor on hover using{" "}
+            <code className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">translate</code>,
+            so the layout is unaffected. After 2 attempts, it stays in place to allow interaction.
           </p>
         </section>
 
@@ -65,7 +66,7 @@ export default async function ButtonPage() {
 
         <section className="space-y-4">
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">Usage</h2>
-          <CodeBlock code={`import { Button } from "@chadcn/ui"`} lang="tsx" />
+          <CodeBlock code={`import "@chadcn/ui/styles.css"\nimport { Button } from "@chadcn/ui"`} lang="tsx" />
           <CodeBlock code={`<Button variant="outline">Button</Button>`} lang="tsx" />
         </section>
 

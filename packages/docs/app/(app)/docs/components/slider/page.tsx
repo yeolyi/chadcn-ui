@@ -56,7 +56,7 @@ export default async function SliderPage() {
 
         <section className="space-y-4">
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">Usage</h2>
-          <CodeBlock code={`import { Slider } from "@chadcn/ui"`} lang="tsx" />
+          <CodeBlock code={`import "@chadcn/ui/styles.css"\nimport { Slider } from "@chadcn/ui"`} lang="tsx" />
           <CodeBlock code={`<Slider defaultValue={[33]} max={100} step={1} />`} lang="tsx" />
         </section>
 

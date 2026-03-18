@@ -3,11 +3,11 @@ import { ExamplePreview } from "@/components/example-preview"
 import { InstallTabs } from "@/components/install-tabs"
 import { createMetadata } from "@/lib/og"
 
-import { SelectDisabledDemo, SelectGroupDemo, SelectMainDemo, SelectScrollableDemo } from "./demos"
+import { SelectDisabledDemo, SelectMainDemo, SelectScrollableDemo } from "./demos"
 
 export const metadata = createMetadata({
   title: "Select",
-  description: "Displays a list of options where the house always wins.",
+  description: "An always-fair select component. The order changes every time you open it.",
 })
 
 export default async function SelectPage() {
@@ -18,14 +18,14 @@ export default async function SelectPage() {
         <div className="flex flex-col gap-2">
           <h1 className="scroll-m-24 text-3xl font-semibold tracking-tight">Select</h1>
           <p className="text-[1.05rem] text-muted-foreground sm:text-base">
-            Displays a list of options where the house always wins.
+            An always-fair select component. The order changes every time you open it.
           </p>
         </div>
 
         <ExamplePreview
           code={
             <CodeBlock
-              code={`import {\n  Select,\n  SelectContent,\n  SelectGroup,\n  SelectItem,\n  SelectLabel,\n  SelectTrigger,\n  SelectValue,\n} from "@chadcn/ui"\n\nexport function SelectDemo() {\n  return (\n    <Select>\n      <SelectTrigger className="w-[180px]">\n        <SelectValue placeholder="Select a fruit" />\n      </SelectTrigger>\n      <SelectContent>\n        <SelectGroup>\n          <SelectLabel>Fruits</SelectLabel>\n          <SelectItem value="apple">Apple</SelectItem>\n          <SelectItem value="banana">Banana</SelectItem>\n          <SelectItem value="blueberry">Blueberry</SelectItem>\n          <SelectItem value="grapes">Grapes</SelectItem>\n          <SelectItem value="pineapple">Pineapple</SelectItem>\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}`}
+              code={`import {\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from "@chadcn/ui"\n\nexport function SelectDemo() {\n  return (\n    <Select>\n      <SelectTrigger className="w-[180px]">\n        <SelectValue placeholder="Select a fruit" />\n      </SelectTrigger>\n      <SelectContent>\n        <SelectItem value="apple">Apple</SelectItem>\n        <SelectItem value="banana">Banana</SelectItem>\n        <SelectItem value="blueberry">Blueberry</SelectItem>\n        <SelectItem value="grapes">Grapes</SelectItem>\n        <SelectItem value="pineapple">Pineapple</SelectItem>\n      </SelectContent>\n    </Select>\n  )\n}`}
               lang="tsx"
             />
           }
@@ -43,8 +43,7 @@ export default async function SelectPage() {
             <code className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">SelectTrigger</code>,{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">SelectContent</code>,{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">SelectItem</code>
-            ), but the options are shuffled every time you open the dropdown. There&apos;s a 15%
-            chance you end up selecting a different item than the one you clicked.
+            ), but the options are shuffled every time you open the dropdown.
           </p>
         </section>
 
@@ -58,13 +57,11 @@ export default async function SelectPage() {
         <section className="space-y-4">
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">Usage</h2>
           <CodeBlock
-            code={`import {
+            code={`import "@chadcn/ui/styles.css"
+import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
-  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "@chadcn/ui"`}
@@ -91,30 +88,6 @@ export default async function SelectPage() {
           </h2>
 
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Groups</h3>
-            <p className="text-[0.95rem] text-muted-foreground">
-              Use{" "}
-              <code className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">SelectGroup</code>,{" "}
-              <code className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">SelectLabel</code>,
-              and{" "}
-              <code className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">
-                SelectSeparator
-              </code>{" "}
-              to organize items into groups.
-            </p>
-            <ExamplePreview
-              code={
-                <CodeBlock
-                  code={`import {\n  Select,\n  SelectContent,\n  SelectGroup,\n  SelectItem,\n  SelectLabel,\n  SelectSeparator,\n  SelectTrigger,\n  SelectValue,\n} from "@chadcn/ui"\n\nexport function SelectGroupDemo() {\n  return (\n    <Select>\n      <SelectTrigger className="w-[280px]">\n        <SelectValue placeholder="Select a timezone" />\n      </SelectTrigger>\n      <SelectContent>\n        <SelectGroup>\n          <SelectLabel>North America</SelectLabel>\n          <SelectItem value="est">Eastern Standard Time (EST)</SelectItem>\n          <SelectItem value="cst">Central Standard Time (CST)</SelectItem>\n          <SelectItem value="pst">Pacific Standard Time (PST)</SelectItem>\n        </SelectGroup>\n        <SelectSeparator />\n        <SelectGroup>\n          <SelectLabel>Asia</SelectLabel>\n          <SelectItem value="kst">Korea Standard Time (KST)</SelectItem>\n          <SelectItem value="jst">Japan Standard Time (JST)</SelectItem>\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}`}
-                  lang="tsx"
-                />
-              }
-            >
-              <SelectGroupDemo />
-            </ExamplePreview>
-          </div>
-
-          <div className="space-y-4">
             <h3 className="text-lg font-semibold">Scrollable</h3>
             <p className="text-[0.95rem] text-muted-foreground">
               The select content automatically becomes scrollable when the list of items exceeds the
@@ -123,7 +96,7 @@ export default async function SelectPage() {
             <ExamplePreview
               code={
                 <CodeBlock
-                  code={`import {\n  Select,\n  SelectContent,\n  SelectGroup,\n  SelectItem,\n  SelectLabel,\n  SelectSeparator,\n  SelectTrigger,\n  SelectValue,\n} from "@chadcn/ui"\n\nexport function SelectScrollable() {\n  return (\n    <Select>\n      <SelectTrigger className="w-[280px]">\n        <SelectValue placeholder="Select a timezone" />\n      </SelectTrigger>\n      <SelectContent>\n        <SelectGroup>\n          <SelectLabel>North America</SelectLabel>\n          <SelectItem value="est">Eastern Standard Time (EST)</SelectItem>\n          <SelectItem value="cst">Central Standard Time (CST)</SelectItem>\n          <SelectItem value="mst">Mountain Standard Time (MST)</SelectItem>\n          <SelectItem value="pst">Pacific Standard Time (PST)</SelectItem>\n        </SelectGroup>\n        <SelectSeparator />\n        <SelectGroup>\n          <SelectLabel>Europe</SelectLabel>\n          <SelectItem value="gmt">Greenwich Mean Time (GMT)</SelectItem>\n          <SelectItem value="cet">Central European Time (CET)</SelectItem>\n        </SelectGroup>\n        <SelectSeparator />\n        <SelectGroup>\n          <SelectLabel>Asia</SelectLabel>\n          <SelectItem value="kst">Korea Standard Time (KST)</SelectItem>\n          <SelectItem value="jst">Japan Standard Time (JST)</SelectItem>\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}`}
+                  code={`import {\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from "@chadcn/ui"\n\nexport function SelectScrollable() {\n  return (\n    <Select>\n      <SelectTrigger className="w-[280px]">\n        <SelectValue placeholder="Select a timezone" />\n      </SelectTrigger>\n      <SelectContent>\n        <SelectItem value="est">Eastern Standard Time (EST)</SelectItem>\n        <SelectItem value="cst">Central Standard Time (CST)</SelectItem>\n        <SelectItem value="mst">Mountain Standard Time (MST)</SelectItem>\n        <SelectItem value="pst">Pacific Standard Time (PST)</SelectItem>\n        <SelectItem value="gmt">Greenwich Mean Time (GMT)</SelectItem>\n        <SelectItem value="cet">Central European Time (CET)</SelectItem>\n        <SelectItem value="kst">Korea Standard Time (KST)</SelectItem>\n        <SelectItem value="jst">Japan Standard Time (JST)</SelectItem>\n      </SelectContent>\n    </Select>\n  )\n}`}
                   lang="tsx"
                 />
               }
@@ -142,7 +115,7 @@ export default async function SelectPage() {
             <ExamplePreview
               code={
                 <CodeBlock
-                  code={`import {\n  Select,\n  SelectContent,\n  SelectGroup,\n  SelectItem,\n  SelectLabel,\n  SelectTrigger,\n  SelectValue,\n} from "@chadcn/ui"\n\nexport function SelectDisabled() {\n  return (\n    <Select disabled>\n      <SelectTrigger className="w-[180px]">\n        <SelectValue placeholder="Select a fruit" />\n      </SelectTrigger>\n      <SelectContent>\n        <SelectGroup>\n          <SelectLabel>Fruits</SelectLabel>\n          <SelectItem value="apple">Apple</SelectItem>\n          <SelectItem value="banana">Banana</SelectItem>\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}`}
+                  code={`import {\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from "@chadcn/ui"\n\nexport function SelectDisabled() {\n  return (\n    <Select disabled>\n      <SelectTrigger className="w-[180px]">\n        <SelectValue placeholder="Select a fruit" />\n      </SelectTrigger>\n      <SelectContent>\n        <SelectItem value="apple">Apple</SelectItem>\n        <SelectItem value="banana">Banana</SelectItem>\n      </SelectContent>\n    </Select>\n  )\n}`}
                   lang="tsx"
                 />
               }

@@ -12,7 +12,7 @@ declare function Button({ className, variant, size, asChild, onClick, children, 
     asChild?: boolean;
 }): react_jsx_runtime.JSX.Element;
 
-declare function Input({ className, type, onBlur, ...props }: React.ComponentProps<"input">): react_jsx_runtime.JSX.Element;
+declare function Input({ className, type, onChange, ...props }: React.ComponentProps<"input">): react_jsx_runtime.JSX.Element;
 
 declare function Select({ onValueChange, onOpenChange, children, ...props }: React.ComponentProps<typeof Select$1.Root>): react_jsx_runtime.JSX.Element;
 declare function SelectGroup({ ...props }: React.ComponentProps<typeof Select$1.Group>): react_jsx_runtime.JSX.Element;

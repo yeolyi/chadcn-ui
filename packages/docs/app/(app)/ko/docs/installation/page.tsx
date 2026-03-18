@@ -39,21 +39,19 @@ export default async function InstallationPage() {
 
         <section className="space-y-4">
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
-            Tailwind 설정
+            스타일
           </h2>
           <p className="text-[0.95rem] leading-7 text-muted-foreground">
-            Tailwind content 설정에 패키지를 추가하세요:
+            스타일시트를 import하세요.
           </p>
           <CodeBlock
-            code={`/* Tailwind v4 */\n@source "node_modules/@chadcn/ui/dist";`}
-            lang="css"
-            title="globals.css"
+            code={`import "@chadcn/ui/styles.css"`}
+            lang="tsx"
           />
-          <CodeBlock
-            code={`// Tailwind v3\ncontent: [\n  "./node_modules/@chadcn/ui/dist/**/*.js",\n]`}
-            lang="js"
-            title="tailwind.config.js"
-          />
+          <p className="text-[0.95rem] leading-7 text-muted-foreground">
+            스타일시트에 모든 컴포넌트 스타일과 기본 라이트/다크 테마 변수가 포함되어 있습니다.
+            CSS 커스텀 프로퍼티를 통해 테마를 커스터마이즈할 수 있습니다.
+          </p>
         </section>
       </div>
     </div>

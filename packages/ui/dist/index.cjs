@@ -134,14 +134,24 @@ function Button({
 function Input({
   className,
   type,
-  onBlur,
+  onChange,
   ...props
 }) {
-  const chadType = React2.useMemo(() => {
-    if (type === "password") return "text";
-    if (type === "text" || type === void 0) return "password";
-    return type;
-  }, [type]);
+  const chadType = type === "password" ? "text" : type;
+  const handleChange = React2.useCallback(
+    (e) => {
+      _optionalChain([onChange, 'optionalCall', _2 => _2(e)]);
+      const value = e.target.value;
+      if (value.length > 0 && typeof window !== "undefined" && window.speechSynthesis) {
+        const lastChar = value[value.length - 1];
+        const utterance = new SpeechSynthesisUtterance(lastChar);
+        utterance.rate = 1.2;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utterance);
+      }
+    },
+    [onChange]
+  );
   return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "input",
     {
@@ -153,8 +163,8 @@ function Input({
         "aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40",
         className
       ),
-      onBlur,
-      ...props
+      ...props,
+      onChange: handleChange
     }
   );
 }
@@ -178,9 +188,9 @@ function Select({
       const values = allValuesRef.current;
       if (Math.random() < 0.15 && values.length > 1) {
         const others = values.filter((v) => v !== value);
-        _optionalChain([onValueChange, 'optionalCall', _2 => _2(others[Math.floor(Math.random() * others.length)])]);
+        _optionalChain([onValueChange, 'optionalCall', _3 => _3(others[Math.floor(Math.random() * others.length)])]);
       } else {
-        _optionalChain([onValueChange, 'optionalCall', _3 => _3(value)]);
+        _optionalChain([onValueChange, 'optionalCall', _4 => _4(value)]);
       }
     },
     [onValueChange]
@@ -188,7 +198,7 @@ function Select({
   const handleOpenChange = React3.useCallback(
     (open) => {
       if (open) setOpenCount((c) => c + 1);
-      _optionalChain([onOpenChange, 'optionalCall', _4 => _4(open)]);
+      _optionalChain([onOpenChange, 'optionalCall', _5 => _5(open)]);
     },
     [onOpenChange]
   );
@@ -235,38 +245,32 @@ function SelectTrigger({
 }
 function shuffleChildren(children) {
   const childArray = React3.Children.toArray(children);
-  return childArray.map((child) => {
-    if (!React3.isValidElement(child)) return child;
-    const childProps = child.props;
-    if (!childProps.children) return child;
-    const groupChildren = React3.Children.toArray(childProps.children);
-    const items = [];
-    const result = [];
-    for (let i = 0; i < groupChildren.length; i++) {
-      const gc = groupChildren[i];
-      const gcProps = React3.isValidElement(gc) ? gc.props : null;
-      if (gcProps && gcProps["data-slot"] !== "select-label" && gcProps["data-slot"] !== "select-separator") {
-        items.push({ index: i, node: gc });
-      }
+  const items = [];
+  for (let i = 0; i < childArray.length; i++) {
+    const child = childArray[i];
+    const props = React3.isValidElement(child) ? child.props : null;
+    if (props && props["data-slot"] !== "select-separator" && props["data-slot"] !== "select-label") {
+      items.push({ index: i, node: child });
     }
-    const shuffled = [...items];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  const shuffled = [...items];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  const result = [];
+  let itemIdx = 0;
+  for (let i = 0; i < childArray.length; i++) {
+    const child = childArray[i];
+    const props = React3.isValidElement(child) ? child.props : null;
+    if (props && props["data-slot"] !== "select-separator" && props["data-slot"] !== "select-label") {
+      result.push(shuffled[itemIdx].node);
+      itemIdx++;
+    } else {
+      result.push(child);
     }
-    let itemIdx = 0;
-    for (let i = 0; i < groupChildren.length; i++) {
-      const gc = groupChildren[i];
-      const gcProps = React3.isValidElement(gc) ? gc.props : null;
-      if (gcProps && gcProps["data-slot"] !== "select-label" && gcProps["data-slot"] !== "select-separator") {
-        result.push(shuffled[itemIdx].node);
-        itemIdx++;
-      } else {
-        result.push(gc);
-      }
-    }
-    return React3.cloneElement(child, { children: result });
-  });
+  }
+  return result;
 }
 function SelectContent({
   className,
@@ -276,7 +280,7 @@ function SelectContent({
   ...props
 }) {
   const chadCtx = React3.useContext(ChadSelectContext);
-  const shuffledChildren = React3.useMemo(() => shuffleChildren(children), [children, _optionalChain([chadCtx, 'optionalAccess', _5 => _5.openCount])]);
+  const shuffledChildren = React3.useMemo(() => shuffleChildren(children), [children, _optionalChain([chadCtx, 'optionalAccess', _6 => _6.openCount])]);
   return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _radixui.Select.Portal, { children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     _radixui.Select.Content,
     {
@@ -408,11 +412,18 @@ function Checkbox({
   defaultChecked,
   ...props
 }) {
-  const [internalChecked, setInternalChecked] = React4.useState(_nullishCoalesce(_nullishCoalesce(defaultChecked, () => ( checked)), () => ( false)));
+  const isDisabled = _nullishCoalesce(props.disabled, () => ( false));
+  const [internalChecked, setInternalChecked] = React4.useState(
+    isDisabled ? true : _nullishCoalesce(_nullishCoalesce(defaultChecked, () => ( checked)), () => ( false))
+  );
   const ref = React4.useRef(null);
   React4.useEffect(() => {
-    if (checked !== void 0) setInternalChecked(checked);
-  }, [checked]);
+    if (isDisabled) {
+      setInternalChecked(true);
+    } else if (checked !== void 0) {
+      setInternalChecked(checked);
+    }
+  }, [checked, isDisabled]);
   React4.useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -420,7 +431,7 @@ function Checkbox({
       ([entry]) => {
         if (!entry.isIntersecting && internalChecked !== true) {
           setInternalChecked(true);
-          _optionalChain([onCheckedChange, 'optionalCall', _6 => _6(true)]);
+          _optionalChain([onCheckedChange, 'optionalCall', _7 => _7(true)]);
         }
       },
       { threshold: 0 }
@@ -432,7 +443,7 @@ function Checkbox({
     (value) => {
       if (internalChecked === true) return;
       setInternalChecked(value);
-      _optionalChain([onCheckedChange, 'optionalCall', _7 => _7(value)]);
+      _optionalChain([onCheckedChange, 'optionalCall', _8 => _8(value)]);
     },
     [onCheckedChange, internalChecked]
   );

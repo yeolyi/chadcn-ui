@@ -49,9 +49,9 @@ export default async function ButtonPage() {
             <code className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">variant</code>,{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">size</code>,{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">asChild</code>
-            )를 받지만, 호버하면 자신의 높이만큼 위로 올라갑니다.{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">translateY</code>를
-            사용하므로 레이아웃에는 영향을 주지 않습니다.
+            )를 받으며, 오클릭 방지 기능이 내장되어 있습니다. 호버 시 커서에서 멀어지는 방향으로{" "}
+            <code className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">translate</code>를
+            사용해 재배치되므로 레이아웃에는 영향을 주지 않습니다. 2번 시도 후 제자리에 머뭅니다.
           </p>
         </section>
 
@@ -64,7 +64,7 @@ export default async function ButtonPage() {
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
             사용법
           </h2>
-          <CodeBlock code={`import { Button } from "@chadcn/ui"`} lang="tsx" />
+          <CodeBlock code={`import "@chadcn/ui/styles.css"\nimport { Button } from "@chadcn/ui"`} lang="tsx" />
           <CodeBlock code={`<Button variant="outline">Button</Button>`} lang="tsx" />
         </section>
 

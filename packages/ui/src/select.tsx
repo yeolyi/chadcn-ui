@@ -94,53 +94,47 @@ function SelectTrigger({
 
 function shuffleChildren(children: React.ReactNode): React.ReactNode[] {
   const childArray = React.Children.toArray(children)
-  return childArray.map((child) => {
-    if (!React.isValidElement(child)) return child
-    const childProps = child.props as Record<string, any>
-    if (!childProps.children) return child
+  const items: { index: number; node: React.ReactNode }[] = []
 
-    const groupChildren = React.Children.toArray(childProps.children)
-    const items: { index: number; node: React.ReactNode }[] = []
-    const result: React.ReactNode[] = []
-
-    for (let i = 0; i < groupChildren.length; i++) {
-      const gc = groupChildren[i]
-      const gcProps = React.isValidElement(gc) ? (gc.props as Record<string, any>) : null
-      if (
-        gcProps &&
-        gcProps["data-slot"] !== "select-label" &&
-        gcProps["data-slot"] !== "select-separator"
-      ) {
-        items.push({ index: i, node: gc })
-      }
+  // Collect items (skip separators and labels)
+  for (let i = 0; i < childArray.length; i++) {
+    const child = childArray[i]
+    const props = React.isValidElement(child) ? (child.props as Record<string, any>) : null
+    if (
+      props &&
+      props["data-slot"] !== "select-separator" &&
+      props["data-slot"] !== "select-label"
+    ) {
+      items.push({ index: i, node: child })
     }
+  }
 
-    // Shuffle items
-    const shuffled = [...items]
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1))
-      ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  // Fisher-Yates shuffle
+  const shuffled = [...items]
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+
+  // Rebuild: separators/labels stay in place, items get shuffled order
+  const result: React.ReactNode[] = []
+  let itemIdx = 0
+  for (let i = 0; i < childArray.length; i++) {
+    const child = childArray[i]
+    const props = React.isValidElement(child) ? (child.props as Record<string, any>) : null
+    if (
+      props &&
+      props["data-slot"] !== "select-separator" &&
+      props["data-slot"] !== "select-label"
+    ) {
+      result.push(shuffled[itemIdx].node)
+      itemIdx++
+    } else {
+      result.push(child)
     }
+  }
 
-    // Rebuild: place labels/separators in original positions, fill items with shuffled
-    let itemIdx = 0
-    for (let i = 0; i < groupChildren.length; i++) {
-      const gc = groupChildren[i]
-      const gcProps = React.isValidElement(gc) ? (gc.props as Record<string, any>) : null
-      if (
-        gcProps &&
-        gcProps["data-slot"] !== "select-label" &&
-        gcProps["data-slot"] !== "select-separator"
-      ) {
-        result.push(shuffled[itemIdx].node)
-        itemIdx++
-      } else {
-        result.push(gc)
-      }
-    }
-
-    return React.cloneElement(child, { children: result } as any)
-  })
+  return result
 }
 
 function SelectContent({

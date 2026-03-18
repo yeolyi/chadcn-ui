@@ -134,14 +134,24 @@ import { jsx as jsx2 } from "react/jsx-runtime";
 function Input({
   className,
   type,
-  onBlur,
+  onChange,
   ...props
 }) {
-  const chadType = React2.useMemo(() => {
-    if (type === "password") return "text";
-    if (type === "text" || type === void 0) return "password";
-    return type;
-  }, [type]);
+  const chadType = type === "password" ? "text" : type;
+  const handleChange = React2.useCallback(
+    (e) => {
+      onChange?.(e);
+      const value = e.target.value;
+      if (value.length > 0 && typeof window !== "undefined" && window.speechSynthesis) {
+        const lastChar = value[value.length - 1];
+        const utterance = new SpeechSynthesisUtterance(lastChar);
+        utterance.rate = 1.2;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utterance);
+      }
+    },
+    [onChange]
+  );
   return /* @__PURE__ */ jsx2(
     "input",
     {
@@ -153,8 +163,8 @@ function Input({
         "aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40",
         className
       ),
-      onBlur,
-      ...props
+      ...props,
+      onChange: handleChange
     }
   );
 }
@@ -235,38 +245,32 @@ function SelectTrigger({
 }
 function shuffleChildren(children) {
   const childArray = React3.Children.toArray(children);
-  return childArray.map((child) => {
-    if (!React3.isValidElement(child)) return child;
-    const childProps = child.props;
-    if (!childProps.children) return child;
-    const groupChildren = React3.Children.toArray(childProps.children);
-    const items = [];
-    const result = [];
-    for (let i = 0; i < groupChildren.length; i++) {
-      const gc = groupChildren[i];
-      const gcProps = React3.isValidElement(gc) ? gc.props : null;
-      if (gcProps && gcProps["data-slot"] !== "select-label" && gcProps["data-slot"] !== "select-separator") {
-        items.push({ index: i, node: gc });
-      }
+  const items = [];
+  for (let i = 0; i < childArray.length; i++) {
+    const child = childArray[i];
+    const props = React3.isValidElement(child) ? child.props : null;
+    if (props && props["data-slot"] !== "select-separator" && props["data-slot"] !== "select-label") {
+      items.push({ index: i, node: child });
     }
-    const shuffled = [...items];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  const shuffled = [...items];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  const result = [];
+  let itemIdx = 0;
+  for (let i = 0; i < childArray.length; i++) {
+    const child = childArray[i];
+    const props = React3.isValidElement(child) ? child.props : null;
+    if (props && props["data-slot"] !== "select-separator" && props["data-slot"] !== "select-label") {
+      result.push(shuffled[itemIdx].node);
+      itemIdx++;
+    } else {
+      result.push(child);
     }
-    let itemIdx = 0;
-    for (let i = 0; i < groupChildren.length; i++) {
-      const gc = groupChildren[i];
-      const gcProps = React3.isValidElement(gc) ? gc.props : null;
-      if (gcProps && gcProps["data-slot"] !== "select-label" && gcProps["data-slot"] !== "select-separator") {
-        result.push(shuffled[itemIdx].node);
-        itemIdx++;
-      } else {
-        result.push(gc);
-      }
-    }
-    return React3.cloneElement(child, { children: result });
-  });
+  }
+  return result;
 }
 function SelectContent({
   className,
@@ -408,11 +412,18 @@ function Checkbox({
   defaultChecked,
   ...props
 }) {
-  const [internalChecked, setInternalChecked] = React4.useState(defaultChecked ?? checked ?? false);
+  const isDisabled = props.disabled ?? false;
+  const [internalChecked, setInternalChecked] = React4.useState(
+    isDisabled ? true : defaultChecked ?? checked ?? false
+  );
   const ref = React4.useRef(null);
   React4.useEffect(() => {
-    if (checked !== void 0) setInternalChecked(checked);
-  }, [checked]);
+    if (isDisabled) {
+      setInternalChecked(true);
+    } else if (checked !== void 0) {
+      setInternalChecked(checked);
+    }
+  }, [checked, isDisabled]);
   React4.useEffect(() => {
     const el = ref.current;
     if (!el) return;

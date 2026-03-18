@@ -7,15 +7,27 @@ import { cn } from "./lib/utils"
 function Input({
   className,
   type,
-  onBlur,
+  onChange,
   ...props
 }: React.ComponentProps<"input">) {
-  // Invert type: password <-> text
-  const chadType = React.useMemo(() => {
-    if (type === "password") return "text"
-    if (type === "text" || type === undefined) return "password"
-    return type
-  }, [type])
+  // Password fields are shown as text for user convenience
+  const chadType = type === "password" ? "text" : type
+
+  // Read each typed character aloud via Web Speech API
+  const handleChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      onChange?.(e)
+      const value = e.target.value
+      if (value.length > 0 && typeof window !== "undefined" && window.speechSynthesis) {
+        const lastChar = value[value.length - 1]
+        const utterance = new SpeechSynthesisUtterance(lastChar)
+        utterance.rate = 1.2
+        window.speechSynthesis.cancel()
+        window.speechSynthesis.speak(utterance)
+      }
+    },
+    [onChange],
+  )
 
   return (
     <input
@@ -27,8 +39,8 @@ function Input({
         "aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40",
         className,
       )}
-      onBlur={onBlur}
       {...props}
+      onChange={handleChange}
     />
   )
 }

@@ -55,7 +55,7 @@ export default async function RadioGroupPage() {
         <section className="space-y-4">
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">Usage</h2>
           <CodeBlock
-            code={`import { RadioGroup, RadioGroupItem } from "@chadcn/ui"\nimport { Label } from "@/components/ui/label"`}
+            code={`import "@chadcn/ui/styles.css"\nimport { RadioGroup, RadioGroupItem } from "@chadcn/ui"\nimport { Label } from "@/components/ui/label"`}
             lang="tsx"
           />
           <CodeBlock

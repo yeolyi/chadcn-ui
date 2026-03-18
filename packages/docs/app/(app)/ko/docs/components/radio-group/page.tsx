@@ -53,7 +53,7 @@ export default async function RadioGroupPage() {
             사용법
           </h2>
           <CodeBlock
-            code={`import { RadioGroup, RadioGroupItem } from "@chadcn/ui"\nimport { Label } from "@/components/ui/label"`}
+            code={`import "@chadcn/ui/styles.css"\nimport { RadioGroup, RadioGroupItem } from "@chadcn/ui"\nimport { Label } from "@/components/ui/label"`}
             lang="tsx"
           />
           <CodeBlock

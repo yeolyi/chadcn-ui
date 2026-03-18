@@ -13,13 +13,20 @@ function Checkbox({
   defaultChecked,
   ...props
 }: React.ComponentProps<typeof CheckboxPrimitive.Root>) {
-  const [internalChecked, setInternalChecked] = React.useState(defaultChecked ?? checked ?? false)
+  const isDisabled = props.disabled ?? false
+  const [internalChecked, setInternalChecked] = React.useState(
+    isDisabled ? true : (defaultChecked ?? checked ?? false),
+  )
   const ref = React.useRef<HTMLButtonElement>(null)
 
-  // Sync with controlled value
+  // Sync with controlled value (disabled always forces checked)
   React.useEffect(() => {
-    if (checked !== undefined) setInternalChecked(checked)
-  }, [checked])
+    if (isDisabled) {
+      setInternalChecked(true)
+    } else if (checked !== undefined) {
+      setInternalChecked(checked)
+    }
+  }, [checked, isDisabled])
 
   // Check when scrolled out of viewport
   React.useEffect(() => {

@@ -55,7 +55,7 @@ export default async function SliderPage() {
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
             사용법
           </h2>
-          <CodeBlock code={`import { Slider } from "@chadcn/ui"`} lang="tsx" />
+          <CodeBlock code={`import "@chadcn/ui/styles.css"\nimport { Slider } from "@chadcn/ui"`} lang="tsx" />
           <CodeBlock code={`<Slider defaultValue={[33]} max={100} step={1} />`} lang="tsx" />
         </section>
 
