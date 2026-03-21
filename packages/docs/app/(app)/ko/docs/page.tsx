@@ -1,4 +1,5 @@
 import { CodeBlock } from "@/components/code-block"
+import { ComingSoon } from "@/components/coming-soon"
 import { createMetadata } from "@/lib/og"
 
 export const metadata = createMetadata({
@@ -32,10 +33,12 @@ export default async function IntroductionPage() {
             chadcn/ui는 shadcn/ui와 완전히 같은 API, props, 타입을 공유합니다. import 경로만
             바꾸면 모든 것이 그대로 작동합니다 — 다만 조금 다르게.
           </p>
-          <CodeBlock
-            code={`import "@chadcn/ui/styles.css"\nimport { Button } from "@chadcn/ui"`}
-            lang="tsx"
-          />
+          <ComingSoon label="준비 중" description="패키지가 아직 npm에 게시되지 않았습니다.">
+            <CodeBlock
+              code={`import "@chadcn/ui/styles.css"\nimport { Button } from "@chadcn/ui"`}
+              lang="tsx"
+            />
+          </ComingSoon>
 
           <h2 className="scroll-m-24 text-2xl font-semibold tracking-tight pt-4">
             같은 모습, 다른 느낌

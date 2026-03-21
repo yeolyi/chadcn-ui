@@ -1,4 +1,5 @@
 import { CodeBlock } from "@/components/code-block"
+import { ComingSoon } from "@/components/coming-soon"
 import { ExamplePreview } from "@/components/example-preview"
 import { InstallTabs } from "@/components/install-tabs"
 import { createMetadata } from "@/lib/og"
@@ -67,13 +68,15 @@ export default async function InputPage() {
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
             Installation
           </h2>
-          <InstallTabs pkg="@chadcn/ui" />
+          <InstallTabs pkg="@chadcn/ui" comingSoon />
         </section>
 
         <section className="space-y-4">
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">Usage</h2>
-          <CodeBlock code={`import "@chadcn/ui/styles.css"\nimport { Input } from "@chadcn/ui"`} lang="tsx" />
-          <CodeBlock code={`<Input />`} lang="tsx" />
+          <ComingSoon>
+            <CodeBlock code={`import "@chadcn/ui/styles.css"\nimport { Input } from "@chadcn/ui"`} lang="tsx" />
+            <CodeBlock code={`<Input />`} lang="tsx" />
+          </ComingSoon>
         </section>
 
         <section className="space-y-8">

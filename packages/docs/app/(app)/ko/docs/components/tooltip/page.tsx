@@ -1,4 +1,5 @@
 import { CodeBlock } from "@/components/code-block"
+import { ComingSoon } from "@/components/coming-soon"
 import { ExamplePreview } from "@/components/example-preview"
 import { InstallTabs } from "@/components/install-tabs"
 import { createMetadata } from "@/lib/og"
@@ -45,7 +46,7 @@ export default async function TooltipPage() {
 
         <section className="space-y-4">
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">설치</h2>
-          <InstallTabs pkg="@chadcn/ui" />
+          <InstallTabs pkg="@chadcn/ui" comingSoon comingSoonLabel="준비 중" comingSoonDescription="패키지가 아직 npm에 게시되지 않았습니다." />
           <p className="text-[0.95rem] leading-7 text-muted-foreground">
             앱의 루트에{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">
@@ -74,25 +75,27 @@ export default function RootLayout({ children }) {
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
             사용법
           </h2>
-          <CodeBlock
-            code={`import "@chadcn/ui/styles.css"
+          <ComingSoon label="준비 중" description="패키지가 아직 npm에 게시되지 않았습니다.">
+            <CodeBlock
+              code={`import "@chadcn/ui/styles.css"
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@chadcn/ui"`}
-            lang="tsx"
-          />
-          <CodeBlock
-            code={`<Tooltip>
+              lang="tsx"
+            />
+            <CodeBlock
+              code={`<Tooltip>
   <TooltipTrigger>마우스를 올려보세요</TooltipTrigger>
   <TooltipContent>
     <p>라이브러리에 추가</p>
   </TooltipContent>
 </Tooltip>`}
-            lang="tsx"
-          />
+              lang="tsx"
+            />
+          </ComingSoon>
         </section>
 
         <section className="space-y-8">

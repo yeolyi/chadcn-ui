@@ -1,4 +1,5 @@
 import { CodeBlock } from "@/components/code-block"
+import { ComingSoon } from "@/components/coming-soon"
 import { InstallTabs } from "@/components/install-tabs"
 import { createMetadata } from "@/lib/og"
 
@@ -21,7 +22,7 @@ export default async function InstallationPage() {
 
         <section className="space-y-4">
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">설치</h2>
-          <InstallTabs pkg="@chadcn/ui" />
+          <InstallTabs pkg="@chadcn/ui" comingSoon comingSoonLabel="준비 중" comingSoonDescription="패키지가 아직 npm에 게시되지 않았습니다." />
         </section>
 
         <section className="space-y-4">
@@ -31,10 +32,12 @@ export default async function InstallationPage() {
           <p className="text-[0.95rem] leading-7 text-muted-foreground">
             스타일시트와 컴포넌트를 직접 import하세요. API는 shadcn/ui와 동일합니다.
           </p>
-          <CodeBlock
-            code={`import "@chadcn/ui/styles.css"\n\nimport { Button } from "@chadcn/ui"\nimport { Input } from "@chadcn/ui"\nimport {\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from "@chadcn/ui"`}
-            lang="tsx"
-          />
+          <ComingSoon label="준비 중" description="패키지가 아직 npm에 게시되지 않았습니다.">
+            <CodeBlock
+              code={`import "@chadcn/ui/styles.css"\n\nimport { Button } from "@chadcn/ui"\nimport { Input } from "@chadcn/ui"\nimport {\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from "@chadcn/ui"`}
+              lang="tsx"
+            />
+          </ComingSoon>
         </section>
       </div>
     </div>

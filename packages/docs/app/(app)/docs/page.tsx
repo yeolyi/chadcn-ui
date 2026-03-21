@@ -1,4 +1,5 @@
 import { CodeBlock } from "@/components/code-block"
+import { ComingSoon } from "@/components/coming-soon"
 import { createMetadata } from "@/lib/og"
 
 export const metadata = createMetadata({
@@ -33,10 +34,12 @@ export default async function IntroductionPage() {
             chadcn/ui shares the exact same API, props, and types as shadcn/ui. Swap your import
             path and everything still works — just differently.
           </p>
-          <CodeBlock
-            code={`import "@chadcn/ui/styles.css"\nimport { Button } from "@chadcn/ui"`}
-            lang="tsx"
-          />
+          <ComingSoon>
+            <CodeBlock
+              code={`import "@chadcn/ui/styles.css"\nimport { Button } from "@chadcn/ui"`}
+              lang="tsx"
+            />
+          </ComingSoon>
 
           <h2 className="scroll-m-24 text-2xl font-semibold tracking-tight pt-4">
             Same Look, Different Feel

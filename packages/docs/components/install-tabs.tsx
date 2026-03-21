@@ -1,6 +1,6 @@
 "use client"
 
-import { CheckIcon, ClipboardIcon, TerminalIcon } from "lucide-react"
+import { CheckIcon, ClipboardIcon, PackageIcon, TerminalIcon } from "lucide-react"
 import * as React from "react"
 
 import { Button } from "@/components/ui/button"
@@ -13,7 +13,17 @@ const packageManagers = {
   bun: "bun add",
 }
 
-export function InstallTabs({ pkg }: { pkg: string }) {
+export function InstallTabs({
+  pkg,
+  comingSoon,
+  comingSoonLabel = "Coming Soon",
+  comingSoonDescription = "Package not yet published on npm.",
+}: {
+  pkg: string
+  comingSoon?: boolean
+  comingSoonLabel?: string
+  comingSoonDescription?: string
+}) {
   const [active, setActive] = React.useState<string>("pnpm")
   const [hasCopied, setHasCopied] = React.useState(false)
 
@@ -32,7 +42,18 @@ export function InstallTabs({ pkg }: { pkg: string }) {
 
   return (
     <div data-rehype-pretty-code-figure="" className="relative overflow-x-auto">
-      <Tabs value={active} className="gap-0" onValueChange={setActive}>
+      {comingSoon && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center">
+          <div className="flex items-center gap-2 rounded-lg border border-border/60 bg-background/90 px-4 py-2 shadow-sm backdrop-blur-sm">
+            <PackageIcon className="size-4 text-muted-foreground" />
+            <div className="flex flex-col">
+              <span className="text-sm font-medium">{comingSoonLabel}</span>
+              <span className="text-xs text-muted-foreground">{comingSoonDescription}</span>
+            </div>
+          </div>
+        </div>
+      )}
+      <Tabs value={active} className={`gap-0${comingSoon ? " pointer-events-none select-none opacity-40 blur-[1px]" : ""}`} onValueChange={setActive}>
         <div className="flex items-center gap-2 border-b border-border/50 px-3 py-1">
           <div className="flex size-4 items-center justify-center rounded-[1px] bg-foreground opacity-70">
             <TerminalIcon className="size-3 text-[var(--color-code)]" />
@@ -65,7 +86,7 @@ export function InstallTabs({ pkg }: { pkg: string }) {
         data-slot="copy-button"
         size="icon"
         variant="ghost"
-        className="absolute top-2 right-2 z-10 size-7 opacity-70 hover:opacity-100 focus-visible:opacity-100"
+        className={`absolute top-2 right-2 z-10 size-7 opacity-70 hover:opacity-100 focus-visible:opacity-100${comingSoon ? " hidden" : ""}`}
         onClick={() => {
           navigator.clipboard.writeText(tabs[active])
           setHasCopied(true)

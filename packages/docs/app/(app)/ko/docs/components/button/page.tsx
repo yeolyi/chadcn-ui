@@ -1,4 +1,5 @@
 import { CodeBlock } from "@/components/code-block"
+import { ComingSoon } from "@/components/coming-soon"
 import { ExamplePreview } from "@/components/example-preview"
 import { InstallTabs } from "@/components/install-tabs"
 import { createMetadata } from "@/lib/og"
@@ -57,15 +58,17 @@ export default async function ButtonPage() {
 
         <section className="space-y-4">
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">설치</h2>
-          <InstallTabs pkg="@chadcn/ui" />
+          <InstallTabs pkg="@chadcn/ui" comingSoon comingSoonLabel="준비 중" comingSoonDescription="패키지가 아직 npm에 게시되지 않았습니다." />
         </section>
 
         <section className="space-y-4">
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
             사용법
           </h2>
-          <CodeBlock code={`import "@chadcn/ui/styles.css"\nimport { Button } from "@chadcn/ui"`} lang="tsx" />
-          <CodeBlock code={`<Button variant="outline">Button</Button>`} lang="tsx" />
+          <ComingSoon label="준비 중" description="패키지가 아직 npm에 게시되지 않았습니다.">
+            <CodeBlock code={`import "@chadcn/ui/styles.css"\nimport { Button } from "@chadcn/ui"`} lang="tsx" />
+            <CodeBlock code={`<Button variant="outline">Button</Button>`} lang="tsx" />
+          </ComingSoon>
         </section>
 
         <section className="space-y-4">

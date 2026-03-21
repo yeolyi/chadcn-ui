@@ -1,4 +1,5 @@
 import { CodeBlock } from "@/components/code-block"
+import { ComingSoon } from "@/components/coming-soon"
 import { InstallTabs } from "@/components/install-tabs"
 import { createMetadata } from "@/lib/og"
 
@@ -23,7 +24,7 @@ export default async function InstallationPage() {
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
             Install
           </h2>
-          <InstallTabs pkg="@chadcn/ui" />
+          <InstallTabs pkg="@chadcn/ui" comingSoon />
         </section>
 
         <section className="space-y-4">
@@ -31,8 +32,9 @@ export default async function InstallationPage() {
           <p className="text-[0.95rem] leading-7 text-muted-foreground">
             Import the stylesheet and components directly. The API is identical to shadcn/ui.
           </p>
-          <CodeBlock
-            code={`import "@chadcn/ui/styles.css"
+          <ComingSoon>
+            <CodeBlock
+              code={`import "@chadcn/ui/styles.css"
 
 import { Button } from "@chadcn/ui"
 import { Input } from "@chadcn/ui"
@@ -43,8 +45,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@chadcn/ui"`}
-            lang="tsx"
-          />
+              lang="tsx"
+            />
+          </ComingSoon>
         </section>
       </div>
     </div>

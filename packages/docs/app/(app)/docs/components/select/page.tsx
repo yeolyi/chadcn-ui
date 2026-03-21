@@ -1,4 +1,5 @@
 import { CodeBlock } from "@/components/code-block"
+import { ComingSoon } from "@/components/coming-soon"
 import { ExamplePreview } from "@/components/example-preview"
 import { InstallTabs } from "@/components/install-tabs"
 import { createMetadata } from "@/lib/og"
@@ -51,13 +52,14 @@ export default async function SelectPage() {
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
             Installation
           </h2>
-          <InstallTabs pkg="@chadcn/ui" />
+          <InstallTabs pkg="@chadcn/ui" comingSoon />
         </section>
 
         <section className="space-y-4">
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">Usage</h2>
-          <CodeBlock
-            code={`import "@chadcn/ui/styles.css"
+          <ComingSoon>
+            <CodeBlock
+              code={`import "@chadcn/ui/styles.css"
 import {
   Select,
   SelectContent,
@@ -65,10 +67,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@chadcn/ui"`}
-            lang="tsx"
-          />
-          <CodeBlock
-            code={`<Select>
+              lang="tsx"
+            />
+            <CodeBlock
+              code={`<Select>
   <SelectTrigger className="w-[180px]">
     <SelectValue placeholder="Theme" />
   </SelectTrigger>
@@ -78,8 +80,9 @@ import {
     <SelectItem value="system">System</SelectItem>
   </SelectContent>
 </Select>`}
-            lang="tsx"
-          />
+              lang="tsx"
+            />
+          </ComingSoon>
         </section>
 
         <section className="space-y-8">

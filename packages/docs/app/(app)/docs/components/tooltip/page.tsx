@@ -1,4 +1,5 @@
 import { CodeBlock } from "@/components/code-block"
+import { ComingSoon } from "@/components/coming-soon"
 import { ExamplePreview } from "@/components/example-preview"
 import { InstallTabs } from "@/components/install-tabs"
 import { createMetadata } from "@/lib/og"
@@ -49,7 +50,7 @@ export default async function TooltipPage() {
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
             Installation
           </h2>
-          <InstallTabs pkg="@chadcn/ui" />
+          <InstallTabs pkg="@chadcn/ui" comingSoon />
           <p className="text-[0.95rem] leading-7 text-muted-foreground">
             Add the{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">
@@ -76,25 +77,27 @@ export default function RootLayout({ children }) {
 
         <section className="space-y-4">
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">Usage</h2>
-          <CodeBlock
-            code={`import "@chadcn/ui/styles.css"
+          <ComingSoon>
+            <CodeBlock
+              code={`import "@chadcn/ui/styles.css"
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@chadcn/ui"`}
-            lang="tsx"
-          />
-          <CodeBlock
-            code={`<Tooltip>
+              lang="tsx"
+            />
+            <CodeBlock
+              code={`<Tooltip>
   <TooltipTrigger>Hover</TooltipTrigger>
   <TooltipContent>
     <p>Add to library</p>
   </TooltipContent>
 </Tooltip>`}
-            lang="tsx"
-          />
+              lang="tsx"
+            />
+          </ComingSoon>
         </section>
 
         <section className="space-y-8">
