@@ -784,7 +784,23 @@ function Switch({
     if (disabled) return;
     const doe = DeviceOrientationEvent;
     if (typeof doe.requestPermission === "function") {
-      setGyroState("needs-permission");
+      const probe = (e) => {
+        if (e.gamma !== null) {
+          window.addEventListener("deviceorientation", onOrientation);
+          setGyroState("granted");
+        }
+        window.removeEventListener("deviceorientation", probe);
+      };
+      window.addEventListener("deviceorientation", probe);
+      const timer = setTimeout(() => {
+        window.removeEventListener("deviceorientation", probe);
+        setGyroState((s) => s === "idle" ? "needs-permission" : s);
+      }, 500);
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener("deviceorientation", probe);
+        window.removeEventListener("deviceorientation", onOrientation);
+      };
     } else if ("DeviceOrientationEvent" in window) {
       window.addEventListener("deviceorientation", onOrientation);
       setGyroState("granted");
@@ -867,7 +883,7 @@ function Switch({
   }, [controlledChecked, isControlled, mid, disabled]);
   const state = checked ? "checked" : "unchecked";
   if (gyroState === "needs-permission") {
-    return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "button",
       {
         type: "button",
@@ -878,10 +894,7 @@ function Switch({
           className
         ),
         onClick: requestGyro,
-        children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { className: "text-sm", children: "\u{1FAF3}" }),
-          "Tap to enable tilt"
-        ]
+        children: typeof navigator !== "undefined" && /^ko\b/.test(navigator.language) ? "\uD0ED\uD558\uC5EC \uC2A4\uC704\uCE58 \uD65C\uC131\uD654" : "Tap to use switch"
       }
     );
   }

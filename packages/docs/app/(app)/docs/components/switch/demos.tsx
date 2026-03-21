@@ -9,11 +9,14 @@ import * as React from "react"
 export function SwitchMainDemo() {
   const { setTheme, resolvedTheme } = useTheme()
   const { setMetaColor, metaColor } = useMetaColor()
-  const isDark = resolvedTheme === "dark"
+  const [mounted, setMounted] = React.useState(false)
 
+  React.useEffect(() => setMounted(true), [])
   React.useEffect(() => {
     setMetaColor(metaColor)
   }, [metaColor, setMetaColor])
+
+  const isDark = mounted && resolvedTheme === "dark"
 
   return (
     <div className="flex items-center gap-2">

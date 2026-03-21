@@ -106,8 +106,26 @@ function Switch({
     }
 
     if (typeof doe.requestPermission === "function") {
-      // iOS: needs user gesture — just mark state, don't call yet
-      setGyroState("needs-permission")
+      // iOS: probe for existing permission by listening briefly
+      const probe = (e: DeviceOrientationEvent) => {
+        if (e.gamma !== null) {
+          // Permission already granted from a previous session
+          window.addEventListener("deviceorientation", onOrientation)
+          setGyroState("granted")
+        }
+        window.removeEventListener("deviceorientation", probe)
+      }
+      window.addEventListener("deviceorientation", probe)
+      // If no event within 500ms, permission is needed
+      const timer = setTimeout(() => {
+        window.removeEventListener("deviceorientation", probe)
+        setGyroState((s) => (s === "idle" ? "needs-permission" : s))
+      }, 500)
+      return () => {
+        clearTimeout(timer)
+        window.removeEventListener("deviceorientation", probe)
+        window.removeEventListener("deviceorientation", onOrientation)
+      }
     } else if ("DeviceOrientationEvent" in window) {
       // Android / non-iOS: listen directly
       window.addEventListener("deviceorientation", onOrientation)
@@ -237,8 +255,10 @@ function Switch({
         )}
         onClick={requestGyro}
       >
-        <span className="text-sm">🫳</span>
-        Tap to enable tilt
+        {typeof navigator !== "undefined" &&
+        /^ko\b/.test(navigator.language)
+          ? "탭하여 스위치 활성화"
+          : "Tap to use switch"}
       </button>
     )
   }
