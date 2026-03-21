@@ -229,16 +229,28 @@ function Switch({
     }
   }, [disabled, range, mid, thumbR, setChecked])
 
-  // --- Controlled checked changed externally → give impulse ---
+  // --- Controlled checked changed externally → snap or impulse ---
+  const hasSettled = React.useRef(false)
   React.useEffect(() => {
     if (!isControlled || disabled) return
     const s = p.current
-    if (controlledChecked && s.x < mid) {
-      s.vx += 200
-    } else if (!controlledChecked && s.x > mid) {
-      s.vx -= 200
+    const wrongSide =
+      (controlledChecked && s.x < mid) || (!controlledChecked && s.x > mid)
+    if (!wrongSide) return
+
+    if (!hasSettled.current) {
+      // First sync (e.g. hydration): snap position instantly, no animation
+      s.x = controlledChecked ? range : 0
+      s.vx = 0
+      hasSettled.current = true
+      if (thumbRef.current) {
+        thumbRef.current.style.transform = `translateX(${s.x}px)`
+      }
+    } else {
+      // Subsequent changes: give impulse
+      s.vx += controlledChecked ? 200 : -200
     }
-  }, [controlledChecked, isControlled, mid, disabled])
+  }, [controlledChecked, isControlled, mid, range, disabled])
 
   const state = checked ? "checked" : "unchecked"
 

@@ -872,15 +872,23 @@ function Switch({
       cancelAnimationFrame(raf.current);
     };
   }, [disabled, range, mid, thumbR, setChecked]);
+  const hasSettled = React7.useRef(false);
   React7.useEffect(() => {
     if (!isControlled || disabled) return;
     const s = p.current;
-    if (controlledChecked && s.x < mid) {
-      s.vx += 200;
-    } else if (!controlledChecked && s.x > mid) {
-      s.vx -= 200;
+    const wrongSide = controlledChecked && s.x < mid || !controlledChecked && s.x > mid;
+    if (!wrongSide) return;
+    if (!hasSettled.current) {
+      s.x = controlledChecked ? range : 0;
+      s.vx = 0;
+      hasSettled.current = true;
+      if (thumbRef.current) {
+        thumbRef.current.style.transform = `translateX(${s.x}px)`;
+      }
+    } else {
+      s.vx += controlledChecked ? 200 : -200;
     }
-  }, [controlledChecked, isControlled, mid, disabled]);
+  }, [controlledChecked, isControlled, mid, range, disabled]);
   const state = checked ? "checked" : "unchecked";
   if (gyroState === "needs-permission") {
     return /* @__PURE__ */ jsx7(
