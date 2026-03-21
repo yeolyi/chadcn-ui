@@ -29,10 +29,12 @@ export default async function InstallationPage() {
         <section className="space-y-4">
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">Usage</h2>
           <p className="text-[0.95rem] leading-7 text-muted-foreground">
-            Import components directly. The API is identical to shadcn/ui.
+            Import the stylesheet and components directly. The API is identical to shadcn/ui.
           </p>
           <CodeBlock
-            code={`import { Button } from "@chadcn/ui"
+            code={`import "@chadcn/ui/styles.css"
+
+import { Button } from "@chadcn/ui"
 import { Input } from "@chadcn/ui"
 import {
   Select,
@@ -43,23 +45,6 @@ import {
 } from "@chadcn/ui"`}
             lang="tsx"
           />
-        </section>
-
-        <section className="space-y-4">
-          <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
-            Styles
-          </h2>
-          <p className="text-[0.95rem] leading-7 text-muted-foreground">
-            Import the stylesheet.
-          </p>
-          <CodeBlock
-            code={`import "@chadcn/ui/styles.css"`}
-            lang="tsx"
-          />
-          <p className="text-[0.95rem] leading-7 text-muted-foreground">
-            The stylesheet includes all component styles with default light/dark theme variables.
-            You can override them with CSS custom properties.
-          </p>
         </section>
       </div>
     </div>

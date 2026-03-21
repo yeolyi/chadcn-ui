@@ -29,29 +29,12 @@ export default async function InstallationPage() {
             사용법
           </h2>
           <p className="text-[0.95rem] leading-7 text-muted-foreground">
-            컴포넌트를 직접 import하세요. API는 shadcn/ui와 동일합니다.
+            스타일시트와 컴포넌트를 직접 import하세요. API는 shadcn/ui와 동일합니다.
           </p>
           <CodeBlock
-            code={`import { Button } from "@chadcn/ui"\nimport { Input } from "@chadcn/ui"\nimport {\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from "@chadcn/ui"`}
+            code={`import "@chadcn/ui/styles.css"\n\nimport { Button } from "@chadcn/ui"\nimport { Input } from "@chadcn/ui"\nimport {\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from "@chadcn/ui"`}
             lang="tsx"
           />
-        </section>
-
-        <section className="space-y-4">
-          <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
-            스타일
-          </h2>
-          <p className="text-[0.95rem] leading-7 text-muted-foreground">
-            스타일시트를 import하세요.
-          </p>
-          <CodeBlock
-            code={`import "@chadcn/ui/styles.css"`}
-            lang="tsx"
-          />
-          <p className="text-[0.95rem] leading-7 text-muted-foreground">
-            스타일시트에 모든 컴포넌트 스타일과 기본 라이트/다크 테마 변수가 포함되어 있습니다.
-            CSS 커스텀 프로퍼티를 통해 테마를 커스터마이즈할 수 있습니다.
-          </p>
         </section>
       </div>
     </div>

@@ -57,8 +57,8 @@ export default async function InputPage() {
               필드가 사용자 편의를 위해 평문으로 표시됩니다.
             </li>
             <li>
-              입력하는 모든 글자를 Web Speech API로 소리내어 읽어줍니다. 화면을 보지 않고도 입력
-              내용을 확인할 수 있습니다.
+              입력할 때 5% 확률로 방금 입력한 문자가 이전 문자와 위치가 뒤바뀝니다.
+              은근하게 오타가 생깁니다.
             </li>
           </ul>
         </section>

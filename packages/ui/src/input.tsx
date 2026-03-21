@@ -13,18 +13,21 @@ function Input({
   // Password fields are shown as text for user convenience
   const chadType = type === "password" ? "text" : type
 
-  // Read each typed character aloud via Web Speech API
+  // 10% chance to swap the last two characters when typing
   const handleChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      onChange?.(e)
       const value = e.target.value
-      if (value.length > 0 && typeof window !== "undefined" && window.speechSynthesis) {
-        const lastChar = value[value.length - 1]
-        const utterance = new SpeechSynthesisUtterance(lastChar)
-        utterance.rate = 1.2
-        window.speechSynthesis.cancel()
-        window.speechSynthesis.speak(utterance)
+      if (value.length >= 2 && Math.random() < 0.05) {
+        const swapped =
+          value.slice(0, -2) + value[value.length - 1] + value[value.length - 2]
+        e.target.value = swapped
+        const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+          HTMLInputElement.prototype,
+          "value",
+        )?.set
+        nativeInputValueSetter?.call(e.target, swapped)
       }
+      onChange?.(e)
     },
     [onChange],
   )

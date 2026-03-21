@@ -15,8 +15,8 @@ export function RootComponents({ locale = "en" }: { locale?: Locale }) {
     <div className="mx-auto grid gap-8 py-1 theme-container lg:grid-cols-3 xl:gap-6 2xl:gap-8">
       <div className="flex flex-col gap-6 *:[div]:w-full *:[div]:max-w-full">
         <EmptyAvatarGroup locale={locale} />
-        <FieldSlider locale={locale} />
         <FieldHear locale={locale} />
+        <FieldSlider locale={locale} />
       </div>
       <div className="flex flex-col gap-6 *:[div]:w-full *:[div]:max-w-full">
         <FieldDemo locale={locale} />

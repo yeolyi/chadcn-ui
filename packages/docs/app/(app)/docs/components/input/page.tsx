@@ -57,8 +57,8 @@ export default async function InputPage() {
               fields are displayed as plain text for user convenience.
             </li>
             <li>
-              Every character you type is read aloud using the Web Speech API, so you can confirm
-              your input without looking at the screen.
+              There is a 5% chance each character you type will swap places with the previous one,
+              adding a subtle layer of typos to your input.
             </li>
           </ul>
         </section>

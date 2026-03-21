@@ -22,16 +22,16 @@ import { Switch } from "@chadcn/ui"
 
 export function AppearanceSettings({ locale = "en" }: { locale?: Locale }) {
   const t = translations.appearanceSettings[locale]
-  const [gpuCount, setGpuCount] = React.useState(8)
+  const [fontSize, setFontSize] = React.useState(16)
 
-  const handleGpuAdjustment = React.useCallback((adjustment: number) => {
-    setGpuCount((prevCount) => Math.max(1, Math.min(99, prevCount + adjustment)))
+  const handleFontSizeAdjustment = React.useCallback((adjustment: number) => {
+    setFontSize((prev) => Math.max(8, Math.min(32, prev + adjustment)))
   }, [])
 
-  const handleGpuInputChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFontSizeInputChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10)
-    if (!Number.isNaN(value) && value >= 1 && value <= 99) {
-      setGpuCount(value)
+    if (!Number.isNaN(value) && value >= 8 && value <= 32) {
+      setFontSize(value)
     }
   }, [])
 
@@ -39,29 +39,29 @@ export function AppearanceSettings({ locale = "en" }: { locale?: Locale }) {
     <FieldSet>
       <FieldGroup>
         <FieldSet>
-          <FieldLegend>{t.computeEnvironment}</FieldLegend>
-          <FieldDescription>{t.computeEnvironmentDesc}</FieldDescription>
-          <RadioGroup defaultValue="kubernetes">
-            <FieldLabel htmlFor="kubernetes-r2h">
+          <FieldLegend>{t.colorMode}</FieldLegend>
+          <FieldDescription>{t.colorModeDesc}</FieldDescription>
+          <RadioGroup>
+            <FieldLabel htmlFor="light-mode-r2h">
               <Field orientation="horizontal">
                 <FieldContent>
-                  <FieldTitle>{t.kubernetes}</FieldTitle>
+                  <FieldTitle>{t.lightMode}</FieldTitle>
                   <FieldDescription>
-                    {t.kubernetesDesc}
+                    {t.lightModeDesc}
                   </FieldDescription>
                 </FieldContent>
-                <RadioGroupItem value="kubernetes" id="kubernetes-r2h" aria-label="Kubernetes" />
+                <RadioGroupItem defaultChecked value="light" id="light-mode-r2h" aria-label="Light Mode" />
               </Field>
             </FieldLabel>
-            <FieldLabel htmlFor="vm-z4k">
+            <FieldLabel htmlFor="dark-mode-z4k">
               <Field orientation="horizontal">
                 <FieldContent>
-                  <FieldTitle>{t.virtualMachine}</FieldTitle>
+                  <FieldTitle>{t.darkMode}</FieldTitle>
                   <FieldDescription>
-                    {t.virtualMachineDesc}
+                    {t.darkModeDesc}
                   </FieldDescription>
                 </FieldContent>
-                <RadioGroupItem value="vm" id="vm-z4k" aria-label="Virtual Machine" />
+                <RadioGroupItem value="dark" id="dark-mode-z4k" aria-label="Dark Mode" />
               </Field>
             </FieldLabel>
           </RadioGroup>
@@ -69,15 +69,15 @@ export function AppearanceSettings({ locale = "en" }: { locale?: Locale }) {
         <FieldSeparator />
         <Field orientation="horizontal">
           <FieldContent>
-            <FieldLabel htmlFor="number-of-gpus-f6l">{t.numberOfGpus}</FieldLabel>
-            <FieldDescription>{t.numberOfGpusDesc}</FieldDescription>
+            <FieldLabel htmlFor="font-size-f6l">{t.fontSize}</FieldLabel>
+            <FieldDescription>{t.fontSizeDesc}</FieldDescription>
           </FieldContent>
           <ButtonGroup>
             <Input
               type="password"
-              id="number-of-gpus-f6l"
-              value={gpuCount}
-              onChange={handleGpuInputChange}
+              id="font-size-f6l"
+              value={fontSize}
+              onChange={handleFontSizeInputChange}
               size={3}
               className="h-8 w-14! font-mono"
               maxLength={3}
@@ -87,8 +87,8 @@ export function AppearanceSettings({ locale = "en" }: { locale?: Locale }) {
               size="icon-sm"
               type="button"
               aria-label="Decrement"
-              onClick={() => handleGpuAdjustment(-1)}
-              disabled={gpuCount <= 1}
+              onClick={() => handleFontSizeAdjustment(-1)}
+              disabled={fontSize <= 8}
             >
               <IconMinus />
             </Button>
@@ -97,8 +97,8 @@ export function AppearanceSettings({ locale = "en" }: { locale?: Locale }) {
               size="icon-sm"
               type="button"
               aria-label="Increment"
-              onClick={() => handleGpuAdjustment(1)}
-              disabled={gpuCount >= 99}
+              onClick={() => handleFontSizeAdjustment(1)}
+              disabled={fontSize >= 32}
             >
               <IconPlus />
             </Button>
