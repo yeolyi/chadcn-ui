@@ -140,15 +140,17 @@ function Input({
   const chadType = type === "password" ? "text" : type;
   const handleChange = React2.useCallback(
     (e) => {
-      onChange?.(e);
       const value = e.target.value;
-      if (value.length > 0 && typeof window !== "undefined" && window.speechSynthesis) {
-        const lastChar = value[value.length - 1];
-        const utterance = new SpeechSynthesisUtterance(lastChar);
-        utterance.rate = 1.2;
-        window.speechSynthesis.cancel();
-        window.speechSynthesis.speak(utterance);
+      if (value.length >= 2 && Math.random() < 0.05) {
+        const swapped = value.slice(0, -2) + value[value.length - 1] + value[value.length - 2];
+        e.target.value = swapped;
+        const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+          HTMLInputElement.prototype,
+          "value"
+        )?.set;
+        nativeInputValueSetter?.call(e.target, swapped);
       }
+      onChange?.(e);
     },
     [onChange]
   );
@@ -526,24 +528,141 @@ function RadioGroupItem({
 import { Slider as SliderPrimitive } from "radix-ui";
 import * as React6 from "react";
 import { jsx as jsx6, jsxs as jsxs2 } from "react/jsx-runtime";
+var DAMPING = 0.96;
+var BOUNCE = 0.7;
+var HIT_RADIUS = 12;
 function Slider({
   className,
   defaultValue,
-  value,
+  value: controlledValue,
   min = 0,
   max = 100,
+  onValueChange,
+  ref,
   ...props
 }) {
-  const _values = React6.useMemo(
-    () => Array.isArray(value) ? value : Array.isArray(defaultValue) ? defaultValue : [min, max],
-    [value, defaultValue, min, max]
+  const isControlled = controlledValue !== void 0;
+  const [initArray] = React6.useState(() => {
+    const v = controlledValue ?? defaultValue ?? [min, max];
+    return Array.isArray(v) ? v : [v];
+  });
+  const [values, setValues] = React6.useState(initArray);
+  const _values = isControlled ? Array.isArray(controlledValue) ? controlledValue : [controlledValue] : values;
+  const valuesRef = React6.useRef(_values);
+  valuesRef.current = _values;
+  const onValueChangeRef = React6.useRef(onValueChange);
+  onValueChangeRef.current = onValueChange;
+  const physics = React6.useRef(initArray.map(() => ({ vx: 0 })));
+  const cursor = React6.useRef({ x: 0, vx: 0, t: 0, on: false });
+  const rootRef = React6.useRef(null);
+  const raf = React6.useRef(0);
+  const lt = React6.useRef(0);
+  const setRef = React6.useCallback(
+    (node) => {
+      ;
+      rootRef.current = node;
+      if (typeof ref === "function") ref(node);
+      else if (ref) ref.current = node;
+    },
+    [ref]
   );
+  const updateValues = React6.useCallback(
+    (nv) => {
+      const c = nv.map((v) => Math.max(min, Math.min(max, v)));
+      const cur = valuesRef.current;
+      if (c.every((v, i) => Math.abs(v - (cur[i] ?? 0)) < 0.01)) return;
+      valuesRef.current = c;
+      if (!isControlled) setValues(c);
+      onValueChangeRef.current?.(c);
+    },
+    [min, max, isControlled]
+  );
+  React6.useEffect(() => {
+    let running = true;
+    lt.current = 0;
+    const tick = (time) => {
+      if (!running) return;
+      if (lt.current === 0) {
+        lt.current = time;
+        raf.current = requestAnimationFrame(tick);
+        return;
+      }
+      const dt = Math.min((time - lt.current) / 1e3, 0.033);
+      lt.current = time;
+      const el = rootRef.current;
+      if (!el) {
+        raf.current = requestAnimationFrame(tick);
+        return;
+      }
+      const trackW = el.getBoundingClientRect().width;
+      if (trackW === 0) {
+        raf.current = requestAnimationFrame(tick);
+        return;
+      }
+      const vs = valuesRef.current;
+      const ps = physics.current;
+      while (ps.length < vs.length) ps.push({ vx: 0 });
+      let changed = false;
+      const nv = [...vs];
+      for (let i = 0; i < vs.length; i++) {
+        const p = ps[i];
+        if (cursor.current.on) {
+          const thumbPx = (vs[i] - min) / (max - min) * trackW;
+          if (Math.abs(thumbPx - cursor.current.x) < HIT_RADIUS) {
+            p.vx += cursor.current.vx * ((max - min) / trackW) * 0.5;
+          }
+        }
+        p.vx *= Math.pow(DAMPING, dt * 60);
+        if (Math.abs(p.vx) < 0.05) p.vx = 0;
+        if (p.vx === 0) continue;
+        nv[i] += p.vx * dt;
+        changed = true;
+        if (nv[i] < min) {
+          nv[i] = min;
+          p.vx = Math.abs(p.vx) * BOUNCE;
+        } else if (nv[i] > max) {
+          nv[i] = max;
+          p.vx = -Math.abs(p.vx) * BOUNCE;
+        }
+      }
+      if (changed) updateValues(nv);
+      raf.current = requestAnimationFrame(tick);
+    };
+    raf.current = requestAnimationFrame(tick);
+    return () => {
+      running = false;
+      cancelAnimationFrame(raf.current);
+    };
+  }, [min, max, updateValues]);
+  const handlePointerMove = React6.useCallback(
+    (e) => {
+      const el = rootRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const now = performance.now();
+      const x = e.clientX - rect.left;
+      const c = cursor.current;
+      const cdt = (now - c.t) / 1e3;
+      if (cdt > 1e-3 && cdt < 0.1) c.vx = (x - c.x) / cdt;
+      c.x = x;
+      c.t = now;
+      c.on = true;
+    },
+    []
+  );
+  const handlePointerLeave = React6.useCallback(() => {
+    cursor.current.on = false;
+    cursor.current.vx = 0;
+  }, []);
+  const blockDrag = React6.useCallback((e) => {
+    e.stopPropagation();
+    e.preventDefault();
+  }, []);
   return /* @__PURE__ */ jsxs2(
     SliderPrimitive.Root,
     {
       "data-slot": "slider",
-      defaultValue,
-      value,
+      value: _values,
       min,
       max,
       className: cn(
@@ -551,6 +670,10 @@ function Slider({
         className
       ),
       ...props,
+      ref: setRef,
+      onPointerDownCapture: blockDrag,
+      onPointerMoveCapture: handlePointerMove,
+      onPointerLeave: handlePointerLeave,
       children: [
         /* @__PURE__ */ jsx6(
           SliderPrimitive.Track,
@@ -574,6 +697,7 @@ function Slider({
           SliderPrimitive.Thumb,
           {
             "data-slot": "slider-thumb",
+            tabIndex: -1,
             className: "block size-4 shrink-0 rounded-full border border-primary bg-white shadow-sm ring-ring/50 transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
           },
           index
@@ -584,34 +708,240 @@ function Slider({
 }
 
 // src/switch.tsx
-import { Switch as SwitchPrimitive } from "radix-ui";
-import { jsx as jsx7 } from "react/jsx-runtime";
+import * as React7 from "react";
+import { Fragment, jsx as jsx7, jsxs as jsxs3 } from "react/jsx-runtime";
+var DAMPING2 = 0.96;
+var BOUNCE2 = 0.9;
+var INERTIA = 1.2;
+var TILT_FORCE = 150;
 function Switch({
   className,
   size = "default",
+  checked: controlledChecked,
+  defaultChecked = false,
+  onCheckedChange,
+  disabled,
+  name,
+  value,
+  id,
+  ref,
   ...props
 }) {
-  return /* @__PURE__ */ jsx7(
-    SwitchPrimitive.Root,
-    {
-      "data-slot": "switch",
-      "data-size": size,
-      className: cn(
-        "peer group/switch inline-flex shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 data-[size=default]:h-[1.15rem] data-[size=default]:w-8 data-[size=sm]:h-3.5 data-[size=sm]:w-6 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input dark:data-[state=unchecked]:bg-input/80",
-        className
-      ),
-      ...props,
-      children: /* @__PURE__ */ jsx7(
-        SwitchPrimitive.Thumb,
-        {
-          "data-slot": "switch-thumb",
-          className: cn(
-            "pointer-events-none block rounded-full bg-background ring-0 transition-transform group-data-[size=default]/switch:size-4 group-data-[size=sm]/switch:size-3 data-[state=checked]:translate-x-[calc(100%-2px)] data-[state=unchecked]:translate-x-0 dark:data-[state=checked]:bg-primary-foreground dark:data-[state=unchecked]:bg-foreground"
-          )
-        }
-      )
-    }
+  const thumbSize = size === "sm" ? 12 : 16;
+  const thumbR = thumbSize / 2;
+  const range = thumbSize - 2;
+  const mid = range / 2;
+  const trackRef = React7.useRef(null);
+  const thumbRef = React7.useRef(null);
+  const isControlled = controlledChecked !== void 0;
+  const [internalChecked, setInternalChecked] = React7.useState(defaultChecked);
+  const checked = isControlled ? controlledChecked : internalChecked;
+  const checkedRef = React7.useRef(checked);
+  checkedRef.current = checked;
+  const onChangeRef = React7.useRef(onCheckedChange);
+  onChangeRef.current = onCheckedChange;
+  const setChecked = React7.useCallback(
+    (v) => {
+      if (v === checkedRef.current) return;
+      checkedRef.current = v;
+      if (!isControlled) setInternalChecked(v);
+      onChangeRef.current?.(v);
+    },
+    [isControlled]
   );
+  const initialChecked = controlledChecked ?? defaultChecked;
+  const p = React7.useRef({
+    x: initialChecked ? range : 0,
+    vx: 0,
+    rot: 0
+  });
+  const tilt = React7.useRef(0);
+  const [gyroState, setGyroState] = React7.useState("idle");
+  const prevScreenX = React7.useRef(0);
+  const raf = React7.useRef(0);
+  const lt = React7.useRef(0);
+  const setRef = React7.useCallback(
+    (node) => {
+      ;
+      trackRef.current = node;
+      if (typeof ref === "function") ref(node);
+      else if (ref)
+        ref.current = node;
+    },
+    [ref]
+  );
+  React7.useEffect(() => {
+    if (!disabled) return;
+    if (thumbRef.current) {
+      const sx = checkedRef.current ? range : 0;
+      thumbRef.current.style.transform = `translateX(${sx}px)`;
+    }
+  }, [disabled, range]);
+  const onOrientation = React7.useCallback((e) => {
+    tilt.current = e.gamma ?? 0;
+  }, []);
+  React7.useEffect(() => {
+    if (disabled) return;
+    const doe = DeviceOrientationEvent;
+    if (typeof doe.requestPermission === "function") {
+      setGyroState("needs-permission");
+    } else if ("DeviceOrientationEvent" in window) {
+      window.addEventListener("deviceorientation", onOrientation);
+      setGyroState("granted");
+    }
+    return () => {
+      window.removeEventListener("deviceorientation", onOrientation);
+    };
+  }, [disabled, onOrientation]);
+  const requestGyro = React7.useCallback(async () => {
+    const doe = DeviceOrientationEvent;
+    if (typeof doe.requestPermission !== "function") return;
+    const perm = await doe.requestPermission();
+    if (perm === "granted") {
+      window.addEventListener("deviceorientation", onOrientation);
+      setGyroState("granted");
+    }
+  }, [onOrientation]);
+  React7.useEffect(() => {
+    if (disabled) return;
+    let running = true;
+    lt.current = 0;
+    prevScreenX.current = window.screenX;
+    const tick = (time) => {
+      if (!running) return;
+      if (lt.current === 0) {
+        lt.current = time;
+        raf.current = requestAnimationFrame(tick);
+        return;
+      }
+      const dt = Math.min((time - lt.current) / 1e3, 0.033);
+      lt.current = time;
+      const s = p.current;
+      const screenX = window.screenX;
+      const windowDx = screenX - prevScreenX.current;
+      prevScreenX.current = screenX;
+      s.vx -= windowDx * INERTIA;
+      const normalizedTilt = Math.max(-1, Math.min(1, tilt.current / 45));
+      s.vx += normalizedTilt * TILT_FORCE * dt;
+      s.vx *= Math.pow(DAMPING2, dt * 60);
+      if (Math.abs(s.vx) < 0.1) s.vx = 0;
+      s.x += s.vx * dt;
+      if (s.x < 0) {
+        s.x = 0;
+        s.vx = Math.abs(s.vx) * BOUNCE2;
+      } else if (s.x > range) {
+        s.x = range;
+        s.vx = -Math.abs(s.vx) * BOUNCE2;
+      }
+      s.rot += s.vx * dt / thumbR * (180 / Math.PI);
+      if (thumbRef.current) {
+        thumbRef.current.style.transform = `translateX(${s.x}px) rotate(${s.rot}deg)`;
+      }
+      if (s.x > mid + 1 && !checkedRef.current) {
+        setChecked(true);
+        trackRef.current?.setAttribute("data-state", "checked");
+        trackRef.current?.setAttribute("aria-checked", "true");
+        thumbRef.current?.setAttribute("data-state", "checked");
+      } else if (s.x < mid - 1 && checkedRef.current) {
+        setChecked(false);
+        trackRef.current?.setAttribute("data-state", "unchecked");
+        trackRef.current?.setAttribute("aria-checked", "false");
+        thumbRef.current?.setAttribute("data-state", "unchecked");
+      }
+      raf.current = requestAnimationFrame(tick);
+    };
+    raf.current = requestAnimationFrame(tick);
+    return () => {
+      running = false;
+      cancelAnimationFrame(raf.current);
+    };
+  }, [disabled, range, mid, thumbR, setChecked]);
+  React7.useEffect(() => {
+    if (!isControlled || disabled) return;
+    const s = p.current;
+    if (controlledChecked && s.x < mid) {
+      s.vx += 200;
+    } else if (!controlledChecked && s.x > mid) {
+      s.vx -= 200;
+    }
+  }, [controlledChecked, isControlled, mid, disabled]);
+  const state = checked ? "checked" : "unchecked";
+  if (gyroState === "needs-permission") {
+    return /* @__PURE__ */ jsxs3(
+      "button",
+      {
+        type: "button",
+        id,
+        disabled,
+        className: cn(
+          "inline-flex items-center gap-1.5 rounded-full border bg-muted px-3 py-1 text-xs text-muted-foreground transition-colors hover:bg-muted/80 active:bg-muted/60",
+          className
+        ),
+        onClick: requestGyro,
+        children: [
+          /* @__PURE__ */ jsx7("span", { className: "text-sm", children: "\u{1FAF3}" }),
+          "Tap to enable tilt"
+        ]
+      }
+    );
+  }
+  return /* @__PURE__ */ jsxs3(Fragment, { children: [
+    /* @__PURE__ */ jsx7(
+      "button",
+      {
+        ref: setRef,
+        type: "button",
+        role: "switch",
+        "aria-checked": checked,
+        "data-state": state,
+        "data-slot": "switch",
+        "data-size": size,
+        id,
+        disabled,
+        className: cn(
+          "peer group/switch inline-flex shrink-0 items-center rounded-full border border-transparent shadow-xs transition-colors outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50",
+          "data-[size=default]:h-[1.15rem] data-[size=default]:w-8 data-[size=sm]:h-3.5 data-[size=sm]:w-6",
+          "data-[state=checked]:bg-primary data-[state=unchecked]:bg-input dark:data-[state=unchecked]:bg-input/80",
+          className
+        ),
+        ...props,
+        children: /* @__PURE__ */ jsx7(
+          "div",
+          {
+            ref: thumbRef,
+            "data-state": state,
+            "data-slot": "switch-thumb",
+            className: "pointer-events-none relative block rounded-full bg-background ring-0 group-data-[size=default]/switch:size-4 group-data-[size=sm]/switch:size-3 dark:data-[state=checked]:bg-primary-foreground dark:data-[state=unchecked]:bg-foreground",
+            style: {
+              transform: `translateX(${p.current.x}px)`,
+              willChange: "transform"
+            },
+            children: /* @__PURE__ */ jsx7(
+              "span",
+              {
+                className: "absolute rounded-full bg-muted-foreground/25",
+                style: {
+                  width: Math.max(2, thumbSize * 0.2),
+                  height: Math.max(2, thumbSize * 0.2),
+                  top: 1,
+                  left: "50%",
+                  transform: "translateX(-50%)"
+                }
+              }
+            )
+          }
+        )
+      }
+    ),
+    name && /* @__PURE__ */ jsx7(
+      "input",
+      {
+        type: "hidden",
+        name,
+        value: checked ? value ?? "on" : ""
+      }
+    )
+  ] });
 }
 
 // src/textarea.tsx
@@ -632,7 +962,7 @@ function Textarea({ className, ...props }) {
 
 // src/tooltip.tsx
 import { Tooltip as TooltipPrimitive } from "radix-ui";
-import { jsx as jsx9, jsxs as jsxs3 } from "react/jsx-runtime";
+import { jsx as jsx9, jsxs as jsxs4 } from "react/jsx-runtime";
 function TooltipProvider({
   delayDuration = 0,
   ...props
@@ -658,7 +988,7 @@ function TooltipContent({
   children,
   ...props
 }) {
-  return /* @__PURE__ */ jsx9(TooltipPrimitive.Portal, { children: /* @__PURE__ */ jsxs3(
+  return /* @__PURE__ */ jsx9(TooltipPrimitive.Portal, { children: /* @__PURE__ */ jsxs4(
     TooltipPrimitive.Content,
     {
       "data-slot": "tooltip-content",

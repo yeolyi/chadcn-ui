@@ -36,9 +36,24 @@ export default async function SwitchPage() {
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
             동작 방식
           </h2>
-          <p className="text-[0.95rem] leading-7 text-muted-foreground">
-            이 컴포넌트는 현재 shadcn/ui 원본과 동일합니다. Chad 동작은 곧 추가될 예정입니다.
-          </p>
+          <ul className="list-disc space-y-2 pl-6 text-[0.95rem] leading-7 text-muted-foreground">
+            <li>
+              실수로 상태가 변경되는 것을 방지하기 위해 클릭 토글이 비활성화되어
+              있습니다. 대신 공간 인식 입력 방식을 사용합니다 — 데스크톱에서는
+              브라우저 창 이동에 따른 관성으로 thumb가 반응하며, 의도적인 물리적
+              동작을 요구합니다.
+            </li>
+            <li>
+              모바일에서는 기기 자이로스코프를 활용합니다. 기기를 기울이면
+              thumb에 중력이 적용되어, 실제 토글 스위치를 모방한 직관적인
+              인터랙션을 제공합니다.
+            </li>
+            <li>
+              thumb가 가장자리에서 물리적으로 튕기며, 중간점을 넘어야만
+              상태가 변경됩니다. 히스테리시스가 적용되어 모호한 위치에서의
+              깜빡임 없이 안정적인 토글 동작을 보장합니다.
+            </li>
+          </ul>
         </section>
 
         <section className="space-y-4">

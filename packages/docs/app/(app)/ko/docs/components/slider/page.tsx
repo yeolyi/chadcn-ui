@@ -41,9 +41,21 @@ export default async function SliderPage() {
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
             동작 방식
           </h2>
-          <p className="text-[0.95rem] leading-7 text-muted-foreground">
-            이 컴포넌트는 현재 shadcn/ui 원본과 동일합니다. Chad 동작은 곧 추가될 예정입니다.
-          </p>
+          <ul className="list-disc space-y-2 pl-6 text-[0.95rem] leading-7 text-muted-foreground">
+            <li>
+              부정확한 값 선택을 방지하기 위해 클릭 드래그가 비활성화되어
+              있습니다. 대신 커서 충돌 방식으로 동작합니다 — 커서를 thumb에
+              스치면 자연스럽게 속도가 전달됩니다.
+            </li>
+            <li>
+              thumb에 관성이 적용되어 있으며 min/max 경계에서 튕겨, 허용
+              범위에 대한 명확한 촉각적 피드백을 제공합니다.
+            </li>
+            <li>
+              키보드 사용자가 실수로 값을 변경하는 것을 방지하기 위해 탭
+              포커스가 제거되어, 복잡한 레이아웃에서 폼 무결성을 보호합니다.
+            </li>
+          </ul>
         </section>
 
         <section className="space-y-4">

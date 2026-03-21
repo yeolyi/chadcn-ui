@@ -36,10 +36,30 @@ export default async function SwitchPage() {
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
             How it works
           </h2>
-          <p className="text-[0.95rem] leading-7 text-muted-foreground">
-            This component is currently identical to the shadcn/ui original. Chad behavior coming
-            soon.
-          </p>
+          <ul className="list-disc space-y-2 pl-6 text-[0.95rem] leading-7 text-muted-foreground">
+            <li>
+              Click-to-toggle is disabled to prevent accidental state changes.
+              Instead, the switch uses spatial-aware input — on desktop, the
+              thumb responds to browser window movement via inertia, requiring
+              deliberate physical action.
+            </li>
+            <li>
+              On mobile, the switch leverages the device gyroscope. Tilting
+              your device applies gravity to the thumb, creating an intuitive
+              and accessible interaction that mirrors real-world toggle
+              switches.
+            </li>
+            <li>
+              The thumb bounces off the edges with realistic physics, providing
+              clear visual feedback about the toggle boundaries and preventing
+              unintended rapid state changes.
+            </li>
+            <li>
+              State only changes when the thumb crosses the midpoint with
+              hysteresis, eliminating flickering from ambiguous positions and
+              ensuring reliable toggle behavior.
+            </li>
+          </ul>
         </section>
 
         <section className="space-y-4">

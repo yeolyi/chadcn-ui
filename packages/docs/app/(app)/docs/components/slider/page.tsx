@@ -41,10 +41,22 @@ export default async function SliderPage() {
           <h2 className="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
             How it works
           </h2>
-          <p className="text-[0.95rem] leading-7 text-muted-foreground">
-            This component is currently identical to the shadcn/ui original. Chad behavior coming
-            soon.
-          </p>
+          <ul className="list-disc space-y-2 pl-6 text-[0.95rem] leading-7 text-muted-foreground">
+            <li>
+              Click and drag is disabled to prevent imprecise value selections.
+              Instead, the thumb responds to cursor collision — swipe your
+              cursor through it and it picks up your velocity naturally.
+            </li>
+            <li>
+              The thumb has built-in momentum and bounces off min/max
+              boundaries, providing clear haptic-like feedback about the
+              allowed range.
+            </li>
+            <li>
+              Tab focus is removed to prevent keyboard users from accidentally
+              changing values, protecting form integrity in complex layouts.
+            </li>
+          </ul>
         </section>
 
         <section className="space-y-4">

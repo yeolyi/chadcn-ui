@@ -7,22 +7,21 @@ import { type Locale, translations } from "./translations"
 
 export function FieldSlider({ locale = "en" }: { locale?: Locale }) {
   const t = translations.fieldSlider[locale]
-  const [value, setValue] = useState([200, 800])
+  const [value, setValue] = useState([50])
   return (
     <div className="w-full max-w-md">
       <Field>
         <FieldTitle>{t.title}</FieldTitle>
         <FieldDescription>
-          {t.description} ($
-          <span className="font-medium tabular-nums">{value[0]}</span> -{" "}
-          <span className="font-medium tabular-nums">{value[1]}</span>).
+          {t.description} (
+          <span className="font-medium tabular-nums">{Math.round(value[0])}</span>%).
         </FieldDescription>
         <Slider
           value={value}
           onValueChange={setValue}
-          max={1000}
+          max={100}
           min={0}
-          step={10}
+          step={1}
           className="mt-2 w-full"
           aria-label={t.title}
         />

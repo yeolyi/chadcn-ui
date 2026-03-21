@@ -2,7 +2,7 @@ import * as react_jsx_runtime from 'react/jsx-runtime';
 import * as class_variance_authority_types from 'class-variance-authority/types';
 import { VariantProps } from 'class-variance-authority';
 import * as React from 'react';
-import { Select as Select$1, Checkbox as Checkbox$1, Slider as Slider$1, Switch as Switch$1, Tooltip as Tooltip$1 } from 'radix-ui';
+import { Select as Select$1, Checkbox as Checkbox$1, Slider as Slider$1, Tooltip as Tooltip$1 } from 'radix-ui';
 
 declare const buttonVariants: (props?: ({
     variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined;
@@ -34,9 +34,12 @@ declare function RadioGroup({ className, disabled, children, ...props }: React.C
 }): react_jsx_runtime.JSX.Element;
 declare function RadioGroupItem({ className, disabled, ...props }: React.ComponentProps<typeof Checkbox$1.Root>): react_jsx_runtime.JSX.Element;
 
-declare function Slider({ className, defaultValue, value, min, max, ...props }: React.ComponentProps<typeof Slider$1.Root>): react_jsx_runtime.JSX.Element;
+declare function Slider({ className, defaultValue, value: controlledValue, min, max, onValueChange, ref, ...props }: React.ComponentProps<typeof Slider$1.Root>): react_jsx_runtime.JSX.Element;
 
-declare function Switch({ className, size, ...props }: React.ComponentProps<typeof Switch$1.Root> & {
+declare function Switch({ className, size, checked: controlledChecked, defaultChecked, onCheckedChange, disabled, name, value, id, ref, ...props }: Omit<React.ComponentProps<"button">, "checked" | "defaultChecked"> & {
+    checked?: boolean;
+    defaultChecked?: boolean;
+    onCheckedChange?: (checked: boolean) => void;
     size?: "sm" | "default";
 }): react_jsx_runtime.JSX.Element;
 
