@@ -24,7 +24,7 @@ export default async function SwitchPage() {
         <ExamplePreview
           code={
             <CodeBlock
-              code={`import { Switch } from "@chadcn/ui"\nimport { Label } from "@/components/ui/label"\n\nexport function SwitchDemo() {\n  return (\n    <div className="flex items-center gap-2">\n      <Switch id="airplane-mode" />\n      <Label htmlFor="airplane-mode">Airplane Mode</Label>\n    </div>\n  )\n}`}
+              code={`import { Switch } from "@chadcn/ui"\nimport { Label } from "@/components/ui/label"\nimport { useTheme } from "next-themes"\n\nexport function SwitchDemo() {\n  const { setTheme, resolvedTheme } = useTheme()\n  const isDark = resolvedTheme === "dark"\n\n  return (\n    <div className="flex items-center gap-2">\n      <Switch\n        id="dark-mode"\n        checked={isDark}\n        onCheckedChange={(checked) =>\n          setTheme(checked ? "dark" : "light")\n        }\n      />\n      <Label htmlFor="dark-mode">Dark Mode</Label>\n    </div>\n  )\n}`}
               lang="tsx"
             />
           }
