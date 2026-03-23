@@ -30,7 +30,7 @@ export default async function SliderPage() {
         <ExamplePreview
           code={
             <CodeBlock
-              code={`import { Slider } from "@chadcn/ui"\n\nexport function SliderDemo() {\n  return (\n    <div className="w-full max-w-sm">\n      <Slider defaultValue={[33]} max={100} step={1} />\n    </div>\n  )\n}`}
+              code={`import { Slider } from "@chadcn/ui"\nimport { useState } from "react"\n\nexport function SliderDemo() {\n  const [value, setValue] = useState([33])\n  return (\n    <div className="w-full max-w-sm space-y-2">\n      <div className="flex items-center justify-between">\n        <label className="text-sm font-medium">Volume</label>\n        <span className="text-sm tabular-nums text-muted-foreground">\n          {Math.round(value[0])}%\n        </span>\n      </div>\n      <Slider value={value} onValueChange={setValue} max={100} step={1} />\n    </div>\n  )\n}`}
               lang="tsx"
             />
           }

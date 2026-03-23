@@ -110,7 +110,7 @@ export function AppearanceSettings({ locale = "en" }: { locale?: Locale }) {
             <FieldLabel htmlFor="tinting">{t.wallpaperTinting}</FieldLabel>
             <FieldDescription>{t.wallpaperTintingDesc}</FieldDescription>
           </FieldContent>
-          <Switch id="tinting" defaultChecked />
+          <Switch id="tinting" defaultChecked gyroPrompt={locale === "ko" ? "탭하여 스위치 활성화" : undefined} />
         </Field>
       </FieldGroup>
     </FieldSet>

@@ -36,11 +36,12 @@ declare function RadioGroupItem({ className, disabled, ...props }: React.Compone
 
 declare function Slider({ className, defaultValue, value: controlledValue, min, max, onValueChange, ref, ...props }: React.ComponentProps<typeof Slider$1.Root>): react_jsx_runtime.JSX.Element;
 
-declare function Switch({ className, size, checked: controlledChecked, defaultChecked, onCheckedChange, disabled, name, value, id, ref, ...props }: Omit<React.ComponentProps<"button">, "checked" | "defaultChecked"> & {
+declare function Switch({ className, size, checked: controlledChecked, defaultChecked, onCheckedChange, disabled, name, value, id, ref, gyroPrompt, ...props }: Omit<React.ComponentProps<"button">, "checked" | "defaultChecked"> & {
     checked?: boolean;
     defaultChecked?: boolean;
     onCheckedChange?: (checked: boolean) => void;
     size?: "sm" | "default";
+    gyroPrompt?: string;
 }): react_jsx_runtime.JSX.Element;
 
 declare function Textarea({ className, ...props }: React.ComponentProps<"textarea">): react_jsx_runtime.JSX.Element;

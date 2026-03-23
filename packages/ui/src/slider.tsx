@@ -5,10 +5,11 @@ import * as React from "react"
 
 import { cn } from "./lib/utils"
 
-// --- Physics constants ---
 const DAMPING = 0.96
 const BOUNCE = 0.7
-const HIT_RADIUS = 12
+const HIT_X = 14
+const HIT_Y = 30
+const PUSH = 800
 
 function Slider({
   className,
@@ -20,7 +21,6 @@ function Slider({
   ref,
   ...props
 }: React.ComponentProps<typeof SliderPrimitive.Root>) {
-  // --- Value management (take over from Radix for physics) ---
   const isControlled = controlledValue !== undefined
   const [initArray] = React.useState(() => {
     const v = controlledValue ?? defaultValue ?? [min, max]
@@ -34,23 +34,21 @@ function Slider({
     : values
   const valuesRef = React.useRef(_values)
   valuesRef.current = _values
+  const onChangeRef = React.useRef(onValueChange)
+  onChangeRef.current = onValueChange
 
-  const onValueChangeRef = React.useRef(onValueChange)
-  onValueChangeRef.current = onValueChange
-
-  // --- Physics state per thumb ---
   const physics = React.useRef(initArray.map(() => ({ vx: 0 })))
-  const cursor = React.useRef({ x: 0, vx: 0, t: 0, on: false })
+  const cursor = React.useRef({ x: 0, y: 0, vx: 0, t: 0, on: false })
   const rootRef = React.useRef<HTMLElement>(null)
   const raf = React.useRef(0)
   const lt = React.useRef(0)
 
-  // --- Ref forwarding ---
   const setRef = React.useCallback(
     (node: HTMLElement | null) => {
       ;(rootRef as React.MutableRefObject<HTMLElement | null>).current = node
       if (typeof ref === "function") ref(node as never)
-      else if (ref) (ref as React.MutableRefObject<HTMLElement | null>).current = node
+      else if (ref)
+        (ref as React.MutableRefObject<HTMLElement | null>).current = node
     },
     [ref]
   )
@@ -62,12 +60,12 @@ function Slider({
       if (c.every((v, i) => Math.abs(v - (cur[i] ?? 0)) < 0.01)) return
       valuesRef.current = c
       if (!isControlled) setValues(c)
-      onValueChangeRef.current?.(c)
+      onChangeRef.current?.(c)
     },
     [min, max, isControlled]
   )
 
-  // --- Physics loop ---
+  // Physics loop
   React.useEffect(() => {
     let running = true
     lt.current = 0
@@ -79,7 +77,6 @@ function Slider({
         raf.current = requestAnimationFrame(tick)
         return
       }
-
       const dt = Math.min((time - lt.current) / 1000, 0.033)
       lt.current = time
 
@@ -97,6 +94,7 @@ function Slider({
       const vs = valuesRef.current
       const ps = physics.current
       while (ps.length < vs.length) ps.push({ vx: 0 })
+      const valPerPx = (max - min) / trackW
 
       let changed = false
       const nv = [...vs]
@@ -104,24 +102,36 @@ function Slider({
       for (let i = 0; i < vs.length; i++) {
         const p = ps[i]
 
-        // Cursor collision: transfer cursor velocity to thumb
+        // Soft push (pre-integration)
         if (cursor.current.on) {
           const thumbPx = ((vs[i] - min) / (max - min)) * trackW
-          if (Math.abs(thumbPx - cursor.current.x) < HIT_RADIUS) {
-            p.vx += cursor.current.vx * ((max - min) / trackW) * 0.5
+          const dx = thumbPx - cursor.current.x
+          if (Math.abs(dx) < HIT_X) {
+            const dir = dx >= 0 ? 1 : -1
+            p.vx += dir * (HIT_X - Math.abs(dx)) * PUSH * valPerPx * dt
+            p.vx += cursor.current.vx * valPerPx * 0.3
           }
         }
 
-        // Damping
         p.vx *= Math.pow(DAMPING, dt * 60)
         if (Math.abs(p.vx) < 0.05) p.vx = 0
         if (p.vx === 0) continue
 
-        // Integrate
         nv[i] += p.vx * dt
         changed = true
 
-        // Bounce off boundaries
+        // Hard collision (post-integration): prevent tunneling
+        if (cursor.current.on) {
+          const thumbPx = ((nv[i] - min) / (max - min)) * trackW
+          const dx = thumbPx - cursor.current.x
+          if (Math.abs(dx) < HIT_X) {
+            const dir = dx >= 0 ? 1 : -1
+            nv[i] = min + (cursor.current.x + dir * HIT_X) * valPerPx
+            if (dir * p.vx < 0) p.vx *= -BOUNCE
+          }
+        }
+
+        // Bounce off min/max
         if (nv[i] < min) {
           nv[i] = min
           p.vx = Math.abs(p.vx) * BOUNCE
@@ -142,35 +152,6 @@ function Slider({
     }
   }, [min, max, updateValues])
 
-  // --- Pointer tracking (capture phase to not interfere with Radix drag) ---
-  const handlePointerMove = React.useCallback(
-    (e: React.PointerEvent) => {
-      const el = rootRef.current
-      if (!el) return
-      const rect = el.getBoundingClientRect()
-      const now = performance.now()
-      const x = e.clientX - rect.left
-      const c = cursor.current
-      const cdt = (now - c.t) / 1000
-      if (cdt > 0.001 && cdt < 0.1) c.vx = (x - c.x) / cdt
-      c.x = x
-      c.t = now
-      c.on = true
-    },
-    []
-  )
-
-  const handlePointerLeave = React.useCallback(() => {
-    cursor.current.on = false
-    cursor.current.vx = 0
-  }, [])
-
-  // Block Radix drag: stop pointerdown from reaching Radix internals
-  const blockDrag = React.useCallback((e: React.PointerEvent) => {
-    e.stopPropagation()
-    e.preventDefault()
-  }, [])
-
   return (
     <SliderPrimitive.Root
       data-slot="slider"
@@ -183,9 +164,34 @@ function Slider({
       )}
       {...props}
       ref={setRef}
-      onPointerDownCapture={blockDrag}
-      onPointerMoveCapture={handlePointerMove}
-      onPointerLeave={handlePointerLeave}
+      onPointerDownCapture={(e) => e.stopPropagation()}
+      onPointerMoveCapture={(e: React.PointerEvent) => {
+        const el = rootRef.current
+        if (!el) return
+        const rect = el.getBoundingClientRect()
+        const now = performance.now()
+        const x = e.clientX - rect.left
+        const y = e.clientY - (rect.top + rect.height / 2)
+        const c = cursor.current
+        const cdt = (now - c.t) / 1000
+        if (cdt > 0.001 && cdt < 0.1) c.vx = (x - c.x) / cdt
+        c.x = x
+        c.y = y
+        c.t = now
+        c.on = Math.abs(y) < HIT_Y
+      }}
+      onPointerLeave={() => {
+        cursor.current.on = false
+        cursor.current.vx = 0
+      }}
+      onPointerUp={() => {
+        cursor.current.on = false
+        cursor.current.vx = 0
+      }}
+      onPointerCancel={() => {
+        cursor.current.on = false
+        cursor.current.vx = 0
+      }}
     >
       <SliderPrimitive.Track
         data-slot="slider-track"

@@ -4,11 +4,10 @@ import * as React from "react"
 
 import { cn } from "./lib/utils"
 
-// --- 1D physics constants ---
 const DAMPING = 0.96
 const BOUNCE = 0.9
-const INERTIA = 1.2 // window movement → opposite force on thumb
-const TILT_FORCE = 150 // gyro tilt → gravity-like force on thumb
+const INERTIA = 1.2
+const TILT_FORCE = 150
 
 function Switch({
   className,
@@ -21,28 +20,29 @@ function Switch({
   value,
   id,
   ref,
+  gyroPrompt = "Tap to use switch",
   ...props
 }: Omit<React.ComponentProps<"button">, "checked" | "defaultChecked"> & {
   checked?: boolean
   defaultChecked?: boolean
   onCheckedChange?: (checked: boolean) => void
   size?: "sm" | "default"
+  gyroPrompt?: string
 }) {
   const thumbSize = size === "sm" ? 12 : 16
   const thumbR = thumbSize / 2
-  const range = thumbSize - 2 // matches original calc(100% - 2px)
+  const range = thumbSize - 2
   const mid = range / 2
 
   const trackRef = React.useRef<HTMLButtonElement>(null)
   const thumbRef = React.useRef<HTMLDivElement>(null)
 
-  // --- Checked state ---
+  // Checked state
   const isControlled = controlledChecked !== undefined
   const [internalChecked, setInternalChecked] = React.useState(defaultChecked)
   const checked = isControlled ? controlledChecked! : internalChecked
   const checkedRef = React.useRef(checked)
   checkedRef.current = checked
-
   const onChangeRef = React.useRef(onCheckedChange)
   onChangeRef.current = onCheckedChange
 
@@ -56,15 +56,10 @@ function Switch({
     [isControlled]
   )
 
-  // --- Physics state (1D: x position only) ---
+  // Physics state
   const initialChecked = controlledChecked ?? defaultChecked
-  const p = React.useRef({
-    x: initialChecked ? range : 0,
-    vx: 0,
-    rot: 0,
-  })
-
-  const tilt = React.useRef(0) // gamma from DeviceOrientation (-90 to 90)
+  const p = React.useRef({ x: initialChecked ? range : 0, vx: 0 })
+  const tilt = React.useRef(0)
   const [gyroState, setGyroState] = React.useState<
     "idle" | "needs-permission" | "granted"
   >("idle")
@@ -72,7 +67,7 @@ function Switch({
   const raf = React.useRef(0)
   const lt = React.useRef(0)
 
-  // --- Ref forwarding ---
+  // Ref forwarding
   const setRef = React.useCallback(
     (node: HTMLButtonElement | null) => {
       ;(trackRef as React.MutableRefObject<HTMLButtonElement | null>).current =
@@ -84,16 +79,7 @@ function Switch({
     [ref]
   )
 
-  // --- Disabled: static position ---
-  React.useEffect(() => {
-    if (!disabled) return
-    if (thumbRef.current) {
-      const sx = checkedRef.current ? range : 0
-      thumbRef.current.style.transform = `translateX(${sx}px)`
-    }
-  }, [disabled, range])
-
-  // --- Gyroscope (mobile tilt) ---
+  // Gyroscope
   const onOrientation = React.useCallback((e: DeviceOrientationEvent) => {
     tilt.current = e.gamma ?? 0
   }, [])
@@ -106,17 +92,15 @@ function Switch({
     }
 
     if (typeof doe.requestPermission === "function") {
-      // iOS: probe for existing permission by listening briefly
+      // iOS: probe for existing permission
       const probe = (e: DeviceOrientationEvent) => {
         if (e.gamma !== null) {
-          // Permission already granted from a previous session
           window.addEventListener("deviceorientation", onOrientation)
           setGyroState("granted")
         }
         window.removeEventListener("deviceorientation", probe)
       }
       window.addEventListener("deviceorientation", probe)
-      // If no event within 500ms, permission is needed
       const timer = setTimeout(() => {
         window.removeEventListener("deviceorientation", probe)
         setGyroState((s) => (s === "idle" ? "needs-permission" : s))
@@ -127,17 +111,13 @@ function Switch({
         window.removeEventListener("deviceorientation", onOrientation)
       }
     } else if ("DeviceOrientationEvent" in window) {
-      // Android / non-iOS: listen directly
       window.addEventListener("deviceorientation", onOrientation)
       setGyroState("granted")
     }
 
-    return () => {
-      window.removeEventListener("deviceorientation", onOrientation)
-    }
+    return () => window.removeEventListener("deviceorientation", onOrientation)
   }, [disabled, onOrientation])
 
-  // Called from a user tap (satisfies iOS gesture requirement)
   const requestGyro = React.useCallback(async () => {
     const doe = DeviceOrientationEvent as typeof DeviceOrientationEvent & {
       requestPermission?: () => Promise<string>
@@ -150,12 +130,17 @@ function Switch({
     }
   }, [onOrientation])
 
-  // --- 1D Physics loop ---
+  // Disabled: static position
+  React.useEffect(() => {
+    if (!disabled || !thumbRef.current) return
+    thumbRef.current.style.transform = `translateX(${checkedRef.current ? range : 0}px)`
+  }, [disabled, range])
+
+  // Physics loop
   React.useEffect(() => {
     if (disabled) return
     let running = true
     lt.current = 0
-
     prevScreenX.current = window.screenX
 
     const tick = (time: number) => {
@@ -165,31 +150,24 @@ function Switch({
         raf.current = requestAnimationFrame(tick)
         return
       }
-
       const dt = Math.min((time - lt.current) / 1000, 0.033)
       lt.current = time
-
       const s = p.current
 
-      // Window inertia (desktop): window moves right → marble slides left
+      // Window inertia (desktop)
       const screenX = window.screenX
-      const windowDx = screenX - prevScreenX.current
+      s.vx -= (screenX - prevScreenX.current) * INERTIA
       prevScreenX.current = screenX
-      s.vx -= windowDx * INERTIA
 
-      // Gyro tilt (mobile): tilt right → marble rolls right
-      // gamma is in degrees; normalize to -1..1 range (clamp at ±45°)
-      const normalizedTilt = Math.max(-1, Math.min(1, tilt.current / 45))
-      s.vx += normalizedTilt * TILT_FORCE * dt
+      // Gyro tilt (mobile)
+      s.vx += Math.max(-1, Math.min(1, tilt.current / 45)) * TILT_FORCE * dt
 
-      // Damping (frame-rate independent)
+      // Damping
       s.vx *= Math.pow(DAMPING, dt * 60)
       if (Math.abs(s.vx) < 0.1) s.vx = 0
 
-      // Integrate
+      // Integrate + bounce
       s.x += s.vx * dt
-
-      // Bounce off boundaries
       if (s.x < 0) {
         s.x = 0
         s.vx = Math.abs(s.vx) * BOUNCE
@@ -198,15 +176,12 @@ function Switch({
         s.vx = -Math.abs(s.vx) * BOUNCE
       }
 
-      // Rolling rotation
-      s.rot += ((s.vx * dt) / thumbR) * (180 / Math.PI)
-
-      // Update DOM directly (no re-render)
+      // Update DOM
       if (thumbRef.current) {
-        thumbRef.current.style.transform = `translateX(${s.x}px) rotate(${s.rot}deg)`
+        thumbRef.current.style.transform = `translateX(${s.x}px)`
       }
 
-      // Checked state with hysteresis (±1px dead zone around mid)
+      // Update state
       if (s.x > mid + 1 && !checkedRef.current) {
         setChecked(true)
         trackRef.current?.setAttribute("data-state", "checked")
@@ -227,9 +202,9 @@ function Switch({
       running = false
       cancelAnimationFrame(raf.current)
     }
-  }, [disabled, range, mid, thumbR, setChecked])
+  }, [disabled, range, mid, setChecked])
 
-  // --- Controlled checked changed externally → snap or impulse ---
+  // Controlled value changed externally
   const hasSettled = React.useRef(false)
   React.useEffect(() => {
     if (!isControlled || disabled) return
@@ -239,22 +214,18 @@ function Switch({
     if (!wrongSide) return
 
     if (!hasSettled.current) {
-      // First sync (e.g. hydration): snap position instantly, no animation
       s.x = controlledChecked ? range : 0
       s.vx = 0
       hasSettled.current = true
-      if (thumbRef.current) {
+      if (thumbRef.current)
         thumbRef.current.style.transform = `translateX(${s.x}px)`
-      }
     } else {
-      // Subsequent changes: give impulse
       s.vx += controlledChecked ? 200 : -200
     }
   }, [controlledChecked, isControlled, mid, range, disabled])
 
   const state = checked ? "checked" : "unchecked"
 
-  // iOS: show text prompt until gyro permission is granted
   if (gyroState === "needs-permission") {
     return (
       <button
@@ -267,10 +238,7 @@ function Switch({
         )}
         onClick={requestGyro}
       >
-        {typeof navigator !== "undefined" &&
-        /^ko\b/.test(navigator.language)
-          ? "탭하여 스위치 활성화"
-          : "Tap to use switch"}
+        {gyroPrompt}
       </button>
     )
   }
@@ -299,24 +267,12 @@ function Switch({
           ref={thumbRef}
           data-state={state}
           data-slot="switch-thumb"
-          className="pointer-events-none relative block rounded-full bg-background ring-0 group-data-[size=default]/switch:size-4 group-data-[size=sm]/switch:size-3 dark:data-[state=checked]:bg-primary-foreground dark:data-[state=unchecked]:bg-foreground"
+          className="pointer-events-none block rounded-full bg-background ring-0 group-data-[size=default]/switch:size-4 group-data-[size=sm]/switch:size-3 dark:data-[state=checked]:bg-primary-foreground dark:data-[state=unchecked]:bg-foreground"
           style={{
             transform: `translateX(${p.current.x}px)`,
             willChange: "transform",
           }}
-        >
-          {/* Rolling indicator dot */}
-          <span
-            className="absolute rounded-full bg-muted-foreground/25"
-            style={{
-              width: Math.max(2, thumbSize * 0.2),
-              height: Math.max(2, thumbSize * 0.2),
-              top: 1,
-              left: "50%",
-              transform: "translateX(-50%)",
-            }}
-          />
-        </div>
+        />
       </button>
       {name && (
         <input

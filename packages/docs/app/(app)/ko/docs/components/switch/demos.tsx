@@ -24,6 +24,7 @@ export function SwitchMainDemo() {
         id="dark-mode"
         checked={isDark}
         onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
+        gyroPrompt="탭하여 스위치 활성화"
       />
       <Label htmlFor="dark-mode">다크 모드</Label>
     </div>

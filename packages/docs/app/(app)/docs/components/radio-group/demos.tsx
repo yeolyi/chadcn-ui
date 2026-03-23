@@ -5,20 +5,27 @@ import { Label } from "@/components/ui/label"
 
 export function RadioGroupMainDemo() {
   return (
-    <RadioGroup defaultValue="comfortable">
-      <div className="flex items-center gap-2">
-        <RadioGroupItem value="default" id="r1" />
-        <Label htmlFor="r1">Default</Label>
-      </div>
-      <div className="flex items-center gap-2">
-        <RadioGroupItem value="comfortable" id="r2" />
-        <Label htmlFor="r2">Comfortable</Label>
-      </div>
-      <div className="flex items-center gap-2">
-        <RadioGroupItem value="compact" id="r3" />
-        <Label htmlFor="r3">Compact</Label>
-      </div>
-    </RadioGroup>
+    <fieldset className="space-y-3">
+      <legend className="text-sm font-medium">Blood Type</legend>
+      <RadioGroup defaultValue="a">
+        <div className="flex items-center gap-2">
+          <RadioGroupItem value="a" id="r1" />
+          <Label htmlFor="r1">Type A</Label>
+        </div>
+        <div className="flex items-center gap-2">
+          <RadioGroupItem value="b" id="r2" />
+          <Label htmlFor="r2">Type B</Label>
+        </div>
+        <div className="flex items-center gap-2">
+          <RadioGroupItem value="ab" id="r3" />
+          <Label htmlFor="r3">Type AB</Label>
+        </div>
+        <div className="flex items-center gap-2">
+          <RadioGroupItem value="o" id="r4" />
+          <Label htmlFor="r4">Type O</Label>
+        </div>
+      </RadioGroup>
+    </fieldset>
   )
 }
 

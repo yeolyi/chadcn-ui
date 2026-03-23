@@ -530,7 +530,9 @@ function RadioGroupItem({
 
 var DAMPING = 0.96;
 var BOUNCE = 0.7;
-var HIT_RADIUS = 12;
+var HIT_X = 14;
+var HIT_Y = 30;
+var PUSH = 800;
 function Slider({
   className,
   defaultValue,
@@ -550,10 +552,10 @@ function Slider({
   const _values = isControlled ? Array.isArray(controlledValue) ? controlledValue : [controlledValue] : values;
   const valuesRef = React6.useRef(_values);
   valuesRef.current = _values;
-  const onValueChangeRef = React6.useRef(onValueChange);
-  onValueChangeRef.current = onValueChange;
+  const onChangeRef = React6.useRef(onValueChange);
+  onChangeRef.current = onValueChange;
   const physics = React6.useRef(initArray.map(() => ({ vx: 0 })));
-  const cursor = React6.useRef({ x: 0, vx: 0, t: 0, on: false });
+  const cursor = React6.useRef({ x: 0, y: 0, vx: 0, t: 0, on: false });
   const rootRef = React6.useRef(null);
   const raf = React6.useRef(0);
   const lt = React6.useRef(0);
@@ -562,7 +564,8 @@ function Slider({
       ;
       rootRef.current = node;
       if (typeof ref === "function") ref(node);
-      else if (ref) ref.current = node;
+      else if (ref)
+        ref.current = node;
     },
     [ref]
   );
@@ -573,7 +576,7 @@ function Slider({
       if (c.every((v, i) => Math.abs(v - (_nullishCoalesce(cur[i], () => ( 0)))) < 0.01)) return;
       valuesRef.current = c;
       if (!isControlled) setValues(c);
-      _optionalChain([onValueChangeRef, 'access', _14 => _14.current, 'optionalCall', _15 => _15(c)]);
+      _optionalChain([onChangeRef, 'access', _14 => _14.current, 'optionalCall', _15 => _15(c)]);
     },
     [min, max, isControlled]
   );
@@ -602,14 +605,18 @@ function Slider({
       const vs = valuesRef.current;
       const ps = physics.current;
       while (ps.length < vs.length) ps.push({ vx: 0 });
+      const valPerPx = (max - min) / trackW;
       let changed = false;
       const nv = [...vs];
       for (let i = 0; i < vs.length; i++) {
         const p = ps[i];
         if (cursor.current.on) {
           const thumbPx = (vs[i] - min) / (max - min) * trackW;
-          if (Math.abs(thumbPx - cursor.current.x) < HIT_RADIUS) {
-            p.vx += cursor.current.vx * ((max - min) / trackW) * 0.5;
+          const dx = thumbPx - cursor.current.x;
+          if (Math.abs(dx) < HIT_X) {
+            const dir = dx >= 0 ? 1 : -1;
+            p.vx += dir * (HIT_X - Math.abs(dx)) * PUSH * valPerPx * dt;
+            p.vx += cursor.current.vx * valPerPx * 0.3;
           }
         }
         p.vx *= Math.pow(DAMPING, dt * 60);
@@ -617,6 +624,15 @@ function Slider({
         if (p.vx === 0) continue;
         nv[i] += p.vx * dt;
         changed = true;
+        if (cursor.current.on) {
+          const thumbPx = (nv[i] - min) / (max - min) * trackW;
+          const dx = thumbPx - cursor.current.x;
+          if (Math.abs(dx) < HIT_X) {
+            const dir = dx >= 0 ? 1 : -1;
+            nv[i] = min + (cursor.current.x + dir * HIT_X) * valPerPx;
+            if (dir * p.vx < 0) p.vx *= -BOUNCE;
+          }
+        }
         if (nv[i] < min) {
           nv[i] = min;
           p.vx = Math.abs(p.vx) * BOUNCE;
@@ -634,30 +650,6 @@ function Slider({
       cancelAnimationFrame(raf.current);
     };
   }, [min, max, updateValues]);
-  const handlePointerMove = React6.useCallback(
-    (e) => {
-      const el = rootRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const now = performance.now();
-      const x = e.clientX - rect.left;
-      const c = cursor.current;
-      const cdt = (now - c.t) / 1e3;
-      if (cdt > 1e-3 && cdt < 0.1) c.vx = (x - c.x) / cdt;
-      c.x = x;
-      c.t = now;
-      c.on = true;
-    },
-    []
-  );
-  const handlePointerLeave = React6.useCallback(() => {
-    cursor.current.on = false;
-    cursor.current.vx = 0;
-  }, []);
-  const blockDrag = React6.useCallback((e) => {
-    e.stopPropagation();
-    e.preventDefault();
-  }, []);
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     _radixui.Slider.Root,
     {
@@ -671,9 +663,34 @@ function Slider({
       ),
       ...props,
       ref: setRef,
-      onPointerDownCapture: blockDrag,
-      onPointerMoveCapture: handlePointerMove,
-      onPointerLeave: handlePointerLeave,
+      onPointerDownCapture: (e) => e.stopPropagation(),
+      onPointerMoveCapture: (e) => {
+        const el = rootRef.current;
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const now = performance.now();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - (rect.top + rect.height / 2);
+        const c = cursor.current;
+        const cdt = (now - c.t) / 1e3;
+        if (cdt > 1e-3 && cdt < 0.1) c.vx = (x - c.x) / cdt;
+        c.x = x;
+        c.y = y;
+        c.t = now;
+        c.on = Math.abs(y) < HIT_Y;
+      },
+      onPointerLeave: () => {
+        cursor.current.on = false;
+        cursor.current.vx = 0;
+      },
+      onPointerUp: () => {
+        cursor.current.on = false;
+        cursor.current.vx = 0;
+      },
+      onPointerCancel: () => {
+        cursor.current.on = false;
+        cursor.current.vx = 0;
+      },
       children: [
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           _radixui.Slider.Track,
@@ -725,6 +742,7 @@ function Switch({
   value,
   id,
   ref,
+  gyroPrompt = "Tap to use switch",
   ...props
 }) {
   const thumbSize = size === "sm" ? 12 : 16;
@@ -750,11 +768,7 @@ function Switch({
     [isControlled]
   );
   const initialChecked = _nullishCoalesce(controlledChecked, () => ( defaultChecked));
-  const p = React7.useRef({
-    x: initialChecked ? range : 0,
-    vx: 0,
-    rot: 0
-  });
+  const p = React7.useRef({ x: initialChecked ? range : 0, vx: 0 });
   const tilt = React7.useRef(0);
   const [gyroState, setGyroState] = React7.useState("idle");
   const prevScreenX = React7.useRef(0);
@@ -770,13 +784,6 @@ function Switch({
     },
     [ref]
   );
-  React7.useEffect(() => {
-    if (!disabled) return;
-    if (thumbRef.current) {
-      const sx = checkedRef.current ? range : 0;
-      thumbRef.current.style.transform = `translateX(${sx}px)`;
-    }
-  }, [disabled, range]);
   const onOrientation = React7.useCallback((e) => {
     tilt.current = _nullishCoalesce(e.gamma, () => ( 0));
   }, []);
@@ -805,9 +812,7 @@ function Switch({
       window.addEventListener("deviceorientation", onOrientation);
       setGyroState("granted");
     }
-    return () => {
-      window.removeEventListener("deviceorientation", onOrientation);
-    };
+    return () => window.removeEventListener("deviceorientation", onOrientation);
   }, [disabled, onOrientation]);
   const requestGyro = React7.useCallback(async () => {
     const doe = DeviceOrientationEvent;
@@ -818,6 +823,10 @@ function Switch({
       setGyroState("granted");
     }
   }, [onOrientation]);
+  React7.useEffect(() => {
+    if (!disabled || !thumbRef.current) return;
+    thumbRef.current.style.transform = `translateX(${checkedRef.current ? range : 0}px)`;
+  }, [disabled, range]);
   React7.useEffect(() => {
     if (disabled) return;
     let running = true;
@@ -834,11 +843,9 @@ function Switch({
       lt.current = time;
       const s = p.current;
       const screenX = window.screenX;
-      const windowDx = screenX - prevScreenX.current;
+      s.vx -= (screenX - prevScreenX.current) * INERTIA;
       prevScreenX.current = screenX;
-      s.vx -= windowDx * INERTIA;
-      const normalizedTilt = Math.max(-1, Math.min(1, tilt.current / 45));
-      s.vx += normalizedTilt * TILT_FORCE * dt;
+      s.vx += Math.max(-1, Math.min(1, tilt.current / 45)) * TILT_FORCE * dt;
       s.vx *= Math.pow(DAMPING2, dt * 60);
       if (Math.abs(s.vx) < 0.1) s.vx = 0;
       s.x += s.vx * dt;
@@ -849,9 +856,8 @@ function Switch({
         s.x = range;
         s.vx = -Math.abs(s.vx) * BOUNCE2;
       }
-      s.rot += s.vx * dt / thumbR * (180 / Math.PI);
       if (thumbRef.current) {
-        thumbRef.current.style.transform = `translateX(${s.x}px) rotate(${s.rot}deg)`;
+        thumbRef.current.style.transform = `translateX(${s.x}px)`;
       }
       if (s.x > mid + 1 && !checkedRef.current) {
         setChecked(true);
@@ -871,7 +877,7 @@ function Switch({
       running = false;
       cancelAnimationFrame(raf.current);
     };
-  }, [disabled, range, mid, thumbR, setChecked]);
+  }, [disabled, range, mid, setChecked]);
   const hasSettled = React7.useRef(false);
   React7.useEffect(() => {
     if (!isControlled || disabled) return;
@@ -882,9 +888,8 @@ function Switch({
       s.x = controlledChecked ? range : 0;
       s.vx = 0;
       hasSettled.current = true;
-      if (thumbRef.current) {
+      if (thumbRef.current)
         thumbRef.current.style.transform = `translateX(${s.x}px)`;
-      }
     } else {
       s.vx += controlledChecked ? 200 : -200;
     }
@@ -902,7 +907,7 @@ function Switch({
           className
         ),
         onClick: requestGyro,
-        children: typeof navigator !== "undefined" && /^ko\b/.test(navigator.language) ? "\uD0ED\uD558\uC5EC \uC2A4\uC704\uCE58 \uD65C\uC131\uD654" : "Tap to use switch"
+        children: gyroPrompt
       }
     );
   }
@@ -932,24 +937,11 @@ function Switch({
             ref: thumbRef,
             "data-state": state,
             "data-slot": "switch-thumb",
-            className: "pointer-events-none relative block rounded-full bg-background ring-0 group-data-[size=default]/switch:size-4 group-data-[size=sm]/switch:size-3 dark:data-[state=checked]:bg-primary-foreground dark:data-[state=unchecked]:bg-foreground",
+            className: "pointer-events-none block rounded-full bg-background ring-0 group-data-[size=default]/switch:size-4 group-data-[size=sm]/switch:size-3 dark:data-[state=checked]:bg-primary-foreground dark:data-[state=unchecked]:bg-foreground",
             style: {
               transform: `translateX(${p.current.x}px)`,
               willChange: "transform"
-            },
-            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-              "span",
-              {
-                className: "absolute rounded-full bg-muted-foreground/25",
-                style: {
-                  width: Math.max(2, thumbSize * 0.2),
-                  height: Math.max(2, thumbSize * 0.2),
-                  top: 1,
-                  left: "50%",
-                  transform: "translateX(-50%)"
-                }
-              }
-            )
+            }
           }
         )
       }
