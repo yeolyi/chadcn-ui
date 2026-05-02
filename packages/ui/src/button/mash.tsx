@@ -5,7 +5,7 @@ import * as React from "react"
 import { ButtonBase, type ButtonBaseProps, buttonVariants } from "./base"
 
 const REQUIRED_CLICKS = 15
-const DRAIN_MS = 4500
+const DRAIN_MS = 3750
 const STEP = 1 / REQUIRED_CLICKS
 
 export function Button({
