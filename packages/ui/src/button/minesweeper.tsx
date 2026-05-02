@@ -189,9 +189,14 @@ export function Button({
     <ButtonBase
       ref={setRefs}
       onClick={handleButtonClick}
+      onContextMenu={(e) => e.preventDefault()}
       style={{
         position: "relative",
         overflow: "hidden",
+        userSelect: "none",
+        WebkitUserSelect: "none",
+        WebkitTouchCallout: "none",
+        touchAction: "manipulation",
         ...style,
       }}
       {...props}
