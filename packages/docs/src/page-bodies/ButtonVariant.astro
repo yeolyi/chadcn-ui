@@ -233,12 +233,13 @@ const description = entry.data.tagline
         </h2>
         <InstallTabs
           client:load
-          pkg={`@chadcn/ui/button/${slug}`}
+          pkg="@chadcn/ui"
           comingSoon
           comingSoonLabel={s.comingSoon}
           comingSoonDescription={s.comingSoonDescription}
           copySuccessMessage={s.copySuccess}
         />
+        <Code code={`import { Button } from "${importPath}"`} lang="tsx" />
       </section>
 
       <section class="space-y-4">

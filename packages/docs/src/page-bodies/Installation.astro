@@ -4,13 +4,17 @@ import { Code } from "astro-expressive-code/components"
 import { InstallTabs } from "@/components/InstallTabs"
 import { t } from "@/i18n/strings"
 import Docs from "@/layouts/Docs.astro"
+import { listVariantsForComponent } from "@/lib/variants"
 
 const locale = Astro.currentLocale ?? "ko"
 const s = t(locale)
 
+const buttonVariants = await listVariantsForComponent("button", locale)
+const exampleSlug = buttonVariants[0]?.slug ?? "escape"
+
 const usage = `import "@chadcn/ui/styles.css"
 
-import { Button } from "@chadcn/ui"`
+import { Button } from "@chadcn/ui/button/${exampleSlug}"`
 
 const toc = [
   { id: "install", text: s.installLabel, depth: 2 as const },
