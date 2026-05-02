@@ -8,6 +8,7 @@ import type { ComponentType } from "react"
 
 import { Button as Thanos } from "@chadcn/ui/button/thanos"
 import { Button as Mash } from "@chadcn/ui/button/mash"
+import { Button as Flinch } from "@chadcn/ui/button/flinch"
 import { Button as Shy } from "@chadcn/ui/button/shy"
 
 import type { Locale } from "@/i18n/strings"
@@ -24,6 +25,7 @@ export const buttonComponents = {
   shy: Shy,
   thanos: Thanos,
   mash: Mash,
+  flinch: Flinch,
 } satisfies Record<string, ComponentType<Parameters<typeof Shy>[0]>>
 
 // Slug → prose. Used at SSG only; not shipped to the client demos.
@@ -50,12 +52,22 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
   },
   mash: {
     tagline: {
-      ko: "확실한 의도만 받아들이는 버튼",
-      en: "A button that only accepts deliberate intent",
+      ko: "사용자의 의지를 확인하는 버튼",
+      en: "A button that verifies the user's intent",
     },
     description: {
-      ko: "진행도는 시간이 흐르면 스스로 줄어들며, 사용자는 클릭으로 그 흐름에 역행해야 합니다. 배경이 가득 찰 때까지 채워야 동작이 확정됩니다.",
-      en: "The progress bar drains on its own; each click pushes back against that decay. The action is only confirmed once the background is fully filled.",
+      ko: "사용자가 버튼을 누르겠다는 의지를 확실히 확인하기 위한 버튼입니다. 진행도는 시간이 흐르면 스스로 줄어들기에, 가득 채울 때까지 꾸준히 클릭해 의지를 증명해야 동작이 확정됩니다.",
+      en: "A button that firmly verifies the user's intent to press it. The progress bar drains on its own, so the user must keep clicking to fill it — only sustained intent confirms the action.",
+    },
+  },
+  flinch: {
+    tagline: {
+      ko: "사용되지 않음으로써 가치를 보존하는 버튼",
+      en: "A button that preserves its value by remaining unused",
+    },
+    description: {
+      ko: "버튼의 가치는 눌릴 수 있다는 가능성 그 자체에 있습니다. 포인터가 닿는 순간 그 가능성은 사용자에게 이미 충분히 전달되었으므로, 더 이상 눌릴 필요 없이 버튼은 자신의 역할을 완수하고 봉인됩니다.",
+      en: "A button's worth lies in the very possibility of being pressed. The instant the pointer arrives, that possibility has been sufficiently conveyed to the user — the button has fulfilled its role without needing to be pressed, and seals itself.",
     },
   },
 }

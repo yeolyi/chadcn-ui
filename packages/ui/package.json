@@ -27,6 +27,11 @@
       "import": "./dist/button/mash.js",
       "require": "./dist/button/mash.cjs"
     },
+    "./button/flinch": {
+      "types": "./dist/button/flinch.d.ts",
+      "import": "./dist/button/flinch.js",
+      "require": "./dist/button/flinch.cjs"
+    },
     "./styles.css": "./dist/styles.css"
   },
   "files": [

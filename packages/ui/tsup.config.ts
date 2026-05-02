@@ -6,6 +6,7 @@ export default defineConfig({
     "button/shy": "src/button/shy.tsx",
     "button/thanos": "src/button/thanos.tsx",
     "button/mash": "src/button/mash.tsx",
+    "button/flinch": "src/button/flinch.tsx",
   },
   format: ["esm", "cjs"],
   dts: true,
