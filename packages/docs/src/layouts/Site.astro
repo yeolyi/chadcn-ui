@@ -3,6 +3,7 @@ import "@/styles/globals.css"
 
 import SiteFooter from "@/components/SiteFooter.astro"
 import SiteHeader from "@/components/SiteHeader.astro"
+import { Toaster } from "@/components/Toaster"
 import { META_THEME_COLORS, siteConfig } from "@/lib/config"
 
 interface Props {
@@ -71,9 +72,19 @@ const fullTitle = title ? `${title} - ${siteConfig.name}` : siteConfig.name
       <main class="flex flex-1 flex-col"><slot /></main>
       <SiteFooter />
     </div>
+    <Toaster client:load />
     <script>
       import { inject } from "@vercel/analytics"
       inject()
+
+      // Hook expressive-code copy buttons → sonner toast (suppress EC's tooltip)
+      document.addEventListener("click", (e) => {
+        const target = e.target as HTMLElement | null
+        const btn = target?.closest("figure.expressive-code .copy button")
+        if (!btn) return
+        const t = (window as unknown as { __toast?: (msg: string) => void }).__toast
+        t?.("코드가 복사되었습니다")
+      })
     </script>
   </body>
 </html>

@@ -1,5 +1,6 @@
-import { CheckIcon, ClipboardIcon, PackageIcon, TerminalIcon } from "lucide-react"
+import { ClipboardIcon, PackageIcon, TerminalIcon } from "lucide-react"
 import * as React from "react"
+import { toast } from "sonner"
 
 const packageManagers = {
   pnpm: "pnpm add",
@@ -22,13 +23,6 @@ export function InstallTabs({
   comingSoonDescription?: string
 }) {
   const [active, setActive] = React.useState<PM>("pnpm")
-  const [hasCopied, setHasCopied] = React.useState(false)
-
-  React.useEffect(() => {
-    if (!hasCopied) return
-    const t = setTimeout(() => setHasCopied(false), 2000)
-    return () => clearTimeout(t)
-  }, [hasCopied])
 
   const tabs = React.useMemo(() => {
     const out = {} as Record<PM, string>
@@ -93,12 +87,12 @@ export function InstallTabs({
           data-slot="copy-button"
           onClick={() => {
             navigator.clipboard.writeText(tabs[active])
-            setHasCopied(true)
+            toast("코드가 복사되었습니다")
           }}
           className="absolute top-2 right-2 z-10 inline-flex size-7 items-center justify-center rounded-md opacity-70 hover:bg-accent hover:opacity-100"
           aria-label="Copy"
         >
-          {hasCopied ? <CheckIcon className="size-3.5" /> : <ClipboardIcon className="size-3.5" />}
+          <ClipboardIcon className="size-3.5" />
         </button>
       )}
     </div>

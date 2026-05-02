@@ -360,6 +360,13 @@
 }
 
 @layer components {
+  /* Suppress expressive-code's "Copied!" feedback tooltip — sonner handles it */
+  figure.expressive-code .copy .feedback {
+    display: none !important;
+  }
+}
+
+@layer components {
   .dialog-ring {
     @apply rounded-xl border-none bg-clip-padding shadow-2xl ring-4 ring-neutral-200/80 dark:bg-neutral-900 dark:ring-neutral-800;
   }
