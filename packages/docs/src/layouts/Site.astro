@@ -64,9 +64,9 @@ const fullTitle = title ? `${title} - ${siteConfig.name}` : siteConfig.name
     </script>
   </head>
   <body
-    class="group/body overscroll-none antialiased [--footer-height:calc(var(--spacing)*14)] [--header-height:calc(var(--spacing)*14)] xl:[--footer-height:calc(var(--spacing)*24)]"
+    class="group/body overscroll-none bg-background text-foreground antialiased [--footer-height:calc(var(--spacing)*14)] [--header-height:calc(var(--spacing)*14)] xl:[--footer-height:calc(var(--spacing)*24)]"
   >
-    <div data-slot="layout" class="relative z-10 flex min-h-svh flex-col bg-background text-foreground">
+    <div data-slot="layout" class="relative z-10 flex min-h-svh flex-col">
       <SiteHeader />
       <main class="flex flex-1 flex-col"><slot /></main>
       <SiteFooter />
