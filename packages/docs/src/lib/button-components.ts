@@ -14,6 +14,7 @@ import { Button as Flinch } from "@chadcn/ui/button/flinch"
 import { Button as Sponsored } from "@chadcn/ui/button/sponsored"
 import { Button as Gacha } from "@chadcn/ui/button/gacha"
 import { Button as Paranoia } from "@chadcn/ui/button/paranoia"
+import { Button as Anchor } from "@chadcn/ui/button/anchor"
 import { Button as Shy } from "@chadcn/ui/button/shy"
 
 import type { Locale } from "@/i18n/strings"
@@ -49,6 +50,7 @@ export const buttonComponents = {
   sponsored: withToast(Sponsored),
   gacha: withToast(Gacha),
   paranoia: withToast(Paranoia),
+  anchor: withToast(Anchor),
 } satisfies Record<string, ComponentType<ButtonProps>>
 
 // Slug → prose. Used at SSG only; not shipped to the client demos.
@@ -121,6 +123,16 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
     description: {
       ko: "각 클릭마다 내장된 슬롯 머신이 동작 실행 여부를 결정합니다. 세 릴이 모두 일치하는 잭팟이 나올 경우에 한해 본래 의도하신 동작이 실행됩니다.",
       en: "Each click runs an embedded slot machine that decides whether the action goes through. The intended action only fires on a jackpot — all three reels matching.",
+    },
+  },
+  anchor: {
+    tagline: {
+      ko: "변하는 것이 자신이 아니라 페이지인 버튼",
+      en: "A button where what changes is the page, not itself",
+    },
+    description: {
+      ko: "사용자가 버튼을 누른다는 인상은 매우 일관된 환상일 뿐이다. 실제로 움직인 것은 버튼이 아니라 그것을 둘러싼 페이지다.",
+      en: "The impression that the user presses the button is a very persistent illusion. What actually moves is not the button, but the page around it.",
     },
   },
   paranoia: {

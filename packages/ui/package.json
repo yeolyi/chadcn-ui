@@ -52,6 +52,11 @@
       "import": "./dist/button/paranoia.js",
       "require": "./dist/button/paranoia.cjs"
     },
+    "./button/anchor": {
+      "types": "./dist/button/anchor.d.ts",
+      "import": "./dist/button/anchor.js",
+      "require": "./dist/button/anchor.cjs"
+    },
     "./styles.css": "./dist/styles.css"
   },
   "files": [

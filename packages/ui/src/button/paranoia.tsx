@@ -41,25 +41,23 @@ export function Button({
       >
         {children}
       </ButtonBase>
-      {step > 0 && (
-        <span className="absolute left-0 top-full z-10 mt-2 flex flex-col items-start gap-2">
-          {CONFIRM_LABELS.slice(0, step).map((label, i) => {
-            const idx = i + 1
-            return (
-              <ButtonBase
-                key={i}
-                type="button"
-                variant="outline"
-                size={size}
-                onClick={advance(idx)}
-                disabled={step > idx}
-              >
-                {label}
-              </ButtonBase>
-            )
-          })}
-        </span>
-      )}
+      {CONFIRM_LABELS.slice(0, step).map((label, i) => {
+        const idx = i + 1
+        return (
+          <ButtonBase
+            key={i}
+            type="button"
+            variant="secondary"
+            size={size}
+            onClick={advance(idx)}
+            disabled={step > idx}
+            className="absolute left-1/2 -translate-x-1/2"
+            style={{ top: idx * 10, zIndex: idx }}
+          >
+            {label}
+          </ButtonBase>
+        )
+      })}
     </span>
   )
 }
