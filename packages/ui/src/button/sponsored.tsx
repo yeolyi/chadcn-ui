@@ -1,19 +1,33 @@
 "use client"
 
+import { CheckIcon, MegaphoneIcon } from "lucide-react"
 import { Dialog } from "radix-ui"
 import * as React from "react"
 
+import { cn } from "../lib/utils"
 import { ButtonBase, type ButtonBaseProps, buttonVariants } from "./base"
+import { sponsoredAvatar } from "./sponsored.avatar"
 
 const COUNTDOWN_SECONDS = 5
 const INSTAGRAM_URL = "https://instagram.com/yeol.dev"
 
-export function Button({ onClick, ...props }: ButtonBaseProps) {
+export function Button({
+  onClick,
+  children,
+  asChild,
+  className,
+  ...props
+}: ButtonBaseProps) {
   const [adOpen, setAdOpen] = React.useState(false)
+  const [watched, setWatched] = React.useState(false)
   const [secondsLeft, setSecondsLeft] = React.useState(COUNTDOWN_SECONDS)
   const pendingRef = React.useRef<(() => void) | null>(null)
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (watched) {
+      onClick?.(e)
+      return
+    }
     e.preventDefault()
     pendingRef.current = onClick ? () => onClick(e) : null
     setSecondsLeft(COUNTDOWN_SECONDS)
@@ -31,6 +45,7 @@ export function Button({ onClick, ...props }: ButtonBaseProps) {
     const cb = pendingRef.current
     pendingRef.current = null
     setAdOpen(false)
+    setWatched(true)
     cb?.()
   }
 
@@ -41,7 +56,27 @@ export function Button({ onClick, ...props }: ButtonBaseProps) {
 
   return (
     <>
-      <ButtonBase onClick={handleClick} {...props} />
+      <ButtonBase
+        onClick={handleClick}
+        asChild={asChild}
+        className={cn("relative", className)}
+        {...props}
+      >
+        {asChild && React.isValidElement(children)
+          ? React.cloneElement(
+              children as React.ReactElement<{ children?: React.ReactNode }>,
+              undefined,
+              (children as React.ReactElement<{ children?: React.ReactNode }>).props
+                .children,
+              <SponsoredBadge watched={watched} />,
+            )
+          : (
+              <>
+                {children}
+                <SponsoredBadge watched={watched} />
+              </>
+            )}
+      </ButtonBase>
       <Dialog.Root
         open={adOpen}
         onOpenChange={(open) => {
@@ -74,9 +109,11 @@ export function Button({ onClick, ...props }: ButtonBaseProps) {
             </div>
 
             <div className="flex items-center gap-3">
-              <div
+              <img
+                src={sponsoredAvatar}
+                alt=""
                 aria-hidden
-                className="size-12 shrink-0 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600"
+                className="size-12 shrink-0 rounded-full object-cover"
               />
               <div className="min-w-0">
                 <Dialog.Title className="truncate text-sm font-semibold">
@@ -104,6 +141,18 @@ export function Button({ onClick, ...props }: ButtonBaseProps) {
         </Dialog.Portal>
       </Dialog.Root>
     </>
+  )
+}
+
+function SponsoredBadge({ watched }: { watched: boolean }) {
+  const Icon = watched ? CheckIcon : MegaphoneIcon
+  return (
+    <span
+      aria-hidden
+      className="pointer-events-none absolute -right-1.5 -top-1.5 flex size-4 items-center justify-center rounded-full bg-foreground text-background ring-2 ring-background"
+    >
+      <Icon className="size-2.5" />
+    </span>
   )
 }
 

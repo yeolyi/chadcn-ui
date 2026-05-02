@@ -70,7 +70,7 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
       en: "A button that only accepts safe clicks",
     },
     description: {
-      ko: "버튼 표면에 작은 안전 점검 절차가 내장되어 있습니다. 폭탄을 피해 모든 안전 영역을 확인해야만 진짜 동작이 활성화됩니다. 의심 영역에는 데스크톱에서는 우클릭으로, 모바일에서는 더블 탭으로 깃발을 표시할 수 있습니다.",
+      ko: "버튼 표면에 작은 안전 점검 절차가 내장되어 있습니다. 폭탄을 피해 모든 안전 영역을 확인해야만 진짜 동작이 활성화됩니다. 의심 영역에는 더블 클릭으로 깃발을 표시할 수 있습니다.",
       en: "A small safety check is embedded across the button surface. Only after every safe region is verified — without striking a mine — does the real action become available. Suspected regions can be flagged via right-click on desktop, or a double tap on mobile.",
     },
   },
@@ -90,8 +90,8 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
       en: "A button offered free of charge via sponsored content",
     },
     description: {
-      ko: "이 버튼을 사용하기 위해서는 짧은 광고 시청에 동의하신 것으로 간주됩니다. 광고가 종료되면 원래 의도하신 동작이 정상적으로 실행됩니다.",
-      en: "By using this button you are deemed to have consented to viewing a brief sponsored message. The originally intended action will execute normally once the ad concludes.",
+      ko: "처음 클릭 시 짧은 스폰서 광고 시청에 동의하신 것으로 간주됩니다. 광고가 종료되면 원래 의도하신 동작이 실행되며, 이후로는 광고 없이 자유롭게 사용하실 수 있습니다.",
+      en: "On the first click you are deemed to have consented to viewing a brief sponsored message. The originally intended action runs once the ad concludes, and the button is freely usable thereafter without further ads.",
     },
   },
 }
