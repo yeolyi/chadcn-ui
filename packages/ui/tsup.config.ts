@@ -1,7 +1,10 @@
 import { defineConfig } from "tsup"
 
 export default defineConfig({
-  entry: ["src/index.ts"],
+  entry: {
+    index: "src/index.ts",
+    "button/escape": "src/button/escape.tsx",
+  },
   format: ["esm", "cjs"],
   dts: true,
   splitting: true,

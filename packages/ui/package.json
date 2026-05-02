@@ -12,6 +12,11 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./button/escape": {
+      "types": "./dist/button/escape.d.ts",
+      "import": "./dist/button/escape.js",
+      "require": "./dist/button/escape.cjs"
+    },
     "./styles.css": "./dist/styles.css"
   },
   "files": [

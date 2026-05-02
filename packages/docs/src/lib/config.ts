@@ -6,7 +6,7 @@ export const siteConfig = {
     "Beautifully designed components with unforgettable interactions. A drop-in replacement for shadcn/ui.",
   links: {
     github: "https://github.com/yeolyi/chadcn-ui",
-    instagram: "https://www.instagram.com/yeolyi/",
+    instagram: "https://www.instagram.com/yeol.dev/",
   },
 }
 
