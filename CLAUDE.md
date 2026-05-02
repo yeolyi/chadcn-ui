@@ -54,6 +54,20 @@ would actually write.
 Demo button text stays English (`"Button"`, `"Default"`) even on Korean pages.
 Matches shadcn convention. Only docs chrome (headings, paragraphs) is localized.
 
+### MDX multi-line template literals strip indent
+
+Upstream MDX bug ([mdx-js/mdx#2533](https://github.com/mdx-js/mdx/issues/2533)
+family): a template literal embedded in a JSX expression
+(`<CodeBlock code={`...`} />`) gets its leading whitespace re-flowed
+across parse cycles. Result: the displayed code shows wrong indent.
+
+**Workaround**: keep multi-line code samples in a sibling `.snippets.ts`
+module (e.g. `content/pages/button.snippets.ts`) as plain JS template
+literals — JS code is untouched by MDX. Import into MDX and pass via
+`code={buttonSnippets(slug).foo}`. Single-line snippets are safe inline.
+Do not try to upstream-patch — the bug is in deep MDX deps and not worth
+the maintenance burden at this scale.
+
 ### Both locales required for every variant
 
 When you add a variant, both `ko` and `en` strings (tagline + description in
@@ -79,6 +93,21 @@ The only inline-SVG exception is the chad logo in
 Theme is OS-only by design. If you add a `.dark` class system the
 expressive-code config and the globals.css media queries will both have to
 change in lockstep — easy to half-do.
+
+## Versioning (`@chadcn/ui`)
+
+Pre-1.0 phase (until variant set + API are stable):
+- New variant subpath = MINOR bump (0.1.0 → 0.2.0)
+- Tweak/fix to existing variant = PATCH (0.2.0 → 0.2.1)
+- Removing/renaming a variant or changing the top-level Button alias =
+  jump to 1.0.0 to flag the breaking change
+
+After 1.0.0 (API frozen):
+- New variant = MINOR (1.1.0)
+- Bug fix = PATCH (1.1.1)
+- Breaking change = MAJOR (2.0.0)
+
+Each variant addition is its own version + git tag + GitHub release.
 
 ## Adding a New Button Variant
 
