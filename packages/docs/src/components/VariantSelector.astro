@@ -1,6 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n"
 
+import { getLocale } from "@/i18n/locale"
 import { listVariantsForComponent } from "@/lib/variants"
 
 interface Props {
@@ -9,7 +10,7 @@ interface Props {
 }
 
 const { component, currentSlug } = Astro.props
-const locale = Astro.currentLocale ?? "ko"
+const locale = getLocale(Astro)
 
 const variants = await listVariantsForComponent(component, locale)
 const current = variants.find((v) => v.slug === currentSlug)

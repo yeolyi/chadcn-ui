@@ -1,5 +1,7 @@
 ---
-const locale = Astro.currentLocale ?? "ko"
+import { getLocale } from "@/i18n/locale"
+
+const locale = getLocale(Astro)
 const pathname = new URL(Astro.request.url).pathname
 
 // Compute the equivalent path in the other locale

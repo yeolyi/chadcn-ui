@@ -4,11 +4,11 @@ import { HomeLink } from "@/components/HomeLink"
 import { InstagramLink } from "@/components/InstagramLink"
 import LocaleSwitcher from "@/components/LocaleSwitcher.astro"
 import { MobileNav } from "@/components/MobileNav"
-import { t } from "@/i18n/strings"
+import { getLocale, tFor } from "@/i18n/locale"
 import { listVariantsForComponent } from "@/lib/variants"
 
-const locale = Astro.currentLocale ?? "ko"
-const s = t(locale)
+const locale = getLocale(Astro)
+const s = tFor(Astro)
 const basePath = locale === "en" ? "/en" : ""
 const buttonVariants = await listVariantsForComponent("button", locale)
 const buttonHref = `${basePath}/docs/components/button/${buttonVariants[0]?.slug ?? "escape"}`

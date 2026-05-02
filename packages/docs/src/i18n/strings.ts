@@ -1,10 +1,10 @@
 export const strings = {
   ko: {
-    // Site
+    // Site / metadata
     siteDescription:
       "shadcn/ui와 동일한 컴포넌트, 동일한 API, 잊을 수 없는 인터랙션. shadcn/ui의 드롭인 대체품.",
 
-    // Header / nav
+    // Header / mobile nav
     menu: "메뉴",
     home: "홈",
     sections: "섹션",
@@ -12,15 +12,14 @@ export const strings = {
     introduction: "소개",
     installation: "설치",
     toggleMenu: "메뉴 토글",
+    toggleLocale: "언어 변경",
+    githubAriaLabel: "GitHub",
+    instagramAriaLabel: "Instagram",
 
-    // Footer
-    builtOn: "를 기반으로 제작되었습니다. 소스 코드는",
-    sourceOnGithub: "에서 확인할 수 있습니다.",
-
-    // TOC
+    // Right rail TOC
     onThisPage: "목차",
 
-    // Code preview
+    // Code preview / copy
     viewCode: "코드 보기",
     copySuccess: "코드가 복사되었습니다",
     comingSoon: "준비 중",
@@ -33,29 +32,20 @@ export const strings = {
     getStarted: "시작하기",
     viewComponents: "컴포넌트 보기",
 
-    // Introduction page
+    // Introduction page (chrome only — body is inline in DocsIndex.astro)
     introductionTitle: "소개",
     introductionDescription:
       "chadcn/ui는 shadcn/ui의 드롭인 대체품입니다. 같은 컴포넌트, 같은 API, 잊을 수 없는 UX.",
 
-    // Installation page
+    // Installation page (chrome — body is inline)
     installationTitle: "설치",
     installationDescription: "프로젝트에 chadcn/ui를 설치하는 방법.",
     installLabel: "설치",
     usageLabel: "사용법",
     usageHelp: "스타일시트와 컴포넌트를 직접 import하세요. API는 shadcn/ui와 동일합니다.",
 
-    // Variant page
-    apiReference: "API 레퍼런스",
-    examples: "예제",
-    cursor: "커서",
+    // Variant page chrome (rest of variant content is in the variant MDX)
     fallbackBanner: "이 항목은 아직 한국어로만 제공됩니다.",
-    fallbackBannerEn: "This entry is only available in Korean.",
-
-    // Misc
-    githubAriaLabel: "GitHub",
-    instagramAriaLabel: "Instagram",
-    toggleLocale: "언어 변경",
   },
   en: {
     siteDescription:
@@ -68,9 +58,9 @@ export const strings = {
     introduction: "Introduction",
     installation: "Installation",
     toggleMenu: "Toggle Menu",
-
-    builtOn: ". The source code is available on",
-    sourceOnGithub: ".",
+    toggleLocale: "Switch language",
+    githubAriaLabel: "GitHub",
+    instagramAriaLabel: "Instagram",
 
     onThisPage: "On This Page",
 
@@ -96,15 +86,7 @@ export const strings = {
     usageHelp:
       "Import the stylesheet and components directly. The API is identical to shadcn/ui.",
 
-    apiReference: "API Reference",
-    examples: "Examples",
-    cursor: "Cursor",
     fallbackBanner: "This entry is only available in Korean.",
-    fallbackBannerEn: "This entry is only available in Korean.",
-
-    githubAriaLabel: "GitHub",
-    instagramAriaLabel: "Instagram",
-    toggleLocale: "Switch language",
   },
 } as const
 

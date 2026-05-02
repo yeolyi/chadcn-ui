@@ -1,4 +1,6 @@
 ---
+import { tFor } from "@/i18n/locale"
+
 export interface TocItem {
   id: string
   text: string
@@ -10,8 +12,7 @@ interface Props {
 }
 
 const { items } = Astro.props
-const locale = Astro.currentLocale ?? "ko"
-const onThisPage = locale === "en" ? "On This Page" : "목차"
+const onThisPage = tFor(Astro).onThisPage
 ---
 
 {

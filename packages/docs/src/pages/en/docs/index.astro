@@ -1,5 +1,57 @@
 ---
-import DocsIndex from "@/page-bodies/DocsIndex.astro"
+import { Code } from "astro-expressive-code/components"
+
+import Docs from "@/layouts/Docs.astro"
+import { listVariantsForComponent } from "@/lib/variants"
+
+const title = "Introduction"
+const description =
+  "chadcn/ui is a drop-in replacement for shadcn/ui. Same components, same API, unforgettable UX."
+
+const buttonVariants = await listVariantsForComponent("button", "ko")
+const exampleSlug = buttonVariants[0]?.slug ?? "escape"
+const usage = `import "@chadcn/ui/styles.css"
+import { Button } from "@chadcn/ui/button/${exampleSlug}"`
+
+const toc = [
+  { id: "drop-in-replacement", text: "Drop-in Replacement", depth: 2 as const },
+  { id: "same-look-different-feel", text: "Same Look, Different Feel", depth: 2 as const },
+  { id: "open-source", text: "Open Source", depth: 2 as const },
+]
 ---
 
-<DocsIndex />
+<Docs title={title} description={description} toc={toc}>
+  <div class="flex min-w-0 flex-1 flex-col">
+    <div class="h-(--top-spacing) shrink-0"></div>
+    <div class="mx-auto flex w-full max-w-[40rem] min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-foreground md:px-0 lg:py-8">
+      <div class="flex flex-col gap-2">
+        <h1 class="scroll-m-24 text-3xl font-semibold tracking-tight">{title}</h1>
+        <p class="text-[1.05rem] text-muted-foreground sm:text-base">{description}</p>
+      </div>
+      <div class="w-full flex-1 space-y-6 text-[0.95rem] leading-7">
+        <p>
+          Every website looks the same these days. chadcn/ui gives your components personality —
+          each one looks identical to its shadcn counterpart, but with a unique interaction that
+          makes your site impossible to ignore.
+        </p>
+        <h2 id="drop-in-replacement" class="scroll-m-24 pt-4 text-2xl font-semibold tracking-tight">Drop-in Replacement</h2>
+        <p>
+          chadcn/ui shares the exact same API, props, and types as shadcn/ui. Swap your import path
+          and everything still works — just differently.
+        </p>
+        <Code code={usage} lang="tsx" />
+        <h2 id="same-look-different-feel" class="scroll-m-24 pt-4 text-2xl font-semibold tracking-tight">Same Look, Different Feel</h2>
+        <p>
+          Every component is visually identical to its shadcn original. The styling, variants, and
+          sizes are all the same. The only difference is the behavior — once you try it, you won't
+          forget it.
+        </p>
+        <h2 id="open-source" class="scroll-m-24 pt-4 text-2xl font-semibold tracking-tight">Open Source</h2>
+        <p>
+          chadcn/ui is open source. The code is available on GitHub. Use it to surprise your users,
+          liven up a demo, or add personality to any project.
+        </p>
+      </div>
+    </div>
+  </div>
+</Docs>

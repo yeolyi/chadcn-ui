@@ -1,5 +1,53 @@
 ---
-import Installation from "@/page-bodies/Installation.astro"
+import { Code } from "astro-expressive-code/components"
+
+import { InstallTabs } from "@/components/InstallTabs"
+import Docs from "@/layouts/Docs.astro"
+import { listVariantsForComponent } from "@/lib/variants"
+
+const title = "Installation"
+const description = "How to install chadcn/ui in your project."
+
+const buttonVariants = await listVariantsForComponent("button", "ko")
+const exampleSlug = buttonVariants[0]?.slug ?? "escape"
+const usage = `import "@chadcn/ui/styles.css"
+
+import { Button } from "@chadcn/ui/button/${exampleSlug}"`
+
+const toc = [
+  { id: "install", text: "Install", depth: 2 as const },
+  { id: "usage", text: "Usage", depth: 2 as const },
+]
 ---
 
-<Installation />
+<Docs title={title} description={description} toc={toc}>
+  <div class="flex min-w-0 flex-1 flex-col">
+    <div class="h-(--top-spacing) shrink-0"></div>
+    <div class="mx-auto flex w-full max-w-[40rem] min-w-0 flex-1 flex-col gap-8 px-4 py-6 text-foreground md:px-0 lg:py-8">
+      <div class="flex flex-col gap-2">
+        <h1 class="scroll-m-24 text-3xl font-semibold tracking-tight">{title}</h1>
+        <p class="text-[1.05rem] text-muted-foreground sm:text-base">{description}</p>
+      </div>
+
+      <section class="space-y-4">
+        <h2 id="install" class="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">Install</h2>
+        <InstallTabs
+          client:load
+          pkg="@chadcn/ui"
+          comingSoon
+          comingSoonLabel="Coming Soon"
+          comingSoonDescription="Package not yet published on npm."
+          copySuccessMessage="Copied to clipboard"
+        />
+      </section>
+
+      <section class="space-y-4">
+        <h2 id="usage" class="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">Usage</h2>
+        <p class="text-[0.95rem] leading-7 text-muted-foreground">
+          Import the stylesheet and components directly. The API is identical to shadcn/ui.
+        </p>
+        <Code code={usage} lang="tsx" />
+      </section>
+    </div>
+  </div>
+</Docs>

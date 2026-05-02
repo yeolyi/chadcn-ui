@@ -1,0 +1,257 @@
+import { Code } from "astro-expressive-code/components"
+import ExamplePreview from "@/components/ExamplePreview.astro"
+import { InstallTabs } from "@/components/InstallTabs"
+import { ButtonAsChild } from "@/demos/button/ButtonAsChild"
+import { ButtonDefault } from "@/demos/button/ButtonDefault"
+import { ButtonDestructive } from "@/demos/button/ButtonDestructive"
+import { ButtonGhost } from "@/demos/button/ButtonGhost"
+import { ButtonIcon } from "@/demos/button/ButtonIcon"
+import { ButtonLink } from "@/demos/button/ButtonLink"
+import { ButtonMain } from "@/demos/button/ButtonMain"
+import { ButtonOutline } from "@/demos/button/ButtonOutline"
+import { ButtonRounded } from "@/demos/button/ButtonRounded"
+import { ButtonSecondary } from "@/demos/button/ButtonSecondary"
+import { ButtonSize } from "@/demos/button/ButtonSize"
+import { ButtonWithIcon } from "@/demos/button/ButtonWithIcon"
+
+<ExamplePreview>
+  <ButtonMain slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+import { ArrowUpIcon } from "lucide-react"
+
+export function ButtonDemo() {
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      <Button variant="outline">Button</Button>
+      <Button variant="outline" size="icon" aria-label="Submit">
+        <ArrowUpIcon />
+      </Button>
+    </div>
+  )
+}`} />
+</ExamplePreview>
+
+## 설치
+
+<InstallTabs
+  client:load
+  pkg="@chadcn/ui"
+  comingSoon
+  comingSoonLabel="준비 중"
+  comingSoonDescription="패키지가 아직 npm에 게시되지 않았습니다."
+  copySuccessMessage="코드가 복사되었습니다"
+/>
+
+<Code lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"`} />
+
+## 커서
+
+Tailwind v4는 버튼 컴포넌트의 기본값을 `cursor: pointer`에서 `cursor: default`로
+[변경했습니다](https://tailwindcss.com/docs/upgrade-guide#buttons-use-the-default-cursor).
+
+포인터 커서를 유지하려면 CSS 파일에 다음 코드를 추가하세요.
+
+<Code lang="css" title="globals.css" code={`@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}`} />
+
+## 예제
+
+### 크기
+
+`size` prop으로 버튼 크기를 변경할 수 있습니다.
+
+<ExamplePreview>
+  <ButtonSize slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+import { ArrowUpRightIcon } from "lucide-react"
+
+export function ButtonSize() {
+  return (
+    <div className="flex flex-wrap items-center gap-4">
+      <Button size="xs">Extra Small</Button>
+      <Button size="xs" variant="outline"><ArrowUpRightIcon /></Button>
+      <Button size="sm">Small</Button>
+      <Button size="sm" variant="outline"><ArrowUpRightIcon /></Button>
+      <Button size="default">Default</Button>
+      <Button size="default" variant="outline"><ArrowUpRightIcon /></Button>
+      <Button size="lg">Large</Button>
+      <Button size="lg" variant="outline"><ArrowUpRightIcon /></Button>
+    </div>
+  )
+}`} />
+</ExamplePreview>
+
+### 기본
+
+<ExamplePreview>
+  <ButtonDefault slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+
+export function ButtonDefault() {
+  return <Button>Default</Button>
+}`} />
+</ExamplePreview>
+
+### 아웃라인
+
+<ExamplePreview>
+  <ButtonOutline slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+
+export function ButtonOutline() {
+  return <Button variant="outline">Outline</Button>
+}`} />
+</ExamplePreview>
+
+### 보조
+
+<ExamplePreview>
+  <ButtonSecondary slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+
+export function ButtonSecondary() {
+  return <Button variant="secondary">Secondary</Button>
+}`} />
+</ExamplePreview>
+
+### 고스트
+
+<ExamplePreview>
+  <ButtonGhost slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+
+export function ButtonGhost() {
+  return <Button variant="ghost">Ghost</Button>
+}`} />
+</ExamplePreview>
+
+### 위험
+
+<ExamplePreview>
+  <ButtonDestructive slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+
+export function ButtonDestructive() {
+  return <Button variant="destructive">Destructive</Button>
+}`} />
+</ExamplePreview>
+
+### 링크
+
+<ExamplePreview>
+  <ButtonLink slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+
+export function ButtonLink() {
+  return <Button variant="link">Link</Button>
+}`} />
+</ExamplePreview>
+
+### 아이콘
+
+<ExamplePreview>
+  <ButtonIcon slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+import { CircleFadingArrowUpIcon } from "lucide-react"
+
+export function ButtonIcon() {
+  return (
+    <Button variant="outline" size="icon" aria-label="Upload">
+      <CircleFadingArrowUpIcon />
+    </Button>
+  )
+}`} />
+</ExamplePreview>
+
+### 아이콘 포함
+
+올바른 간격을 위해 아이콘에 `data-icon="inline-start"` 또는 `data-icon="inline-end"` 속성을 추가하세요.
+
+<ExamplePreview>
+  <ButtonWithIcon slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+import { GitBranchIcon } from "lucide-react"
+
+export function ButtonWithIcon() {
+  return (
+    <Button>
+      <GitBranchIcon data-icon="inline-start" />
+      New Branch
+    </Button>
+  )
+}`} />
+</ExamplePreview>
+
+### 둥근 버튼
+
+완전히 둥근 버튼을 만들려면 `rounded-full` 클래스를 사용하세요.
+
+<ExamplePreview>
+  <ButtonRounded slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+import { ArrowUpIcon } from "lucide-react"
+
+export function ButtonRounded() {
+  return (
+    <Button className="rounded-full" size="icon" variant="outline">
+      <ArrowUpIcon />
+    </Button>
+  )
+}`} />
+</ExamplePreview>
+
+### 자식 요소로
+
+`<Button />`의 `asChild` prop을 사용하면 다른 컴포넌트를 버튼처럼 보이게 할 수 있습니다. 아래는 버튼처럼 보이는 링크 예시입니다.
+
+<ExamplePreview>
+  <ButtonAsChild slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+
+export function ButtonAsChild() {
+  return (
+    <Button asChild>
+      <a href="/login">Login</a>
+    </Button>
+  )
+}`} />
+</ExamplePreview>
+
+## API 레퍼런스
+
+### Button
+
+`Button` 컴포넌트는 다양한 스타일과 기능을 추가하는 `button` 요소의 래퍼입니다.
+
+<div class="overflow-x-auto rounded-xl border">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b bg-muted/50">
+        <th class="p-3 text-left font-medium">Prop</th>
+        <th class="p-3 text-left font-medium">타입</th>
+        <th class="p-3 text-left font-medium">기본값</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="border-b">
+        <td class="p-3 font-mono text-sm">variant</td>
+        <td class="p-3 font-mono text-xs">"default" | "outline" | "ghost" | "destructive" | "secondary" | "link"</td>
+        <td class="p-3 font-mono text-sm">"default"</td>
+      </tr>
+      <tr class="border-b">
+        <td class="p-3 font-mono text-sm">size</td>
+        <td class="p-3 font-mono text-xs">"default" | "xs" | "sm" | "lg" | "icon" | "icon-xs" | "icon-sm" | "icon-lg"</td>
+        <td class="p-3 font-mono text-sm">"default"</td>
+      </tr>
+      <tr>
+        <td class="p-3 font-mono text-sm">asChild</td>
+        <td class="p-3 font-mono text-xs">boolean</td>
+        <td class="p-3 font-mono text-sm">false</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

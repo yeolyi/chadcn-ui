@@ -1,0 +1,257 @@
+import { Code } from "astro-expressive-code/components"
+import ExamplePreview from "@/components/ExamplePreview.astro"
+import { InstallTabs } from "@/components/InstallTabs"
+import { ButtonAsChild } from "@/demos/button/ButtonAsChild"
+import { ButtonDefault } from "@/demos/button/ButtonDefault"
+import { ButtonDestructive } from "@/demos/button/ButtonDestructive"
+import { ButtonGhost } from "@/demos/button/ButtonGhost"
+import { ButtonIcon } from "@/demos/button/ButtonIcon"
+import { ButtonLink } from "@/demos/button/ButtonLink"
+import { ButtonMain } from "@/demos/button/ButtonMain"
+import { ButtonOutline } from "@/demos/button/ButtonOutline"
+import { ButtonRounded } from "@/demos/button/ButtonRounded"
+import { ButtonSecondary } from "@/demos/button/ButtonSecondary"
+import { ButtonSize } from "@/demos/button/ButtonSize"
+import { ButtonWithIcon } from "@/demos/button/ButtonWithIcon"
+
+<ExamplePreview>
+  <ButtonMain slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+import { ArrowUpIcon } from "lucide-react"
+
+export function ButtonDemo() {
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      <Button variant="outline">Button</Button>
+      <Button variant="outline" size="icon" aria-label="Submit">
+        <ArrowUpIcon />
+      </Button>
+    </div>
+  )
+}`} />
+</ExamplePreview>
+
+## Installation
+
+<InstallTabs
+  client:load
+  pkg="@chadcn/ui"
+  comingSoon
+  comingSoonLabel="Coming Soon"
+  comingSoonDescription="Package not yet published on npm."
+  copySuccessMessage="Copied to clipboard"
+/>
+
+<Code lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"`} />
+
+## Cursor
+
+Tailwind v4 [switched](https://tailwindcss.com/docs/upgrade-guide#buttons-use-the-default-cursor)
+the default from `cursor: pointer` to `cursor: default` for the button component.
+
+To keep the pointer cursor, add the following to your CSS file:
+
+<Code lang="css" title="globals.css" code={`@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}`} />
+
+## Examples
+
+### Size
+
+Use the `size` prop to change the button size.
+
+<ExamplePreview>
+  <ButtonSize slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+import { ArrowUpRightIcon } from "lucide-react"
+
+export function ButtonSize() {
+  return (
+    <div className="flex flex-wrap items-center gap-4">
+      <Button size="xs">Extra Small</Button>
+      <Button size="xs" variant="outline"><ArrowUpRightIcon /></Button>
+      <Button size="sm">Small</Button>
+      <Button size="sm" variant="outline"><ArrowUpRightIcon /></Button>
+      <Button size="default">Default</Button>
+      <Button size="default" variant="outline"><ArrowUpRightIcon /></Button>
+      <Button size="lg">Large</Button>
+      <Button size="lg" variant="outline"><ArrowUpRightIcon /></Button>
+    </div>
+  )
+}`} />
+</ExamplePreview>
+
+### Default
+
+<ExamplePreview>
+  <ButtonDefault slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+
+export function ButtonDefault() {
+  return <Button>Default</Button>
+}`} />
+</ExamplePreview>
+
+### Outline
+
+<ExamplePreview>
+  <ButtonOutline slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+
+export function ButtonOutline() {
+  return <Button variant="outline">Outline</Button>
+}`} />
+</ExamplePreview>
+
+### Secondary
+
+<ExamplePreview>
+  <ButtonSecondary slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+
+export function ButtonSecondary() {
+  return <Button variant="secondary">Secondary</Button>
+}`} />
+</ExamplePreview>
+
+### Ghost
+
+<ExamplePreview>
+  <ButtonGhost slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+
+export function ButtonGhost() {
+  return <Button variant="ghost">Ghost</Button>
+}`} />
+</ExamplePreview>
+
+### Destructive
+
+<ExamplePreview>
+  <ButtonDestructive slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+
+export function ButtonDestructive() {
+  return <Button variant="destructive">Destructive</Button>
+}`} />
+</ExamplePreview>
+
+### Link
+
+<ExamplePreview>
+  <ButtonLink slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+
+export function ButtonLink() {
+  return <Button variant="link">Link</Button>
+}`} />
+</ExamplePreview>
+
+### Icon
+
+<ExamplePreview>
+  <ButtonIcon slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+import { CircleFadingArrowUpIcon } from "lucide-react"
+
+export function ButtonIcon() {
+  return (
+    <Button variant="outline" size="icon" aria-label="Upload">
+      <CircleFadingArrowUpIcon />
+    </Button>
+  )
+}`} />
+</ExamplePreview>
+
+### With Icon
+
+Add the `data-icon="inline-start"` or `data-icon="inline-end"` attribute to the icon for correct spacing.
+
+<ExamplePreview>
+  <ButtonWithIcon slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+import { GitBranchIcon } from "lucide-react"
+
+export function ButtonWithIcon() {
+  return (
+    <Button>
+      <GitBranchIcon data-icon="inline-start" />
+      New Branch
+    </Button>
+  )
+}`} />
+</ExamplePreview>
+
+### Rounded
+
+Use the `rounded-full` class to make the button fully rounded.
+
+<ExamplePreview>
+  <ButtonRounded slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+import { ArrowUpIcon } from "lucide-react"
+
+export function ButtonRounded() {
+  return (
+    <Button className="rounded-full" size="icon" variant="outline">
+      <ArrowUpIcon />
+    </Button>
+  )
+}`} />
+</ExamplePreview>
+
+### As Child
+
+Use the `asChild` prop on `<Button />` to make another component look like a button. Here's an example of a link that looks like a button.
+
+<ExamplePreview>
+  <ButtonAsChild slug={props.slug} client:load slot="preview" />
+  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+
+export function ButtonAsChild() {
+  return (
+    <Button asChild>
+      <a href="/login">Login</a>
+    </Button>
+  )
+}`} />
+</ExamplePreview>
+
+## API Reference
+
+### Button
+
+The `Button` component is a wrapper around the native `button` element that adds styling and functionality.
+
+<div class="overflow-x-auto rounded-xl border">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b bg-muted/50">
+        <th class="p-3 text-left font-medium">Prop</th>
+        <th class="p-3 text-left font-medium">Type</th>
+        <th class="p-3 text-left font-medium">Default</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="border-b">
+        <td class="p-3 font-mono text-sm">variant</td>
+        <td class="p-3 font-mono text-xs">"default" | "outline" | "ghost" | "destructive" | "secondary" | "link"</td>
+        <td class="p-3 font-mono text-sm">"default"</td>
+      </tr>
+      <tr class="border-b">
+        <td class="p-3 font-mono text-sm">size</td>
+        <td class="p-3 font-mono text-xs">"default" | "xs" | "sm" | "lg" | "icon" | "icon-xs" | "icon-sm" | "icon-lg"</td>
+        <td class="p-3 font-mono text-sm">"default"</td>
+      </tr>
+      <tr>
+        <td class="p-3 font-mono text-sm">asChild</td>
+        <td class="p-3 font-mono text-xs">boolean</td>
+        <td class="p-3 font-mono text-sm">false</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
