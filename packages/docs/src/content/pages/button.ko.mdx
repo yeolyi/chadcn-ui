@@ -1,4 +1,4 @@
-import { Code } from "astro-expressive-code/components"
+import CodeBlock from "@/components/docs/CodeBlock.astro"
 import ExamplePreview from "@/components/docs/ExamplePreview.astro"
 import { InstallTabs } from "@/components/docs/InstallTabs"
 import { ButtonAsChild } from "@/components/demos/button/ButtonAsChild"
@@ -16,7 +16,7 @@ import { ButtonWithIcon } from "@/components/demos/button/ButtonWithIcon"
 
 <ExamplePreview>
   <ButtonMain slug={props.slug} client:load slot="preview" />
-  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
 import { ArrowUpIcon } from "lucide-react"
 
 export function ButtonDemo() {
@@ -42,7 +42,7 @@ export function ButtonDemo() {
   copySuccessMessage="코드가 복사되었습니다"
 />
 
-<Code lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"`} />
+<CodeBlock lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"`} />
 
 ## 커서
 
@@ -51,7 +51,7 @@ Tailwind v4는 버튼 컴포넌트의 기본값을 `cursor: pointer`에서 `curs
 
 포인터 커서를 유지하려면 CSS 파일에 다음 코드를 추가하세요.
 
-<Code lang="css" title="globals.css" code={`@layer base {
+<CodeBlock lang="css" title="globals.css" code={`@layer base {
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
@@ -66,7 +66,7 @@ Tailwind v4는 버튼 컴포넌트의 기본값을 `cursor: pointer`에서 `curs
 
 <ExamplePreview>
   <ButtonSize slug={props.slug} client:load slot="preview" />
-  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
 import { ArrowUpRightIcon } from "lucide-react"
 
 export function ButtonSize() {
@@ -89,7 +89,7 @@ export function ButtonSize() {
 
 <ExamplePreview>
   <ButtonDefault slug={props.slug} client:load slot="preview" />
-  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
 
 export function ButtonDefault() {
   return <Button>Default</Button>
@@ -100,7 +100,7 @@ export function ButtonDefault() {
 
 <ExamplePreview>
   <ButtonOutline slug={props.slug} client:load slot="preview" />
-  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
 
 export function ButtonOutline() {
   return <Button variant="outline">Outline</Button>
@@ -111,7 +111,7 @@ export function ButtonOutline() {
 
 <ExamplePreview>
   <ButtonSecondary slug={props.slug} client:load slot="preview" />
-  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
 
 export function ButtonSecondary() {
   return <Button variant="secondary">Secondary</Button>
@@ -122,7 +122,7 @@ export function ButtonSecondary() {
 
 <ExamplePreview>
   <ButtonGhost slug={props.slug} client:load slot="preview" />
-  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
 
 export function ButtonGhost() {
   return <Button variant="ghost">Ghost</Button>
@@ -133,7 +133,7 @@ export function ButtonGhost() {
 
 <ExamplePreview>
   <ButtonDestructive slug={props.slug} client:load slot="preview" />
-  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
 
 export function ButtonDestructive() {
   return <Button variant="destructive">Destructive</Button>
@@ -144,7 +144,7 @@ export function ButtonDestructive() {
 
 <ExamplePreview>
   <ButtonLink slug={props.slug} client:load slot="preview" />
-  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
 
 export function ButtonLink() {
   return <Button variant="link">Link</Button>
@@ -155,7 +155,7 @@ export function ButtonLink() {
 
 <ExamplePreview>
   <ButtonIcon slug={props.slug} client:load slot="preview" />
-  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
 import { CircleFadingArrowUpIcon } from "lucide-react"
 
 export function ButtonIcon() {
@@ -173,7 +173,7 @@ export function ButtonIcon() {
 
 <ExamplePreview>
   <ButtonWithIcon slug={props.slug} client:load slot="preview" />
-  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
 import { GitBranchIcon } from "lucide-react"
 
 export function ButtonWithIcon() {
@@ -192,7 +192,7 @@ export function ButtonWithIcon() {
 
 <ExamplePreview>
   <ButtonRounded slug={props.slug} client:load slot="preview" />
-  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
 import { ArrowUpIcon } from "lucide-react"
 
 export function ButtonRounded() {
@@ -210,7 +210,7 @@ export function ButtonRounded() {
 
 <ExamplePreview>
   <ButtonAsChild slug={props.slug} client:load slot="preview" />
-  <Code slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
+  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
 
 export function ButtonAsChild() {
   return (

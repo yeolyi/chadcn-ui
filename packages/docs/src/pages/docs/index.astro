@@ -1,5 +1,5 @@
 ---
-import { Code } from "astro-expressive-code/components"
+import CodeBlock from "@/components/docs/CodeBlock.astro"
 
 import Docs from "@/layouts/Docs.astro"
 import { listButtonSlugs } from "@/lib/button-components"
@@ -38,7 +38,7 @@ const toc = [
           chadcn/ui는 shadcn/ui와 완전히 같은 API, props, 타입을 공유합니다. import 경로만 바꾸면
           모든 것이 그대로 작동합니다 — 다만 조금 다르게.
         </p>
-        <Code code={usage} lang="tsx" />
+        <CodeBlock code={usage} lang="tsx" />
         <h2 id="same-look-different-feel" class="scroll-m-24 pt-4 text-2xl font-semibold tracking-tight">같은 모습, 다른 느낌</h2>
         <p>
           모든 컴포넌트는 shadcn 원본과 시각적으로 동일합니다. 스타일링, variant, 사이즈 모두 같습니다.

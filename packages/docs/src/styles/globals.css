@@ -360,32 +360,25 @@
 }
 
 @layer components {
-  /* Suppress expressive-code's "Copied!" feedback tooltip; we swap the icon
-     to a check via [data-copied="true"] (toggled in Site.astro) instead. */
-  figure.expressive-code .copy .feedback {
-    display: none !important;
+  /* Shiki dual-theme: light is the inline default, dark is in CSS vars.
+     Switch by media query so OS preference picks the theme. */
+  @media (prefers-color-scheme: dark) {
+    .shiki,
+    .shiki span {
+      color: var(--shiki-dark) !important;
+      background-color: var(--shiki-dark-bg) !important;
+    }
   }
-  figure.expressive-code .copy button {
-    --button-size: 1.5rem !important;
-    width: 1.5rem !important;
-    height: 1.5rem !important;
+
+  /* CodeBlock copy button: clipboard ↔ check via [data-copied]. */
+  button[data-copy] [data-icon="check"] {
+    display: none;
   }
-  figure.expressive-code .copy button > div::before,
-  figure.expressive-code .copy button > div::after {
-    --button-size: 1.5rem !important;
+  button[data-copy][data-copied] [data-icon="clipboard"] {
+    display: none;
   }
-  /* Hide the original clipboard icon and show a check when copied. */
-  figure.expressive-code .copy button[data-copied="true"] > div {
-    background-image: none !important;
-  }
-  figure.expressive-code .copy button[data-copied="true"]::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 0.75rem;
+  button[data-copy][data-copied] [data-icon="check"] {
+    display: inline;
   }
 }
 

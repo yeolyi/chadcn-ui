@@ -1,5 +1,5 @@
 ---
-import { Code } from "astro-expressive-code/components"
+import CodeBlock from "@/components/docs/CodeBlock.astro"
 
 import { InstallTabs } from "@/components/docs/InstallTabs"
 import Docs from "@/layouts/Docs.astro"
@@ -45,7 +45,7 @@ const toc = [
         <p class="text-[0.95rem] leading-7 text-muted-foreground">
           Import the stylesheet and components directly. The API is identical to shadcn/ui.
         </p>
-        <Code code={usage} lang="tsx" />
+        <CodeBlock code={usage} lang="tsx" />
       </section>
     </div>
   </div>

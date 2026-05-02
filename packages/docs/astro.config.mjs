@@ -1,7 +1,6 @@
 import { defineConfig } from "astro/config"
 import mdx from "@astrojs/mdx"
 import react from "@astrojs/react"
-import expressiveCode from "astro-expressive-code"
 import tailwindcss from "@tailwindcss/vite"
 
 export default defineConfig({
@@ -12,11 +11,7 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
-  integrations: [
-    expressiveCode(),
-    mdx(),
-    react(),
-  ],
+  integrations: [mdx(), react()],
   vite: {
     plugins: [tailwindcss()],
   },

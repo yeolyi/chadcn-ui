@@ -66,12 +66,13 @@ const fullTitle = title ? `${title} - ${siteConfig.name}` : siteConfig.name
       import { inject } from "@vercel/analytics"
       inject()
 
-      // After clicking an expressive-code copy button, briefly mark it as
-      // copied so CSS can swap the icon to a check (~2s), then clear.
+      // CodeBlock copy buttons: write to clipboard, swap to check icon for ~2s.
       document.addEventListener("click", (e) => {
-        const target = e.target as HTMLElement | null
-        const btn = target?.closest<HTMLButtonElement>("figure.expressive-code .copy button")
+        const btn = (e.target as HTMLElement | null)?.closest<HTMLButtonElement>(
+          "button[data-copy]",
+        )
         if (!btn) return
+        navigator.clipboard.writeText(btn.dataset.code ?? "")
         btn.dataset.copied = "true"
         setTimeout(() => btn.removeAttribute("data-copied"), 2000)
       })

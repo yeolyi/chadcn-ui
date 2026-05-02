@@ -1,5 +1,5 @@
 ---
-import { Code } from "astro-expressive-code/components"
+import CodeBlock from "@/components/docs/CodeBlock.astro"
 
 import Docs from "@/layouts/Docs.astro"
 import { listButtonSlugs } from "@/lib/button-components"
@@ -38,7 +38,7 @@ const toc = [
           chadcn/ui shares the exact same API, props, and types as shadcn/ui. Swap your import path
           and everything still works — just differently.
         </p>
-        <Code code={usage} lang="tsx" />
+        <CodeBlock code={usage} lang="tsx" />
         <h2 id="same-look-different-feel" class="scroll-m-24 pt-4 text-2xl font-semibold tracking-tight">Same Look, Different Feel</h2>
         <p>
           Every component is visually identical to its shadcn original. The styling, variants, and
