@@ -2,7 +2,6 @@
 import { GitHubLink } from "@/components/GitHubLink"
 import { HomeLink } from "@/components/HomeLink"
 import { MobileNav } from "@/components/MobileNav"
-import { ModeToggle } from "@/components/ModeToggle"
 
 let stars = ""
 try {
@@ -19,8 +18,6 @@ try {
       <MobileNav client:load />
       <HomeLink />
       <div class="ml-auto flex items-center gap-2">
-        <ModeToggle client:load />
-        <span class="h-4 w-px bg-border" data-slot="separator"></span>
         <GitHubLink stars={stars} />
       </div>
     </div>

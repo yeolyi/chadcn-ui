@@ -24,7 +24,8 @@ const fullTitle = title ? `${title} - ${siteConfig.name}` : siteConfig.name
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content={META_THEME_COLORS.light} />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content={META_THEME_COLORS.light} />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content={META_THEME_COLORS.dark} />
     <meta name="description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={fullTitle} />
@@ -50,19 +51,6 @@ const fullTitle = title ? `${title} - ${siteConfig.name}` : siteConfig.name
       }
     </style>
 
-    <script is:inline>
-      try {
-        const stored = localStorage.theme
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
-        const isDark = stored === "dark" || (!stored && prefersDark)
-        document.documentElement.classList.toggle("dark", isDark)
-        if (isDark) {
-          document
-            .querySelector('meta[name="theme-color"]')
-            ?.setAttribute("content", "#09090b")
-        }
-      } catch {}
-    </script>
   </head>
   <body
     class="group/body overscroll-none bg-background text-foreground antialiased [--footer-height:calc(var(--spacing)*14)] [--header-height:calc(var(--spacing)*14)] xl:[--footer-height:calc(var(--spacing)*24)]"
