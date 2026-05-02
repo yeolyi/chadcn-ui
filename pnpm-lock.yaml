@@ -11,10 +11,6 @@ overrides:
 importers:
 
   .:
-    dependencies:
-      turbo:
-        specifier: ^1.9.9
-        version: 1.13.4
     devDependencies:
       '@biomejs/biome':
         specifier: ^2.4.7
@@ -27,13 +23,13 @@ importers:
     dependencies:
       '@astrojs/react':
         specifier: ^4.4.1
-        version: 4.4.2(@types/node@20.19.10)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(jiti@2.6.1)(lightningcss@1.31.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tsx@4.21.0)(yaml@2.8.3)
+        version: 4.4.2(@types/node@20.19.10)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(jiti@2.6.1)(lightningcss@1.32.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tsx@4.21.0)(yaml@2.8.3)
       '@chadcn/ui':
         specifier: workspace:^
         version: link:../ui
       '@tailwindcss/vite':
         specifier: ^4.1.16
-        version: 4.2.4(vite@6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.3))
+        version: 4.2.4(vite@6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.3))
       '@types/react':
         specifier: 19.2.2
         version: 19.2.2
@@ -45,10 +41,10 @@ importers:
         version: 2.0.1(next@16.1.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)
       astro:
         specifier: ^5.16.0
-        version: 5.18.1(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.31.1)(rollup@4.46.2)(tsx@4.21.0)(typescript@5.9.2)(yaml@2.8.3)
+        version: 5.18.1(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.46.2)(tsx@4.21.0)(typescript@5.9.2)(yaml@2.8.3)
       astro-expressive-code:
         specifier: ^0.41.4
-        version: 0.41.7(astro@5.18.1(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.31.1)(rollup@4.46.2)(tsx@4.21.0)(typescript@5.9.2)(yaml@2.8.3))
+        version: 0.41.7(astro@5.18.1(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.46.2)(tsx@4.21.0)(typescript@5.9.2)(yaml@2.8.3))
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -2102,11 +2098,6 @@ packages:
   base-64@1.0.0:
     resolution: {integrity: sha512-kwDPIFCGx0NZHog36dj+tHiwP4QMzsZ3AgMViUBKI0+V5n4U0ufTCUMhnQ04diaRI8EX/QcPfql7zlhZ7j4zgg==}
 
-  baseline-browser-mapping@2.10.0:
-    resolution: {integrity: sha512-lIyg0szRfYbiy67j9KN8IyeD7q7hcmqnJ1ddWmNt19ItGpNN64mnllmxUNFIOdOm6by97jlL6wfpTTJrmnjWAA==}
-    engines: {node: '>=6.0.0'}
-    hasBin: true
-
   baseline-browser-mapping@2.10.24:
     resolution: {integrity: sha512-I2NkZOOrj2XuguvWCK6OVh9GavsNjZjK908Rq3mIBK25+GD8vPX5w2WdxVqnQ7xx3SrZJiCiZFu+/Oz50oSYSA==}
     engines: {node: '>=6.0.0'}
@@ -2143,9 +2134,6 @@ packages:
   camelcase@8.0.0:
     resolution: {integrity: sha512-8WB3Jcas3swSvjIeA2yvCJ+Miyz5l1ZmB6HFb9R1317dt9LCQoswg/BGrmAmkWVEszSrrg4RwmO46qIm2OEnSA==}
     engines: {node: '>=16'}
-
-  caniuse-lite@1.0.30001759:
-    resolution: {integrity: sha512-Pzfx9fOKoKvevQf8oCXoyNRQ5QyxJj+3O0Rqx2V5oxT61KGx8+n6hV/IUyJeifUci2clnmmKVpvtiqRzgiWjSw==}
 
   caniuse-lite@1.0.30001791:
     resolution: {integrity: sha512-yk0l/YSrOnFZk3UROpDLQD9+kC1l4meK/wed583AXrzoarMGJcbRi2Q4RaUYbKxYAsZ8sWmaSa/DsLmdBeI1vQ==}
@@ -3408,40 +3396,6 @@ packages:
     engines: {node: '>=18.0.0'}
     hasBin: true
 
-  turbo-darwin-64@1.13.4:
-    resolution: {integrity: sha512-A0eKd73R7CGnRinTiS7txkMElg+R5rKFp9HV7baDiEL4xTG1FIg/56Vm7A5RVgg8UNgG2qNnrfatJtb+dRmNdw==}
-    cpu: [x64]
-    os: [darwin]
-
-  turbo-darwin-arm64@1.13.4:
-    resolution: {integrity: sha512-eG769Q0NF6/Vyjsr3mKCnkG/eW6dKMBZk6dxWOdrHfrg6QgfkBUk0WUUujzdtVPiUIvsh4l46vQrNVd9EOtbyA==}
-    cpu: [arm64]
-    os: [darwin]
-
-  turbo-linux-64@1.13.4:
-    resolution: {integrity: sha512-Bq0JphDeNw3XEi+Xb/e4xoKhs1DHN7OoLVUbTIQz+gazYjigVZvtwCvgrZI7eW9Xo1eOXM2zw2u1DGLLUfmGkQ==}
-    cpu: [x64]
-    os: [linux]
-
-  turbo-linux-arm64@1.13.4:
-    resolution: {integrity: sha512-BJcXw1DDiHO/okYbaNdcWN6szjXyHWx9d460v6fCHY65G8CyqGU3y2uUTPK89o8lq/b2C8NK0yZD+Vp0f9VoIg==}
-    cpu: [arm64]
-    os: [linux]
-
-  turbo-windows-64@1.13.4:
-    resolution: {integrity: sha512-OFFhXHOFLN7A78vD/dlVuuSSVEB3s9ZBj18Tm1hk3aW1HTWTuAw0ReN6ZNlVObZUHvGy8d57OAGGxf2bT3etQw==}
-    cpu: [x64]
-    os: [win32]
-
-  turbo-windows-arm64@1.13.4:
-    resolution: {integrity: sha512-u5A+VOKHswJJmJ8o8rcilBfU5U3Y1TTAfP9wX8bFh8teYF1ghP0EhtMRLjhtp6RPa+XCxHHVA2CiC3gbh5eg5g==}
-    cpu: [arm64]
-    os: [win32]
-
-  turbo@1.13.4:
-    resolution: {integrity: sha512-1q7+9UJABuBAHrcC4Sxp5lOqYS5mvxRrwa33wpIyM18hlOCpRD/fTJNxZ0vhbMcJmz15o9kkVm743mPn7p6jpQ==}
-    hasBin: true
-
   tw-animate-css@1.4.0:
     resolution: {integrity: sha512-7bziOlRqH0hJx80h/3mbicLW7o8qLsH5+RaLR2t+OHM3D0JlWGODQKQ4cxbK7WlvmUxpcj6Kgu6EKqjrGFe3QQ==}
 
@@ -3763,15 +3717,15 @@ snapshots:
     dependencies:
       prismjs: 1.30.0
 
-  '@astrojs/react@4.4.2(@types/node@20.19.10)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(jiti@2.6.1)(lightningcss@1.31.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tsx@4.21.0)(yaml@2.8.3)':
+  '@astrojs/react@4.4.2(@types/node@20.19.10)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(jiti@2.6.1)(lightningcss@1.32.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tsx@4.21.0)(yaml@2.8.3)':
     dependencies:
       '@types/react': 19.2.2
       '@types/react-dom': 19.2.2(@types/react@19.2.2)
-      '@vitejs/plugin-react': 4.7.0(vite@6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.3))
+      '@vitejs/plugin-react': 4.7.0(vite@6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.3))
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
       ultrahtml: 1.6.0
-      vite: 6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.3)
+      vite: 6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.3)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
@@ -5371,12 +5325,12 @@ snapshots:
       '@tailwindcss/oxide-win32-arm64-msvc': 4.2.4
       '@tailwindcss/oxide-win32-x64-msvc': 4.2.4
 
-  '@tailwindcss/vite@4.2.4(vite@6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.3))':
+  '@tailwindcss/vite@4.2.4(vite@6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
       '@tailwindcss/node': 4.2.4
       '@tailwindcss/oxide': 4.2.4
       tailwindcss: 4.2.4
-      vite: 6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.3)
+      vite: 6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.3)
 
   '@types/babel__core@7.20.5':
     dependencies:
@@ -5441,7 +5395,7 @@ snapshots:
       next: 16.1.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       react: 19.2.3
 
-  '@vitejs/plugin-react@4.7.0(vite@6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.3))':
+  '@vitejs/plugin-react@4.7.0(vite@6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.29.0)
@@ -5449,7 +5403,7 @@ snapshots:
       '@rolldown/pluginutils': 1.0.0-beta.27
       '@types/babel__core': 7.20.5
       react-refresh: 0.17.0
-      vite: 6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.3)
+      vite: 6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.3)
     transitivePeerDependencies:
       - supports-color
 
@@ -5486,12 +5440,12 @@ snapshots:
 
   array-iterate@2.0.1: {}
 
-  astro-expressive-code@0.41.7(astro@5.18.1(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.31.1)(rollup@4.46.2)(tsx@4.21.0)(typescript@5.9.2)(yaml@2.8.3)):
+  astro-expressive-code@0.41.7(astro@5.18.1(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.46.2)(tsx@4.21.0)(typescript@5.9.2)(yaml@2.8.3)):
     dependencies:
-      astro: 5.18.1(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.31.1)(rollup@4.46.2)(tsx@4.21.0)(typescript@5.9.2)(yaml@2.8.3)
+      astro: 5.18.1(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.46.2)(tsx@4.21.0)(typescript@5.9.2)(yaml@2.8.3)
       rehype-expressive-code: 0.41.7
 
-  astro@5.18.1(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.31.1)(rollup@4.46.2)(tsx@4.21.0)(typescript@5.9.2)(yaml@2.8.3):
+  astro@5.18.1(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.46.2)(tsx@4.21.0)(typescript@5.9.2)(yaml@2.8.3):
     dependencies:
       '@astrojs/compiler': 2.13.1
       '@astrojs/internal-helpers': 0.7.6
@@ -5548,8 +5502,8 @@ snapshots:
       unist-util-visit: 5.0.0
       unstorage: 1.17.5
       vfile: 6.0.3
-      vite: 6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.3)
-      vitefu: 1.1.3(vite@6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.3))
+      vite: 6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.3)
+      vitefu: 1.1.3(vite@6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.3))
       xxhash-wasm: 1.1.0
       yargs-parser: 21.1.1
       yocto-spinner: 0.2.3
@@ -5601,9 +5555,6 @@ snapshots:
 
   base-64@1.0.0: {}
 
-  baseline-browser-mapping@2.10.0:
-    optional: true
-
   baseline-browser-mapping@2.10.24: {}
 
   bcp-47-match@2.0.3: {}
@@ -5641,9 +5592,6 @@ snapshots:
   cac@6.7.14: {}
 
   camelcase@8.0.0: {}
-
-  caniuse-lite@1.0.30001759:
-    optional: true
 
   caniuse-lite@1.0.30001791: {}
 
@@ -6621,8 +6569,8 @@ snapshots:
     dependencies:
       '@next/env': 16.1.6
       '@swc/helpers': 0.5.15
-      baseline-browser-mapping: 2.10.0
-      caniuse-lite: 1.0.30001759
+      baseline-browser-mapping: 2.10.24
+      caniuse-lite: 1.0.30001791
       postcss: 8.4.31
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
@@ -7221,33 +7169,6 @@ snapshots:
       fsevents: 2.3.3
     optional: true
 
-  turbo-darwin-64@1.13.4:
-    optional: true
-
-  turbo-darwin-arm64@1.13.4:
-    optional: true
-
-  turbo-linux-64@1.13.4:
-    optional: true
-
-  turbo-linux-arm64@1.13.4:
-    optional: true
-
-  turbo-windows-64@1.13.4:
-    optional: true
-
-  turbo-windows-arm64@1.13.4:
-    optional: true
-
-  turbo@1.13.4:
-    optionalDependencies:
-      turbo-darwin-64: 1.13.4
-      turbo-darwin-arm64: 1.13.4
-      turbo-linux-64: 1.13.4
-      turbo-linux-arm64: 1.13.4
-      turbo-windows-64: 1.13.4
-      turbo-windows-arm64: 1.13.4
-
   tw-animate-css@1.4.0: {}
 
   type-fest@4.41.0: {}
@@ -7379,7 +7300,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vite@6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.3):
+  vite@6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.3):
     dependencies:
       esbuild: 0.25.12
       fdir: 6.5.0(picomatch@4.0.3)
@@ -7391,13 +7312,13 @@ snapshots:
       '@types/node': 20.19.10
       fsevents: 2.3.3
       jiti: 2.6.1
-      lightningcss: 1.31.1
+      lightningcss: 1.32.0
       tsx: 4.21.0
       yaml: 2.8.3
 
-  vitefu@1.1.3(vite@6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.3)):
+  vitefu@1.1.3(vite@6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.3)):
     optionalDependencies:
-      vite: 6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.3)
+      vite: 6.4.2(@types/node@20.19.10)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.3)
 
   web-namespaces@2.0.1: {}
 
