@@ -85,16 +85,16 @@ export function Button({
   const [solved, setSolved] = React.useState(false)
   const buttonRef = React.useRef<HTMLButtonElement>(null)
   const shakeAnimRef = React.useRef<Animation | null>(null)
-  const pressTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null)
-  const pressOriginRef = React.useRef<{ x: number; y: number } | null>(null)
-  const longPressedRef = React.useRef(false)
+  const pendingTapRef = React.useRef<{
+    index: number
+    timer: ReturnType<typeof setTimeout>
+  } | null>(null)
 
-  const cancelPress = React.useCallback(() => {
-    if (pressTimerRef.current !== null) {
-      clearTimeout(pressTimerRef.current)
-      pressTimerRef.current = null
+  const clearPendingTap = React.useCallback(() => {
+    if (pendingTapRef.current) {
+      clearTimeout(pendingTapRef.current.timer)
+      pendingTapRef.current = null
     }
-    pressOriginRef.current = null
   }, [])
 
   const setRefs = React.useCallback(
@@ -109,9 +109,9 @@ export function Button({
   React.useEffect(
     () => () => {
       shakeAnimRef.current?.cancel()
-      cancelPress()
+      clearPendingTap()
     },
-    [cancelPress],
+    [clearPendingTap],
   )
 
   React.useLayoutEffect(() => {
@@ -175,45 +175,23 @@ export function Button({
     setBoard(next)
   }
 
-  const handleCellPointerDown = (i: number) => (e: React.PointerEvent) => {
-    e.stopPropagation()
-    if (e.button === 2) return
-    longPressedRef.current = false
-    cancelPress()
-    pressOriginRef.current = { x: e.clientX, y: e.clientY }
-    pressTimerRef.current = setTimeout(() => {
-      pressTimerRef.current = null
-      longPressedRef.current = true
-      toggleFlag(i)
-    }, 400)
-  }
-
-  const handleCellPointerMove = (e: React.PointerEvent) => {
-    const origin = pressOriginRef.current
-    if (!origin || pressTimerRef.current === null) return
-    const dx = e.clientX - origin.x
-    const dy = e.clientY - origin.y
-    if (Math.hypot(dx, dy) > 6) cancelPress()
-  }
-
-  const handleCellPointerEnd = () => cancelPress()
-
   const handleCellClick = (i: number) => (e: React.MouseEvent) => {
     e.stopPropagation()
     e.preventDefault()
-    if (longPressedRef.current) {
-      longPressedRef.current = false
+    const pending = pendingTapRef.current
+    if (pending && pending.index === i) {
+      clearPendingTap()
+      toggleFlag(i)
       return
     }
-    reveal(i)
-  }
-
-  const handleCellContextMenu = (i: number) => (e: React.MouseEvent) => {
-    e.stopPropagation()
-    e.preventDefault()
-    cancelPress()
-    longPressedRef.current = true
-    toggleFlag(i)
+    clearPendingTap()
+    pendingTapRef.current = {
+      index: i,
+      timer: setTimeout(() => {
+        pendingTapRef.current = null
+        reveal(i)
+      }, 220),
+    }
   }
 
   const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -281,11 +259,6 @@ export function Button({
                 key={i}
                 role="button"
                 tabIndex={-1}
-                onPointerDown={handleCellPointerDown(i)}
-                onPointerMove={handleCellPointerMove}
-                onPointerUp={handleCellPointerEnd}
-                onPointerCancel={handleCellPointerEnd}
-                onPointerLeave={handleCellPointerEnd}
                 onClick={handleCellClick(i)}
                 onContextMenu={handleCellContextMenu(i)}
                 style={{
