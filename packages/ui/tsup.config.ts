@@ -12,6 +12,7 @@ export default defineConfig({
     "button/gacha": "src/button/gacha.tsx",
     "button/paranoia": "src/button/paranoia.tsx",
     "button/anchor": "src/button/anchor.tsx",
+    "button/benjamin": "src/button/benjamin.tsx",
   },
   format: ["esm", "cjs"],
   dts: true,

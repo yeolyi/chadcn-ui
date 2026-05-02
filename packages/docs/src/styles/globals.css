@@ -3,6 +3,22 @@
 
 @source "../../../ui/src/**/*.{ts,tsx}";
 
+@font-face {
+  font-family: "Silkscreen";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("/fonts/silkscreen-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Silkscreen";
+  font-style: normal;
+  font-weight: 700;
+  font-display: block;
+  src: url("/fonts/silkscreen-700.woff2") format("woff2");
+}
+
 @custom-variant fixed (&:is(.layout-fixed *));
 
 @theme inline {

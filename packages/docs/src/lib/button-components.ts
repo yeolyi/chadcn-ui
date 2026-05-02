@@ -15,6 +15,7 @@ import { Button as Sponsored } from "@chadcn/ui/button/sponsored"
 import { Button as Gacha } from "@chadcn/ui/button/gacha"
 import { Button as Paranoia } from "@chadcn/ui/button/paranoia"
 import { Button as Anchor } from "@chadcn/ui/button/anchor"
+import { Button as Benjamin } from "@chadcn/ui/button/benjamin"
 import { Button as Shy } from "@chadcn/ui/button/shy"
 
 import type { Locale } from "@/i18n/strings"
@@ -51,6 +52,7 @@ export const buttonComponents = {
   gacha: withToast(Gacha),
   paranoia: withToast(Paranoia),
   anchor: withToast(Anchor),
+  benjamin: withToast(Benjamin),
 } satisfies Record<string, ComponentType<ButtonProps>>
 
 // Slug → prose. Used at SSG only; not shipped to the client demos.
@@ -143,6 +145,16 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
     description: {
       ko: "클릭이 발생할 때마다 추가 확인 단계가 뒤따릅니다. 사용자의 결정이 충분히 단호한지 다단계에 걸쳐 검증되며, 모든 단계를 통과할 때에 한해 본래 의도하신 동작이 실행됩니다. 이전 단계의 버튼은 진행과 함께 자동으로 비활성화됩니다.",
       en: "Each click is followed by an additional verification step. The user's decision is validated across a multi-stage cascade and the originally intended action runs only after every stage has been cleared. Earlier buttons disable themselves as the cascade advances.",
+    },
+  },
+  benjamin: {
+    tagline: {
+      ko: "시간을 거꾸로 거슬러 가는 버튼",
+      en: "A button that travels backward in time",
+    },
+    description: {
+      ko: "벤자민 버튼처럼, 클릭할 때마다 버튼은 한 시대씩 과거의 디자인으로 회귀합니다.",
+      en: "Like Benjamin Button, each click rewinds the design by one era.",
     },
   },
 }

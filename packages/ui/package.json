@@ -57,6 +57,11 @@
       "import": "./dist/button/anchor.js",
       "require": "./dist/button/anchor.cjs"
     },
+    "./button/benjamin": {
+      "types": "./dist/button/benjamin.d.ts",
+      "import": "./dist/button/benjamin.js",
+      "require": "./dist/button/benjamin.cjs"
+    },
     "./styles.css": "./dist/styles.css"
   },
   "files": [
