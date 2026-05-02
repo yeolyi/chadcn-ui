@@ -1,7 +1,7 @@
 // Chad components (modified behavior)
-// Top-level Button is an alias for the "escape" variant.
+// Top-level Button is an alias for the "shy" variant.
 // Use subpath imports for explicit variant selection: @chadcn/ui/button/<slug>
-export { Button, buttonVariants } from "./button/escape"
+export { Button, buttonVariants } from "./button/shy"
 export { Input } from "./input"
 export {
   Select,

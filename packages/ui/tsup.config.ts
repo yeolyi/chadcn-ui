@@ -3,7 +3,7 @@ import { defineConfig } from "tsup"
 export default defineConfig({
   entry: {
     index: "src/index.ts",
-    "button/escape": "src/button/escape.tsx",
+    "button/shy": "src/button/shy.tsx",
   },
   format: ["esm", "cjs"],
   dts: true,

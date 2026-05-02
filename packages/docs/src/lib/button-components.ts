@@ -6,7 +6,7 @@
 
 import type { ComponentType } from "react"
 
-import { Button as Escape } from "@chadcn/ui/button/escape"
+import { Button as Shy } from "@chadcn/ui/button/shy"
 
 import type { Locale } from "@/i18n/strings"
 
@@ -19,12 +19,12 @@ interface ButtonVariantInfo {
 
 // Slug → React component. Demos hydrate via this map (small bundle, just refs).
 export const buttonComponents = {
-  escape: Escape,
-} satisfies Record<string, ComponentType<Parameters<typeof Escape>[0]>>
+  shy: Shy,
+} satisfies Record<string, ComponentType<Parameters<typeof Shy>[0]>>
 
 // Slug → prose. Used at SSG only; not shipped to the client demos.
 const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
-  escape: {
+  shy: {
     tagline: {
       ko: "잘못된 클릭을 막아주는 버튼",
       en: "A button that prevents accidental clicks",

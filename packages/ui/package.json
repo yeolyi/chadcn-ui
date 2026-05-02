@@ -12,10 +12,10 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./button/escape": {
-      "types": "./dist/button/escape.d.ts",
-      "import": "./dist/button/escape.js",
-      "require": "./dist/button/escape.cjs"
+    "./button/shy": {
+      "types": "./dist/button/shy.d.ts",
+      "import": "./dist/button/shy.js",
+      "require": "./dist/button/shy.cjs"
     },
     "./styles.css": "./dist/styles.css"
   },
