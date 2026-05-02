@@ -43,3 +43,7 @@ tsconfig.tsbuildinfo
 .notes
 .playwright-mcp
 shadcn-workspace
+.vercel
+
+# scaffolding artifacts
+HANDOFF.md
