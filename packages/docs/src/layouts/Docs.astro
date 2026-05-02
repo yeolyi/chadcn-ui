@@ -1,0 +1,31 @@
+---
+import Sidebar from "@/components/Sidebar.astro"
+import Toc, { type TocItem } from "@/components/Toc.astro"
+import Site from "@/layouts/Site.astro"
+
+interface Props {
+  title?: string
+  description?: string
+  toc?: TocItem[]
+}
+
+const { title, description, toc = [] } = Astro.props
+---
+
+<Site title={title} description={description}>
+  <div class="container-wrapper flex flex-1 flex-col px-2">
+    <div
+      class="min-h-min flex-1 items-start px-0 [--top-spacing:0] lg:grid lg:grid-cols-[18rem_minmax(0,1fr)] lg:[--top-spacing:calc(var(--spacing)*4)]"
+    >
+      <Sidebar />
+      <div class="flex h-full w-full">
+        <div class="min-w-0 flex-1"><slot /></div>
+        <div
+          class="sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[90svh] w-[220px] shrink-0 overflow-y-auto px-6 pt-10 xl:block"
+        >
+          <Toc items={toc} />
+        </div>
+      </div>
+    </div>
+  </div>
+</Site>

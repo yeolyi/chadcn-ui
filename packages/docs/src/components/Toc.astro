@@ -1,0 +1,53 @@
+---
+export interface TocItem {
+  id: string
+  text: string
+  depth: 2 | 3
+}
+
+interface Props {
+  items: TocItem[]
+}
+
+const { items } = Astro.props
+---
+
+{
+  items.length > 0 && (
+    <div class="flex flex-col gap-2 p-4 pt-0 text-sm" data-toc>
+      <p class="sticky top-0 h-6 bg-background text-xs font-medium text-muted-foreground">
+        목차
+      </p>
+      {items.map((item) => (
+        <a
+          href={`#${item.id}`}
+          data-depth={item.depth}
+          data-toc-id={item.id}
+          class="text-[0.8rem] leading-relaxed text-muted-foreground/60 no-underline transition-colors hover:text-foreground data-[active=true]:font-semibold data-[active=true]:text-foreground data-[depth=3]:pl-4"
+        >
+          {item.text}
+        </a>
+      ))}
+    </div>
+  )
+}
+
+<script>
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>("[data-toc-id]"))
+  if (links.length > 0) {
+    const update = () => {
+      const scrollY = window.scrollY + 100
+      let activeId = ""
+      for (const link of links) {
+        const id = link.dataset.tocId!
+        const el = document.getElementById(id)
+        if (el && el.offsetTop <= scrollY) activeId = id
+      }
+      for (const link of links) {
+        link.dataset.active = String(link.dataset.tocId === activeId)
+      }
+    }
+    update()
+    window.addEventListener("scroll", update, { passive: true })
+  }
+</script>

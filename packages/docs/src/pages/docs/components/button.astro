@@ -1,0 +1,283 @@
+---
+import { Code } from "astro-expressive-code/components"
+
+import ExamplePreview from "@/components/ExamplePreview.astro"
+import { InstallTabs } from "@/components/InstallTabs"
+import Docs from "@/layouts/Docs.astro"
+
+import { ButtonAsChild } from "@/demos/button/ButtonAsChild"
+import { ButtonDefault } from "@/demos/button/ButtonDefault"
+import { ButtonDestructive } from "@/demos/button/ButtonDestructive"
+import { ButtonGhost } from "@/demos/button/ButtonGhost"
+import { ButtonIcon } from "@/demos/button/ButtonIcon"
+import { ButtonLink } from "@/demos/button/ButtonLink"
+import { ButtonMain } from "@/demos/button/ButtonMain"
+import { ButtonOutline } from "@/demos/button/ButtonOutline"
+import { ButtonRounded } from "@/demos/button/ButtonRounded"
+import { ButtonSecondary } from "@/demos/button/ButtonSecondary"
+import { ButtonSize } from "@/demos/button/ButtonSize"
+import { ButtonWithIcon } from "@/demos/button/ButtonWithIcon"
+
+import mainSrc from "@/demos/button/ButtonMain.tsx?raw"
+import sizeSrc from "@/demos/button/ButtonSize.tsx?raw"
+import defaultSrc from "@/demos/button/ButtonDefault.tsx?raw"
+import outlineSrc from "@/demos/button/ButtonOutline.tsx?raw"
+import secondarySrc from "@/demos/button/ButtonSecondary.tsx?raw"
+import ghostSrc from "@/demos/button/ButtonGhost.tsx?raw"
+import destructiveSrc from "@/demos/button/ButtonDestructive.tsx?raw"
+import linkSrc from "@/demos/button/ButtonLink.tsx?raw"
+import iconSrc from "@/demos/button/ButtonIcon.tsx?raw"
+import withIconSrc from "@/demos/button/ButtonWithIcon.tsx?raw"
+import roundedSrc from "@/demos/button/ButtonRounded.tsx?raw"
+import asChildSrc from "@/demos/button/ButtonAsChild.tsx?raw"
+
+const cursorSnippet = `@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}`
+
+const toc = [
+  { id: "how-it-works", text: "동작 방식", depth: 2 as const },
+  { id: "installation", text: "설치", depth: 2 as const },
+  { id: "cursor", text: "커서", depth: 2 as const },
+  { id: "examples", text: "예제", depth: 2 as const },
+  { id: "size", text: "크기", depth: 3 as const },
+  { id: "default", text: "기본", depth: 3 as const },
+  { id: "outline", text: "아웃라인", depth: 3 as const },
+  { id: "secondary", text: "보조", depth: 3 as const },
+  { id: "ghost", text: "고스트", depth: 3 as const },
+  { id: "destructive", text: "위험", depth: 3 as const },
+  { id: "link", text: "링크", depth: 3 as const },
+  { id: "icon", text: "아이콘", depth: 3 as const },
+  { id: "with-icon", text: "아이콘 포함", depth: 3 as const },
+  { id: "rounded", text: "둥근 버튼", depth: 3 as const },
+  { id: "as-child", text: "자식 요소로", depth: 3 as const },
+  { id: "api-reference", text: "API 레퍼런스", depth: 2 as const },
+]
+---
+
+<Docs title="Button" description="오클릭 방지 기능이 내장된 버튼을 표시합니다." toc={toc}>
+  <div class="flex min-w-0 flex-1 flex-col">
+    <div class="h-(--top-spacing) shrink-0"></div>
+    <div class="mx-auto flex w-full max-w-[40rem] min-w-0 flex-1 flex-col gap-8 px-4 py-6 md:px-0 lg:py-8">
+      <div class="flex flex-col gap-2">
+        <h1 class="scroll-m-24 text-3xl font-semibold tracking-tight">Button</h1>
+        <p class="text-[1.05rem] text-muted-foreground sm:text-base">
+          오클릭 방지 기능이 내장된 버튼을 표시합니다.
+        </p>
+      </div>
+
+      <ExamplePreview>
+        <ButtonMain client:load slot="preview" />
+        <Code slot="code" code={mainSrc} lang="tsx" />
+      </ExamplePreview>
+
+      <section class="space-y-4">
+        <h2 id="how-it-works" class="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
+          동작 방식
+        </h2>
+        <p class="text-[0.95rem] leading-7 text-muted-foreground">
+          이 컴포넌트는 shadcn/ui Button과 동일한 props(
+          <code class="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">variant</code>,
+          <code class="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">size</code>,
+          <code class="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">asChild</code>
+          )를 받으며, 오클릭 방지 기능이 내장되어 있습니다. 호버 시 커서에서 멀어지는 방향으로
+          <code class="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">translate</code>를 사용해
+          재배치되므로 레이아웃에는 영향을 주지 않습니다. 2번 시도 후 제자리에 머뭅니다.
+        </p>
+      </section>
+
+      <section class="space-y-4">
+        <h2 id="installation" class="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
+          설치
+        </h2>
+        <InstallTabs
+          client:load
+          pkg="@chadcn/ui"
+          comingSoon
+          comingSoonLabel="준비 중"
+          comingSoonDescription="패키지가 아직 npm에 게시되지 않았습니다."
+        />
+      </section>
+
+      <section class="space-y-4">
+        <h2 id="cursor" class="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
+          커서
+        </h2>
+        <p class="text-[0.95rem] leading-7 text-muted-foreground">
+          Tailwind v4는 버튼 컴포넌트의 기본값을
+          <code class="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">cursor: pointer</code>에서
+          <code class="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">cursor: default</code>로
+          <a
+            href="https://tailwindcss.com/docs/upgrade-guide#buttons-use-the-default-cursor"
+            class="underline underline-offset-4 hover:text-foreground"
+            target="_blank"
+            rel="noreferrer">변경했습니다</a>.
+        </p>
+        <p class="text-[0.95rem] leading-7 text-muted-foreground">
+          포인터 커서를 유지하려면 CSS 파일에 다음 코드를 추가하세요.
+        </p>
+        <Code code={cursorSnippet} lang="css" title="globals.css" />
+      </section>
+
+      <section class="space-y-8">
+        <h2 id="examples" class="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
+          예제
+        </h2>
+
+        <div class="space-y-4">
+          <h3 id="size" class="text-lg font-semibold">크기</h3>
+          <p class="text-[0.95rem] text-muted-foreground">
+            <code class="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">size</code> prop으로 버튼
+            크기를 변경할 수 있습니다.
+          </p>
+          <ExamplePreview>
+            <ButtonSize client:load slot="preview" />
+            <Code slot="code" code={sizeSrc} lang="tsx" />
+          </ExamplePreview>
+        </div>
+
+        <div class="space-y-4">
+          <h3 id="default" class="text-lg font-semibold">기본</h3>
+          <ExamplePreview>
+            <ButtonDefault client:load slot="preview" />
+            <Code slot="code" code={defaultSrc} lang="tsx" />
+          </ExamplePreview>
+        </div>
+
+        <div class="space-y-4">
+          <h3 id="outline" class="text-lg font-semibold">아웃라인</h3>
+          <ExamplePreview>
+            <ButtonOutline client:load slot="preview" />
+            <Code slot="code" code={outlineSrc} lang="tsx" />
+          </ExamplePreview>
+        </div>
+
+        <div class="space-y-4">
+          <h3 id="secondary" class="text-lg font-semibold">보조</h3>
+          <ExamplePreview>
+            <ButtonSecondary client:load slot="preview" />
+            <Code slot="code" code={secondarySrc} lang="tsx" />
+          </ExamplePreview>
+        </div>
+
+        <div class="space-y-4">
+          <h3 id="ghost" class="text-lg font-semibold">고스트</h3>
+          <ExamplePreview>
+            <ButtonGhost client:load slot="preview" />
+            <Code slot="code" code={ghostSrc} lang="tsx" />
+          </ExamplePreview>
+        </div>
+
+        <div class="space-y-4">
+          <h3 id="destructive" class="text-lg font-semibold">위험</h3>
+          <ExamplePreview>
+            <ButtonDestructive client:load slot="preview" />
+            <Code slot="code" code={destructiveSrc} lang="tsx" />
+          </ExamplePreview>
+        </div>
+
+        <div class="space-y-4">
+          <h3 id="link" class="text-lg font-semibold">링크</h3>
+          <ExamplePreview>
+            <ButtonLink client:load slot="preview" />
+            <Code slot="code" code={linkSrc} lang="tsx" />
+          </ExamplePreview>
+        </div>
+
+        <div class="space-y-4">
+          <h3 id="icon" class="text-lg font-semibold">아이콘</h3>
+          <ExamplePreview>
+            <ButtonIcon client:load slot="preview" />
+            <Code slot="code" code={iconSrc} lang="tsx" />
+          </ExamplePreview>
+        </div>
+
+        <div class="space-y-4">
+          <h3 id="with-icon" class="text-lg font-semibold">아이콘 포함</h3>
+          <p class="text-[0.95rem] text-muted-foreground">
+            올바른 간격을 위해 아이콘에
+            <code class="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">data-icon="inline-start"</code>
+            또는
+            <code class="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">data-icon="inline-end"</code>
+            속성을 추가하세요.
+          </p>
+          <ExamplePreview>
+            <ButtonWithIcon client:load slot="preview" />
+            <Code slot="code" code={withIconSrc} lang="tsx" />
+          </ExamplePreview>
+        </div>
+
+        <div class="space-y-4">
+          <h3 id="rounded" class="text-lg font-semibold">둥근 버튼</h3>
+          <p class="text-[0.95rem] text-muted-foreground">
+            완전히 둥근 버튼을 만들려면
+            <code class="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">rounded-full</code>
+            클래스를 사용하세요.
+          </p>
+          <ExamplePreview>
+            <ButtonRounded client:load slot="preview" />
+            <Code slot="code" code={roundedSrc} lang="tsx" />
+          </ExamplePreview>
+        </div>
+
+        <div class="space-y-4">
+          <h3 id="as-child" class="text-lg font-semibold">자식 요소로</h3>
+          <p class="text-[0.95rem] text-muted-foreground">
+            <code class="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">&lt;Button /&gt;</code>의
+            <code class="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">asChild</code> prop을
+            사용하면 다른 컴포넌트를 버튼처럼 보이게 할 수 있습니다. 아래는 버튼처럼 보이는 링크
+            예시입니다.
+          </p>
+          <ExamplePreview>
+            <ButtonAsChild client:load slot="preview" />
+            <Code slot="code" code={asChildSrc} lang="tsx" />
+          </ExamplePreview>
+        </div>
+      </section>
+
+      <section class="space-y-4">
+        <h2 id="api-reference" class="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
+          API 레퍼런스
+        </h2>
+        <h3 class="text-lg font-semibold">Button</h3>
+        <p class="text-[0.95rem] text-muted-foreground">
+          <code class="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">Button</code> 컴포넌트는
+          다양한 스타일과 기능을 추가하는
+          <code class="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">button</code> 요소의
+          래퍼입니다.
+        </p>
+        <div class="overflow-x-auto rounded-xl border">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b bg-muted/50">
+                <th class="p-3 text-left font-medium">Prop</th>
+                <th class="p-3 text-left font-medium">타입</th>
+                <th class="p-3 text-left font-medium">기본값</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b">
+                <td class="p-3 font-mono text-sm">variant</td>
+                <td class="p-3 font-mono text-xs">"default" | "outline" | "ghost" | "destructive" | "secondary" | "link"</td>
+                <td class="p-3 font-mono text-sm">"default"</td>
+              </tr>
+              <tr class="border-b">
+                <td class="p-3 font-mono text-sm">size</td>
+                <td class="p-3 font-mono text-xs">"default" | "xs" | "sm" | "lg" | "icon" | "icon-xs" | "icon-sm" | "icon-lg"</td>
+                <td class="p-3 font-mono text-sm">"default"</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-mono text-sm">asChild</td>
+                <td class="p-3 font-mono text-xs">boolean</td>
+                <td class="p-3 font-mono text-sm">false</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+</Docs>

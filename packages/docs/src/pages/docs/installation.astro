@@ -1,0 +1,58 @@
+---
+import { Code } from "astro-expressive-code/components"
+
+import { InstallTabs } from "@/components/InstallTabs"
+import Docs from "@/layouts/Docs.astro"
+
+const usage = `import "@chadcn/ui/styles.css"
+
+import { Button } from "@chadcn/ui"`
+
+const toc = [
+  { id: "install", text: "설치", depth: 2 as const },
+  { id: "usage", text: "사용법", depth: 2 as const },
+]
+---
+
+<Docs
+  title="설치"
+  description="프로젝트에 chadcn/ui를 설치하는 방법."
+  toc={toc}
+>
+  <div class="flex min-w-0 flex-1 flex-col">
+    <div class="h-(--top-spacing) shrink-0"></div>
+    <div
+      class="mx-auto flex w-full max-w-[40rem] min-w-0 flex-1 flex-col gap-8 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300"
+    >
+      <div class="flex flex-col gap-2">
+        <h1 class="scroll-m-24 text-3xl font-semibold tracking-tight">설치</h1>
+        <p class="text-[1.05rem] text-muted-foreground sm:text-base">
+          프로젝트에 chadcn/ui를 설치하는 방법.
+        </p>
+      </div>
+
+      <section class="space-y-4">
+        <h2 id="install" class="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
+          설치
+        </h2>
+        <InstallTabs
+          client:load
+          pkg="@chadcn/ui"
+          comingSoon
+          comingSoonLabel="준비 중"
+          comingSoonDescription="패키지가 아직 npm에 게시되지 않았습니다."
+        />
+      </section>
+
+      <section class="space-y-4">
+        <h2 id="usage" class="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
+          사용법
+        </h2>
+        <p class="text-[0.95rem] leading-7 text-muted-foreground">
+          스타일시트와 컴포넌트를 직접 import하세요. API는 shadcn/ui와 동일합니다.
+        </p>
+        <Code code={usage} lang="tsx" />
+      </section>
+    </div>
+  </div>
+</Docs>

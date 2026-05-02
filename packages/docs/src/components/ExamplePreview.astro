@@ -1,0 +1,63 @@
+---
+interface Props {
+  className?: string
+  hasCode?: boolean
+}
+
+const { className = "", hasCode = true } = Astro.props
+---
+
+<div
+  data-slot="component-preview"
+  data-expanded="false"
+  class="group relative mt-4 mb-12 flex flex-col overflow-hidden rounded-xl border"
+>
+  <div class={`preview relative flex h-72 w-full items-center justify-center p-10 ${className}`}>
+    <slot name="preview" />
+  </div>
+
+  {
+    hasCode && (
+      <div data-slot="code" class="relative overflow-hidden">
+        <div data-collapsed class="relative max-h-24 overflow-hidden">
+          <div class="[&_pre]:!m-0 [&_figure]:!m-0 [&_figure]:!rounded-none [&_figure]:!border-t [&_figure]:!border-border">
+            <slot name="code" />
+          </div>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div
+              class="absolute inset-0"
+              style="background: linear-gradient(to top, var(--color-code), color-mix(in oklab, var(--color-code) 60%, transparent), transparent)"
+            />
+            <button
+              type="button"
+              data-toggle
+              class="relative z-10 inline-flex h-8 items-center justify-center gap-1.5 rounded-lg border bg-background px-3 text-sm font-medium text-foreground shadow-none hover:bg-muted"
+            >
+              코드 보기
+            </button>
+          </div>
+        </div>
+        <div data-expanded-pane class="hidden">
+          <div class="[&_pre]:!m-0 [&_figure]:!m-0 [&_figure]:!rounded-t-none [&_figure]:!border-t [&_figure]:!border-border [&_pre]:max-h-72">
+            <slot name="code" />
+          </div>
+        </div>
+      </div>
+    )
+  }
+</div>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>("[data-toggle]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const root = btn.closest<HTMLElement>("[data-slot='component-preview']")
+      if (!root) return
+      const collapsed = root.querySelector<HTMLElement>("[data-collapsed]")
+      const expanded = root.querySelector<HTMLElement>("[data-expanded-pane]")
+      if (collapsed && expanded) {
+        collapsed.classList.add("hidden")
+        expanded.classList.remove("hidden")
+      }
+    })
+  })
+</script>
