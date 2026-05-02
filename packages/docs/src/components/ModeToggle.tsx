@@ -13,7 +13,6 @@ export function ModeToggle({ className }: { className?: string }) {
   const toggle = React.useCallback(() => {
     const next = !document.documentElement.classList.contains("dark")
     document.documentElement.classList.toggle("dark", next)
-    document.documentElement.classList.toggle("light", !next)
     try {
       localStorage.theme = next ? "dark" : "light"
     } catch {}

@@ -15,7 +15,7 @@ const fullTitle = title ? `${title} - ${siteConfig.name}` : siteConfig.name
 ---
 
 <!doctype html>
-<html lang="en" class="light">
+<html lang="ko">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
@@ -55,7 +55,6 @@ const fullTitle = title ? `${title} - ${siteConfig.name}` : siteConfig.name
         const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
         const isDark = stored === "dark" || (!stored && prefersDark)
         document.documentElement.classList.toggle("dark", isDark)
-        document.documentElement.classList.toggle("light", !isDark)
         if (isDark) {
           document
             .querySelector('meta[name="theme-color"]')
