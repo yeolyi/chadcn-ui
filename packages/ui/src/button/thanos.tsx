@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { createPortal } from "react-dom"
 
 import { ButtonBase, type ButtonBaseProps, buttonVariants } from "./base"
 
@@ -60,6 +61,8 @@ export function Button({
 }: ButtonBaseProps) {
   const [state, setState] = React.useState<{
     rect: DOMRect
+    scrollX: number
+    scrollY: number
     particles: Particle[]
     color: string
   } | null>(null)
@@ -112,7 +115,13 @@ export function Button({
         }
       }
 
-      setState({ rect, particles, color: pickColor(btn) })
+      setState({
+        rect,
+        scrollX: window.scrollX,
+        scrollY: window.scrollY,
+        particles,
+        color: pickColor(btn),
+      })
     },
     [onMouseEnter, state],
   )
@@ -174,20 +183,21 @@ export function Button({
         }}
         {...props}
       />
-      {state && (
+      {state && typeof document !== "undefined" && createPortal(
         <canvas
           ref={canvasRef}
           aria-hidden
           style={{
-            position: "fixed",
-            left: state.rect.left - PAD,
-            top: state.rect.top - PAD,
+            position: "absolute",
+            left: state.rect.left + state.scrollX - PAD,
+            top: state.rect.top + state.scrollY - PAD,
             width: state.rect.width + PAD * 2,
             height: state.rect.height + PAD * 2,
             pointerEvents: "none",
             zIndex: 50,
           }}
-        />
+        />,
+        document.body,
       )}
     </>
   )
