@@ -260,7 +260,6 @@ export function Button({
                 role="button"
                 tabIndex={-1}
                 onClick={handleCellClick(i)}
-                onContextMenu={handleCellContextMenu(i)}
                 style={{
                   background: bg,
                   display: "flex",

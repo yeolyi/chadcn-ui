@@ -71,7 +71,7 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
     },
     description: {
       ko: "버튼 표면에 작은 안전 점검 절차가 내장되어 있습니다. 폭탄을 피해 모든 안전 영역을 확인해야만 진짜 동작이 활성화됩니다. 의심 영역에는 더블 클릭으로 깃발을 표시할 수 있습니다.",
-      en: "A small safety check is embedded across the button surface. Only after every safe region is verified — without striking a mine — does the real action become available. Suspected regions can be flagged via right-click on desktop, or a double tap on mobile.",
+      en: "A small safety check is embedded across the button surface. Only after every safe region is verified — without striking a mine — does the real action become available. Suspected regions can be flagged with a double click.",
     },
   },
   flinch: {
