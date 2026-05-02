@@ -4,6 +4,8 @@ export default defineConfig({
   entry: {
     index: "src/index.ts",
     "button/shy": "src/button/shy.tsx",
+    "button/thanos": "src/button/thanos.tsx",
+    "button/mash": "src/button/mash.tsx",
   },
   format: ["esm", "cjs"],
   dts: true,

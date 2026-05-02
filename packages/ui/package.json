@@ -17,6 +17,16 @@
       "import": "./dist/button/shy.js",
       "require": "./dist/button/shy.cjs"
     },
+    "./button/thanos": {
+      "types": "./dist/button/thanos.d.ts",
+      "import": "./dist/button/thanos.js",
+      "require": "./dist/button/thanos.cjs"
+    },
+    "./button/mash": {
+      "types": "./dist/button/mash.d.ts",
+      "import": "./dist/button/mash.js",
+      "require": "./dist/button/mash.cjs"
+    },
     "./styles.css": "./dist/styles.css"
   },
   "files": [
