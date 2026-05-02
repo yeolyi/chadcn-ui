@@ -1,0 +1,16 @@
+---
+title: Escape Button
+author: "@yeol.dev"
+---
+
+Repositions itself away from the cursor on hover, making it harder to click.
+After two attempts it stays in place so you can finally click it.
+
+## How it works
+
+Movement is purely visual via `translate` — the layout is not affected.
+Keyboard and screen reader users are not affected and can click normally.
+
+- First attempt: picks 1 of 16 random angles farthest from the cursor
+- Second attempt: same algorithm, runs again
+- Third attempt: gives up and snaps back to the original position

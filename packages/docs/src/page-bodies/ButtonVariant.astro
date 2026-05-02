@@ -1,0 +1,306 @@
+---
+import { Code } from "astro-expressive-code/components"
+import { render } from "astro:content"
+
+import ExamplePreview from "@/components/ExamplePreview.astro"
+import { InstallTabs } from "@/components/InstallTabs"
+import VariantSelector from "@/components/VariantSelector.astro"
+import { ButtonAsChild } from "@/demos/button/ButtonAsChild"
+import { ButtonDefault } from "@/demos/button/ButtonDefault"
+import { ButtonDestructive } from "@/demos/button/ButtonDestructive"
+import { ButtonGhost } from "@/demos/button/ButtonGhost"
+import { ButtonIcon } from "@/demos/button/ButtonIcon"
+import { ButtonLink } from "@/demos/button/ButtonLink"
+import { ButtonMain } from "@/demos/button/ButtonMain"
+import { ButtonOutline } from "@/demos/button/ButtonOutline"
+import { ButtonRounded } from "@/demos/button/ButtonRounded"
+import { ButtonSecondary } from "@/demos/button/ButtonSecondary"
+import { ButtonSize } from "@/demos/button/ButtonSize"
+import { ButtonWithIcon } from "@/demos/button/ButtonWithIcon"
+import { t } from "@/i18n/strings"
+import Docs from "@/layouts/Docs.astro"
+import { buttonComponents } from "@/lib/button-components"
+import { findVariant } from "@/lib/variants"
+
+import mainSrc from "@/demos/button/ButtonMain.tsx?raw"
+import sizeSrc from "@/demos/button/ButtonSize.tsx?raw"
+import defaultSrc from "@/demos/button/ButtonDefault.tsx?raw"
+import outlineSrc from "@/demos/button/ButtonOutline.tsx?raw"
+import secondarySrc from "@/demos/button/ButtonSecondary.tsx?raw"
+import ghostSrc from "@/demos/button/ButtonGhost.tsx?raw"
+import destructiveSrc from "@/demos/button/ButtonDestructive.tsx?raw"
+import linkSrc from "@/demos/button/ButtonLink.tsx?raw"
+import iconSrc from "@/demos/button/ButtonIcon.tsx?raw"
+import withIconSrc from "@/demos/button/ButtonWithIcon.tsx?raw"
+import roundedSrc from "@/demos/button/ButtonRounded.tsx?raw"
+import asChildSrc from "@/demos/button/ButtonAsChild.tsx?raw"
+
+interface Props {
+  slug: string
+}
+
+const { slug } = Astro.props
+const locale = Astro.currentLocale ?? "ko"
+const s = t(locale)
+
+const found = await findVariant("button", slug, locale)
+if (!found) {
+  return Astro.redirect(locale === "en" ? "/en/" : "/")
+}
+const { entry, isFallback } = found
+const { Content } = await render(entry)
+const Button = buttonComponents[slug]
+
+const cursorSnippet = `@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}`
+
+const tocBase = locale === "en"
+  ? [
+      { id: "installation", text: s.installation, depth: 2 as const },
+      { id: "cursor", text: s.cursor, depth: 2 as const },
+      { id: "examples", text: s.examples, depth: 2 as const },
+      { id: "size", text: "Size", depth: 3 as const },
+      { id: "default", text: "Default", depth: 3 as const },
+      { id: "outline", text: "Outline", depth: 3 as const },
+      { id: "secondary", text: "Secondary", depth: 3 as const },
+      { id: "ghost", text: "Ghost", depth: 3 as const },
+      { id: "destructive", text: "Destructive", depth: 3 as const },
+      { id: "link", text: "Link", depth: 3 as const },
+      { id: "icon", text: "Icon", depth: 3 as const },
+      { id: "with-icon", text: "With Icon", depth: 3 as const },
+      { id: "rounded", text: "Rounded", depth: 3 as const },
+      { id: "as-child", text: "As Child", depth: 3 as const },
+      { id: "api-reference", text: s.apiReference, depth: 2 as const },
+    ]
+  : [
+      { id: "installation", text: s.installation, depth: 2 as const },
+      { id: "cursor", text: s.cursor, depth: 2 as const },
+      { id: "examples", text: s.examples, depth: 2 as const },
+      { id: "size", text: "크기", depth: 3 as const },
+      { id: "default", text: "기본", depth: 3 as const },
+      { id: "outline", text: "아웃라인", depth: 3 as const },
+      { id: "secondary", text: "보조", depth: 3 as const },
+      { id: "ghost", text: "고스트", depth: 3 as const },
+      { id: "destructive", text: "위험", depth: 3 as const },
+      { id: "link", text: "링크", depth: 3 as const },
+      { id: "icon", text: "아이콘", depth: 3 as const },
+      { id: "with-icon", text: "아이콘 포함", depth: 3 as const },
+      { id: "rounded", text: "둥근 버튼", depth: 3 as const },
+      { id: "as-child", text: "자식 요소로", depth: 3 as const },
+      { id: "api-reference", text: s.apiReference, depth: 2 as const },
+    ]
+
+const description = entry.data.title
+---
+
+<Docs title={`Button — ${entry.data.title}`} description={description} toc={tocBase}>
+  <div class="flex min-w-0 flex-1 flex-col">
+    <div class="h-(--top-spacing) shrink-0"></div>
+    <div class="mx-auto flex w-full max-w-[40rem] min-w-0 flex-1 flex-col gap-8 px-4 py-6 md:px-0 lg:py-8">
+      <div class="flex items-start justify-between gap-4">
+        <div class="flex flex-col gap-2">
+          <h1 class="scroll-m-24 text-3xl font-semibold tracking-tight">Button</h1>
+          <p class="text-[1.05rem] text-muted-foreground sm:text-base">{entry.data.title}</p>
+        </div>
+        <VariantSelector component="button" currentSlug={slug} />
+      </div>
+
+      {isFallback && (
+        <div class="rounded-md border border-border bg-muted/40 px-4 py-3 text-sm text-muted-foreground">
+          {s.fallbackBanner}
+        </div>
+      )}
+
+      <ExamplePreview>
+        <ButtonMain Button={Button} client:load slot="preview" />
+        <Code slot="code" code={mainSrc} lang="tsx" />
+      </ExamplePreview>
+
+      <section class="prose-section space-y-4 [&_h2]:scroll-m-24 [&_h2]:pt-2 [&_h2]:text-xl [&_h2]:font-semibold [&_p]:text-[0.95rem] [&_p]:leading-7 [&_p]:text-muted-foreground [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:text-[0.95rem] [&_ul]:text-muted-foreground [&_li]:my-1">
+        <Content />
+      </section>
+
+      <section class="space-y-4">
+        <h2 id="installation" class="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
+          {s.installation}
+        </h2>
+        <InstallTabs
+          client:load
+          pkg={`@chadcn/ui/button/${slug}`}
+          comingSoon
+          comingSoonLabel={s.comingSoon}
+          comingSoonDescription={s.comingSoonDescription}
+          copySuccessMessage={s.copySuccess}
+        />
+      </section>
+
+      <section class="space-y-4">
+        <h2 id="cursor" class="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
+          {s.cursor}
+        </h2>
+        {locale === "en" ? (
+          <>
+            <p class="text-[0.95rem] leading-7 text-muted-foreground">
+              Tailwind v4
+              <a href="https://tailwindcss.com/docs/upgrade-guide#buttons-use-the-default-cursor" class="underline underline-offset-4 hover:text-foreground" target="_blank" rel="noreferrer">switched</a>
+              the default from
+              <code class="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">cursor: pointer</code>
+              to
+              <code class="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">cursor: default</code>
+              for the button component.
+            </p>
+            <p class="text-[0.95rem] leading-7 text-muted-foreground">
+              To keep the pointer cursor, add the following to your CSS file:
+            </p>
+          </>
+        ) : (
+          <>
+            <p class="text-[0.95rem] leading-7 text-muted-foreground">
+              Tailwind v4는 버튼 컴포넌트의 기본값을
+              <code class="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">cursor: pointer</code>에서
+              <code class="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">cursor: default</code>로
+              <a href="https://tailwindcss.com/docs/upgrade-guide#buttons-use-the-default-cursor" class="underline underline-offset-4 hover:text-foreground" target="_blank" rel="noreferrer">변경했습니다</a>.
+            </p>
+            <p class="text-[0.95rem] leading-7 text-muted-foreground">
+              포인터 커서를 유지하려면 CSS 파일에 다음 코드를 추가하세요.
+            </p>
+          </>
+        )}
+        <Code code={cursorSnippet} lang="css" title="globals.css" />
+      </section>
+
+      <section class="space-y-8">
+        <h2 id="examples" class="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
+          {s.examples}
+        </h2>
+
+        <div class="space-y-4">
+          <h3 id="size" class="text-lg font-semibold">{locale === "en" ? "Size" : "크기"}</h3>
+          <ExamplePreview>
+            <ButtonSize Button={Button} client:load slot="preview" />
+            <Code slot="code" code={sizeSrc} lang="tsx" />
+          </ExamplePreview>
+        </div>
+
+        <div class="space-y-4">
+          <h3 id="default" class="text-lg font-semibold">{locale === "en" ? "Default" : "기본"}</h3>
+          <ExamplePreview>
+            <ButtonDefault Button={Button} client:load slot="preview" />
+            <Code slot="code" code={defaultSrc} lang="tsx" />
+          </ExamplePreview>
+        </div>
+
+        <div class="space-y-4">
+          <h3 id="outline" class="text-lg font-semibold">{locale === "en" ? "Outline" : "아웃라인"}</h3>
+          <ExamplePreview>
+            <ButtonOutline Button={Button} client:load slot="preview" />
+            <Code slot="code" code={outlineSrc} lang="tsx" />
+          </ExamplePreview>
+        </div>
+
+        <div class="space-y-4">
+          <h3 id="secondary" class="text-lg font-semibold">{locale === "en" ? "Secondary" : "보조"}</h3>
+          <ExamplePreview>
+            <ButtonSecondary Button={Button} client:load slot="preview" />
+            <Code slot="code" code={secondarySrc} lang="tsx" />
+          </ExamplePreview>
+        </div>
+
+        <div class="space-y-4">
+          <h3 id="ghost" class="text-lg font-semibold">{locale === "en" ? "Ghost" : "고스트"}</h3>
+          <ExamplePreview>
+            <ButtonGhost Button={Button} client:load slot="preview" />
+            <Code slot="code" code={ghostSrc} lang="tsx" />
+          </ExamplePreview>
+        </div>
+
+        <div class="space-y-4">
+          <h3 id="destructive" class="text-lg font-semibold">{locale === "en" ? "Destructive" : "위험"}</h3>
+          <ExamplePreview>
+            <ButtonDestructive Button={Button} client:load slot="preview" />
+            <Code slot="code" code={destructiveSrc} lang="tsx" />
+          </ExamplePreview>
+        </div>
+
+        <div class="space-y-4">
+          <h3 id="link" class="text-lg font-semibold">{locale === "en" ? "Link" : "링크"}</h3>
+          <ExamplePreview>
+            <ButtonLink Button={Button} client:load slot="preview" />
+            <Code slot="code" code={linkSrc} lang="tsx" />
+          </ExamplePreview>
+        </div>
+
+        <div class="space-y-4">
+          <h3 id="icon" class="text-lg font-semibold">{locale === "en" ? "Icon" : "아이콘"}</h3>
+          <ExamplePreview>
+            <ButtonIcon Button={Button} client:load slot="preview" />
+            <Code slot="code" code={iconSrc} lang="tsx" />
+          </ExamplePreview>
+        </div>
+
+        <div class="space-y-4">
+          <h3 id="with-icon" class="text-lg font-semibold">{locale === "en" ? "With Icon" : "아이콘 포함"}</h3>
+          <ExamplePreview>
+            <ButtonWithIcon Button={Button} client:load slot="preview" />
+            <Code slot="code" code={withIconSrc} lang="tsx" />
+          </ExamplePreview>
+        </div>
+
+        <div class="space-y-4">
+          <h3 id="rounded" class="text-lg font-semibold">{locale === "en" ? "Rounded" : "둥근 버튼"}</h3>
+          <ExamplePreview>
+            <ButtonRounded Button={Button} client:load slot="preview" />
+            <Code slot="code" code={roundedSrc} lang="tsx" />
+          </ExamplePreview>
+        </div>
+
+        <div class="space-y-4">
+          <h3 id="as-child" class="text-lg font-semibold">{locale === "en" ? "As Child" : "자식 요소로"}</h3>
+          <ExamplePreview>
+            <ButtonAsChild Button={Button} client:load slot="preview" />
+            <Code slot="code" code={asChildSrc} lang="tsx" />
+          </ExamplePreview>
+        </div>
+      </section>
+
+      <section class="space-y-4">
+        <h2 id="api-reference" class="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
+          {s.apiReference}
+        </h2>
+        <h3 class="text-lg font-semibold">Button</h3>
+        <div class="overflow-x-auto rounded-xl border">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b bg-muted/50">
+                <th class="p-3 text-left font-medium">Prop</th>
+                <th class="p-3 text-left font-medium">{locale === "en" ? "Type" : "타입"}</th>
+                <th class="p-3 text-left font-medium">{locale === "en" ? "Default" : "기본값"}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b">
+                <td class="p-3 font-mono text-sm">variant</td>
+                <td class="p-3 font-mono text-xs">"default" | "outline" | "ghost" | "destructive" | "secondary" | "link"</td>
+                <td class="p-3 font-mono text-sm">"default"</td>
+              </tr>
+              <tr class="border-b">
+                <td class="p-3 font-mono text-sm">size</td>
+                <td class="p-3 font-mono text-xs">"default" | "xs" | "sm" | "lg" | "icon" | "icon-xs" | "icon-sm" | "icon-lg"</td>
+                <td class="p-3 font-mono text-sm">"default"</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-mono text-sm">asChild</td>
+                <td class="p-3 font-mono text-xs">boolean</td>
+                <td class="p-3 font-mono text-sm">false</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+</Docs>

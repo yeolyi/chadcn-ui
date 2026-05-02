@@ -1,0 +1,15 @@
+---
+import ButtonVariant from "@/page-bodies/ButtonVariant.astro"
+import { listVariantsForComponent } from "@/lib/variants"
+
+export async function getStaticPaths() {
+  // English routes mirror Korean — every ko variant exists in en too
+  // (with fallback content if .en.mdx is missing).
+  const variants = await listVariantsForComponent("button", "ko")
+  return variants.map((v) => ({ params: { variant: v.slug } }))
+}
+
+const { variant } = Astro.params as { variant: string }
+---
+
+<ButtonVariant slug={variant} />

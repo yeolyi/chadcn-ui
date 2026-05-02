@@ -1,22 +1,23 @@
-import { Button } from "@chadcn/ui"
 import { ArrowUpRightIcon } from "lucide-react"
 
-export function ButtonSize() {
+import type { ButtonComponent } from "@/lib/types"
+
+export function ButtonSize({ Button }: { Button: ButtonComponent }) {
   return (
     <div className="flex flex-wrap items-center gap-4">
-      <Button size="xs">아주 작게</Button>
+      <Button size="xs">Extra Small</Button>
       <Button size="xs" variant="outline">
         <ArrowUpRightIcon />
       </Button>
-      <Button size="sm">작게</Button>
+      <Button size="sm">Small</Button>
       <Button size="sm" variant="outline">
         <ArrowUpRightIcon />
       </Button>
-      <Button size="default">기본</Button>
+      <Button size="default">Default</Button>
       <Button size="default" variant="outline">
         <ArrowUpRightIcon />
       </Button>
-      <Button size="lg">크게</Button>
+      <Button size="lg">Large</Button>
       <Button size="lg" variant="outline">
         <ArrowUpRightIcon />
       </Button>

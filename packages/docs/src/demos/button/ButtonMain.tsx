@@ -1,11 +1,12 @@
-import { Button } from "@chadcn/ui"
 import { ArrowUpIcon } from "lucide-react"
 
-export function ButtonMain() {
+import type { ButtonComponent } from "@/lib/types"
+
+export function ButtonMain({ Button }: { Button: ButtonComponent }) {
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <Button variant="outline">버튼</Button>
-      <Button variant="outline" size="icon" aria-label="제출">
+      <Button variant="outline">Button</Button>
+      <Button variant="outline" size="icon" aria-label="Submit">
         <ArrowUpIcon />
       </Button>
     </div>

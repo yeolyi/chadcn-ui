@@ -1,5 +1,5 @@
-import { Button } from "@chadcn/ui"
+import type { ButtonComponent } from "@/lib/types"
 
-export function ButtonLink() {
-  return <Button variant="link">링크</Button>
+export function ButtonLink({ Button }: { Button: ButtonComponent }) {
+  return <Button variant="link">Link</Button>
 }

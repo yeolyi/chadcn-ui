@@ -1,9 +1,9 @@
-import { Button } from "@chadcn/ui"
+import type { ButtonComponent } from "@/lib/types"
 
-export function ButtonAsChild() {
+export function ButtonAsChild({ Button }: { Button: ButtonComponent }) {
   return (
     <Button asChild>
-      <a href="/login">로그인</a>
+      <a href="/login">Login</a>
     </Button>
   )
 }

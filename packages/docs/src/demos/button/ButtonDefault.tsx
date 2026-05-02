@@ -1,5 +1,5 @@
-import { Button } from "@chadcn/ui"
+import type { ButtonComponent } from "@/lib/types"
 
-export function ButtonDefault() {
-  return <Button>기본</Button>
+export function ButtonDefault({ Button }: { Button: ButtonComponent }) {
+  return <Button>Default</Button>
 }

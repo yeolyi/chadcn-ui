@@ -1,5 +1,5 @@
-import { Button } from "@chadcn/ui"
+import type { ButtonComponent } from "@/lib/types"
 
-export function ButtonGhost() {
-  return <Button variant="ghost">고스트</Button>
+export function ButtonGhost({ Button }: { Button: ButtonComponent }) {
+  return <Button variant="ghost">Ghost</Button>
 }

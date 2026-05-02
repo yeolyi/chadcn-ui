@@ -1,5 +1,5 @@
-import { Button } from "@chadcn/ui"
+import type { ButtonComponent } from "@/lib/types"
 
-export function ButtonSecondary() {
-  return <Button variant="secondary">보조</Button>
+export function ButtonSecondary({ Button }: { Button: ButtonComponent }) {
+  return <Button variant="secondary">Secondary</Button>
 }

@@ -1,9 +1,10 @@
-import { Button } from "@chadcn/ui"
 import { CircleFadingArrowUpIcon } from "lucide-react"
 
-export function ButtonIcon() {
+import type { ButtonComponent } from "@/lib/types"
+
+export function ButtonIcon({ Button }: { Button: ButtonComponent }) {
   return (
-    <Button variant="outline" size="icon" aria-label="업로드">
+    <Button variant="outline" size="icon" aria-label="Upload">
       <CircleFadingArrowUpIcon />
     </Button>
   )

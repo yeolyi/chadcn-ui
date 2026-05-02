@@ -1,0 +1,13 @@
+---
+import ButtonVariant from "@/page-bodies/ButtonVariant.astro"
+import { listVariantsForComponent } from "@/lib/variants"
+
+export async function getStaticPaths() {
+  const variants = await listVariantsForComponent("button", "ko")
+  return variants.map((v) => ({ params: { variant: v.slug } }))
+}
+
+const { variant } = Astro.params as { variant: string }
+---
+
+<ButtonVariant slug={variant} />

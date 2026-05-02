@@ -1,5 +1,5 @@
-import { Button } from "@chadcn/ui"
+import type { ButtonComponent } from "@/lib/types"
 
-export function ButtonDestructive() {
-  return <Button variant="destructive">위험</Button>
+export function ButtonDestructive({ Button }: { Button: ButtonComponent }) {
+  return <Button variant="destructive">Destructive</Button>
 }

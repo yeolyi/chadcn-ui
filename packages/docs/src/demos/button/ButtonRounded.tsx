@@ -1,7 +1,8 @@
-import { Button } from "@chadcn/ui"
 import { ArrowUpIcon } from "lucide-react"
 
-export function ButtonRounded() {
+import type { ButtonComponent } from "@/lib/types"
+
+export function ButtonRounded({ Button }: { Button: ButtonComponent }) {
   return (
     <Button className="rounded-full" size="icon" variant="outline">
       <ArrowUpIcon />
