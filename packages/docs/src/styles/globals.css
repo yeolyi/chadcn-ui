@@ -160,7 +160,6 @@
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;
     word-break: keep-all;
-    overflow-wrap: anywhere;
   }
 
   button:not(:disabled),
