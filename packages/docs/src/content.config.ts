@@ -11,7 +11,6 @@ const variants = defineCollection({
     generateId: ({ entry }) => entry.replace(/\.mdx$/, ""),
   }),
   schema: z.object({
-    name: z.string(),
     tagline: z.string(),
   }),
 })

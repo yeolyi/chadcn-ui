@@ -23,7 +23,7 @@ const current = variants.find((v) => v.slug === currentSlug)
     aria-haspopup="true"
     aria-expanded="false"
   >
-    <span>{current?.entry.data.title ?? currentSlug}</span>
+    <span>{currentSlug}</span>
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="m6 9 6 6 6-6" />
     </svg>
@@ -41,7 +41,7 @@ const current = variants.find((v) => v.slug === currentSlug)
             class={`flex items-center rounded-sm px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground ${v.slug === currentSlug ? "bg-accent text-accent-foreground" : ""}`}
             role="menuitem"
           >
-            <span>{v.entry.data.name}</span>
+            <span>{v.slug}</span>
           </a>
         </li>
       ))
