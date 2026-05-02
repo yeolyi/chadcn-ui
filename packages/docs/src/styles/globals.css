@@ -412,6 +412,11 @@
   button[data-copy][data-copied] [data-icon="check"] {
     display: inline;
   }
+
+  /* Hide copy button while the CodeBlock is collapsed inside ExamplePreview. */
+  [data-collapsed] button[data-copy] {
+    display: none;
+  }
 }
 
 @layer components {

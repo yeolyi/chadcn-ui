@@ -13,36 +13,18 @@ import { ButtonRounded } from "@/components/demos/button/ButtonRounded"
 import { ButtonSecondary } from "@/components/demos/button/ButtonSecondary"
 import { ButtonSize } from "@/components/demos/button/ButtonSize"
 import { ButtonWithIcon } from "@/components/demos/button/ButtonWithIcon"
+import { buttonSnippets } from "./button.snippets"
 
 <ExamplePreview>
   <ButtonMain slug={props.slug} client:load slot="preview" />
-  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
-import { ArrowUpIcon } from "lucide-react"
-
-export function ButtonDemo() {
-  return (
-    <div className="flex flex-wrap items-center gap-2">
-      <Button variant="outline">Button</Button>
-      <Button variant="outline" size="icon" aria-label="Submit">
-        <ArrowUpIcon />
-      </Button>
-    </div>
-  )
-}`} />
+  <CodeBlock slot="code" lang="tsx" code={buttonSnippets(props.slug).main} />
 </ExamplePreview>
 
 ## Installation
 
-<InstallTabs
-  client:load
-  pkg="@chadcn/ui"
-  comingSoon
-  comingSoonLabel="Coming Soon"
-  comingSoonDescription="Package not yet published on npm."
-  copySuccessMessage="Copied to clipboard"
-/>
+<InstallTabs client:load pkg="@chadcn/ui" />
 
-<CodeBlock lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"`} />
+<CodeBlock lang="tsx" code={buttonSnippets(props.slug).install} />
 
 ## Cursor
 
@@ -51,12 +33,7 @@ the default from `cursor: pointer` to `cursor: default` for the button component
 
 To keep the pointer cursor, add the following to your CSS file:
 
-<CodeBlock lang="css" title="globals.css" code={`@layer base {
-  button:not(:disabled),
-  [role="button"]:not(:disabled) {
-    cursor: pointer;
-  }
-}`} />
+<CodeBlock lang="css" title="globals.css" code={buttonSnippets(props.slug).cursor} />
 
 ## Examples
 
@@ -66,105 +43,56 @@ Use the `size` prop to change the button size.
 
 <ExamplePreview>
   <ButtonSize slug={props.slug} client:load slot="preview" />
-  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
-import { ArrowUpRightIcon } from "lucide-react"
-
-export function ButtonSize() {
-  return (
-    <div className="flex flex-wrap items-center gap-4">
-      <Button size="xs">Extra Small</Button>
-      <Button size="xs" variant="outline"><ArrowUpRightIcon /></Button>
-      <Button size="sm">Small</Button>
-      <Button size="sm" variant="outline"><ArrowUpRightIcon /></Button>
-      <Button size="default">Default</Button>
-      <Button size="default" variant="outline"><ArrowUpRightIcon /></Button>
-      <Button size="lg">Large</Button>
-      <Button size="lg" variant="outline"><ArrowUpRightIcon /></Button>
-    </div>
-  )
-}`} />
+  <CodeBlock slot="code" lang="tsx" code={buttonSnippets(props.slug).size} />
 </ExamplePreview>
 
 ### Default
 
 <ExamplePreview>
   <ButtonDefault slug={props.slug} client:load slot="preview" />
-  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
-
-export function ButtonDefault() {
-  return <Button>Default</Button>
-}`} />
+  <CodeBlock slot="code" lang="tsx" code={buttonSnippets(props.slug).default} />
 </ExamplePreview>
 
 ### Outline
 
 <ExamplePreview>
   <ButtonOutline slug={props.slug} client:load slot="preview" />
-  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
-
-export function ButtonOutline() {
-  return <Button variant="outline">Outline</Button>
-}`} />
+  <CodeBlock slot="code" lang="tsx" code={buttonSnippets(props.slug).outline} />
 </ExamplePreview>
 
 ### Secondary
 
 <ExamplePreview>
   <ButtonSecondary slug={props.slug} client:load slot="preview" />
-  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
-
-export function ButtonSecondary() {
-  return <Button variant="secondary">Secondary</Button>
-}`} />
+  <CodeBlock slot="code" lang="tsx" code={buttonSnippets(props.slug).secondary} />
 </ExamplePreview>
 
 ### Ghost
 
 <ExamplePreview>
   <ButtonGhost slug={props.slug} client:load slot="preview" />
-  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
-
-export function ButtonGhost() {
-  return <Button variant="ghost">Ghost</Button>
-}`} />
+  <CodeBlock slot="code" lang="tsx" code={buttonSnippets(props.slug).ghost} />
 </ExamplePreview>
 
 ### Destructive
 
 <ExamplePreview>
   <ButtonDestructive slug={props.slug} client:load slot="preview" />
-  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
-
-export function ButtonDestructive() {
-  return <Button variant="destructive">Destructive</Button>
-}`} />
+  <CodeBlock slot="code" lang="tsx" code={buttonSnippets(props.slug).destructive} />
 </ExamplePreview>
 
 ### Link
 
 <ExamplePreview>
   <ButtonLink slug={props.slug} client:load slot="preview" />
-  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
-
-export function ButtonLink() {
-  return <Button variant="link">Link</Button>
-}`} />
+  <CodeBlock slot="code" lang="tsx" code={buttonSnippets(props.slug).link} />
 </ExamplePreview>
 
 ### Icon
 
 <ExamplePreview>
   <ButtonIcon slug={props.slug} client:load slot="preview" />
-  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
-import { CircleFadingArrowUpIcon } from "lucide-react"
-
-export function ButtonIcon() {
-  return (
-    <Button variant="outline" size="icon" aria-label="Upload">
-      <CircleFadingArrowUpIcon />
-    </Button>
-  )
-}`} />
+  <CodeBlock slot="code" lang="tsx" code={buttonSnippets(props.slug).icon} />
 </ExamplePreview>
 
 ### With Icon
@@ -173,17 +101,7 @@ Add the `data-icon="inline-start"` or `data-icon="inline-end"` attribute to the 
 
 <ExamplePreview>
   <ButtonWithIcon slug={props.slug} client:load slot="preview" />
-  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
-import { GitBranchIcon } from "lucide-react"
-
-export function ButtonWithIcon() {
-  return (
-    <Button>
-      <GitBranchIcon data-icon="inline-start" />
-      New Branch
-    </Button>
-  )
-}`} />
+  <CodeBlock slot="code" lang="tsx" code={buttonSnippets(props.slug).withIcon} />
 </ExamplePreview>
 
 ### Rounded
@@ -192,16 +110,7 @@ Use the `rounded-full` class to make the button fully rounded.
 
 <ExamplePreview>
   <ButtonRounded slug={props.slug} client:load slot="preview" />
-  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
-import { ArrowUpIcon } from "lucide-react"
-
-export function ButtonRounded() {
-  return (
-    <Button className="rounded-full" size="icon" variant="outline">
-      <ArrowUpIcon />
-    </Button>
-  )
-}`} />
+  <CodeBlock slot="code" lang="tsx" code={buttonSnippets(props.slug).rounded} />
 </ExamplePreview>
 
 ### As Child
@@ -210,15 +119,7 @@ Use the `asChild` prop on `<Button />` to make another component look like a but
 
 <ExamplePreview>
   <ButtonAsChild slug={props.slug} client:load slot="preview" />
-  <CodeBlock slot="code" lang="tsx" code={`import { Button } from "@chadcn/ui/button/${props.slug}"
-
-export function ButtonAsChild() {
-  return (
-    <Button asChild>
-      <a href="/login">Login</a>
-    </Button>
-  )
-}`} />
+  <CodeBlock slot="code" lang="tsx" code={buttonSnippets(props.slug).asChild} />
 </ExamplePreview>
 
 ## API Reference

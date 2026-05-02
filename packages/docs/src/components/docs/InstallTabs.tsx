@@ -1,4 +1,4 @@
-import { CheckIcon, ClipboardIcon, PackageIcon, TerminalIcon } from "lucide-react"
+import { CheckIcon, ClipboardIcon, TerminalIcon } from "lucide-react"
 import * as React from "react"
 
 const packageManagers = {
@@ -10,17 +10,7 @@ const packageManagers = {
 
 type PM = keyof typeof packageManagers
 
-export function InstallTabs({
-  pkg,
-  comingSoon,
-  comingSoonLabel = "Coming Soon",
-  comingSoonDescription = "Package not yet published on npm.",
-}: {
-  pkg: string
-  comingSoon?: boolean
-  comingSoonLabel?: string
-  comingSoonDescription?: string
-}) {
+export function InstallTabs({ pkg }: { pkg: string }) {
   const [active, setActive] = React.useState<PM>("pnpm")
   const [copied, setCopied] = React.useState(false)
 
@@ -41,23 +31,7 @@ export function InstallTabs({
       data-rehype-pretty-code-figure=""
       className="relative overflow-x-auto rounded-xl border bg-code text-code-foreground"
     >
-      {comingSoon && (
-        <div className="absolute inset-0 z-20 flex items-center justify-center">
-          <div className="flex items-center gap-2 rounded-lg border border-border/60 bg-background/90 px-4 py-2 shadow-sm backdrop-blur-sm">
-            <PackageIcon className="size-4 text-muted-foreground" />
-            <div className="flex flex-col">
-              <span className="text-sm font-medium">{comingSoonLabel}</span>
-              <span className="text-xs text-muted-foreground">{comingSoonDescription}</span>
-            </div>
-          </div>
-        </div>
-      )}
-      <div
-        className={
-          "flex items-center gap-2 border-b border-border/50 px-3 py-1" +
-          (comingSoon ? " pointer-events-none select-none opacity-40 blur-[1px]" : "")
-        }
-      >
+      <div className="flex items-center gap-2 border-b border-border/50 px-3 py-1">
         <div className="flex size-4 items-center justify-center rounded-[1px] bg-foreground opacity-70">
           <TerminalIcon className="size-3 text-[var(--color-code)]" />
         </div>
@@ -75,32 +49,25 @@ export function InstallTabs({
           ))}
         </div>
       </div>
-      <div
-        className={
-          "no-scrollbar overflow-x-auto px-4 py-3.5" +
-          (comingSoon ? " pointer-events-none select-none opacity-40 blur-[1px]" : "")
-        }
-      >
+      <div className="no-scrollbar overflow-x-auto px-4 py-3.5">
         <pre>
           <code className="relative font-mono text-sm leading-none" data-language="bash">
             {tabs[active]}
           </code>
         </pre>
       </div>
-      {!comingSoon && (
-        <button
-          type="button"
-          data-slot="copy-button"
-          onClick={() => {
-            navigator.clipboard.writeText(tabs[active])
-            setCopied(true)
-          }}
-          className="absolute top-2 right-2 z-10 inline-flex size-6 items-center justify-center rounded-md opacity-70 hover:bg-accent hover:opacity-100"
-          aria-label="Copy"
-        >
-          {copied ? <CheckIcon className="size-3" /> : <ClipboardIcon className="size-3" />}
-        </button>
-      )}
+      <button
+        type="button"
+        data-slot="copy-button"
+        onClick={() => {
+          navigator.clipboard.writeText(tabs[active])
+          setCopied(true)
+        }}
+        className="absolute top-2 right-2 z-10 inline-flex size-6 items-center justify-center rounded-md opacity-70 hover:bg-accent hover:opacity-100"
+        aria-label="Copy"
+      >
+        {copied ? <CheckIcon className="size-3" /> : <ClipboardIcon className="size-3" />}
+      </button>
     </div>
   )
 }
