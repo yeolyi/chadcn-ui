@@ -42,6 +42,16 @@
       "import": "./dist/button/sponsored.js",
       "require": "./dist/button/sponsored.cjs"
     },
+    "./button/gacha": {
+      "types": "./dist/button/gacha.d.ts",
+      "import": "./dist/button/gacha.js",
+      "require": "./dist/button/gacha.cjs"
+    },
+    "./button/paranoia": {
+      "types": "./dist/button/paranoia.d.ts",
+      "import": "./dist/button/paranoia.js",
+      "require": "./dist/button/paranoia.cjs"
+    },
     "./styles.css": "./dist/styles.css"
   },
   "files": [

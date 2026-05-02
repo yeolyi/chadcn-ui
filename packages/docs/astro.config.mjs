@@ -12,6 +12,7 @@ export default defineConfig({
     },
   },
   integrations: [mdx(), react()],
+  devToolbar: { enabled: false },
   vite: {
     plugins: [tailwindcss()],
   },

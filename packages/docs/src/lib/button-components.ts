@@ -4,13 +4,16 @@
 //   1. packages/ui/src/button/<slug>.tsx (+ tsup entry, package.json#exports)
 //   2. Add an entry below with tagline & description per locale.
 
-import type { ComponentType } from "react"
+import { type ComponentType, createElement, type MouseEvent } from "react"
+import { toast } from "sonner"
 
 import { Button as Thanos } from "@chadcn/ui/button/thanos"
 import { Button as Mash } from "@chadcn/ui/button/mash"
 import { Button as Minesweeper } from "@chadcn/ui/button/minesweeper"
 import { Button as Flinch } from "@chadcn/ui/button/flinch"
 import { Button as Sponsored } from "@chadcn/ui/button/sponsored"
+import { Button as Gacha } from "@chadcn/ui/button/gacha"
+import { Button as Paranoia } from "@chadcn/ui/button/paranoia"
 import { Button as Shy } from "@chadcn/ui/button/shy"
 
 import type { Locale } from "@/i18n/strings"
@@ -22,15 +25,31 @@ interface ButtonVariantInfo {
   description: LocalizedText
 }
 
+type ButtonProps = Parameters<typeof Shy>[0]
+
+// Demo-only: every button click that actually reaches onClick fires a toast,
+// so visitors can see which variants suppress, defer, or pass clicks through.
+function withToast(C: ComponentType<ButtonProps>): ComponentType<ButtonProps> {
+  return function ButtonWithToast(props: ButtonProps) {
+    const handle = (e: MouseEvent<HTMLButtonElement>) => {
+      toast("Button clicked")
+      props.onClick?.(e)
+    }
+    return createElement(C, { ...props, onClick: handle })
+  }
+}
+
 // Slug → React component. Demos hydrate via this map (small bundle, just refs).
 export const buttonComponents = {
-  shy: Shy,
-  thanos: Thanos,
-  mash: Mash,
-  minesweeper: Minesweeper,
-  flinch: Flinch,
-  sponsored: Sponsored,
-} satisfies Record<string, ComponentType<Parameters<typeof Shy>[0]>>
+  shy: withToast(Shy),
+  thanos: withToast(Thanos),
+  mash: withToast(Mash),
+  minesweeper: withToast(Minesweeper),
+  flinch: withToast(Flinch),
+  sponsored: withToast(Sponsored),
+  gacha: withToast(Gacha),
+  paranoia: withToast(Paranoia),
+} satisfies Record<string, ComponentType<ButtonProps>>
 
 // Slug → prose. Used at SSG only; not shipped to the client demos.
 const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
@@ -92,6 +111,26 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
     description: {
       ko: "처음 클릭 시 짧은 스폰서 광고 시청에 동의하신 것으로 간주됩니다. 광고가 종료되면 원래 의도하신 동작이 실행되며, 이후로는 광고 없이 자유롭게 사용하실 수 있습니다.",
       en: "On the first click you are deemed to have consented to viewing a brief sponsored message. The originally intended action runs once the ad concludes, and the button is freely usable thereafter without further ads.",
+    },
+  },
+  gacha: {
+    tagline: {
+      ko: "확률 기반으로 동작이 결정되는 버튼",
+      en: "A button whose action is decided by chance",
+    },
+    description: {
+      ko: "각 클릭마다 내장된 슬롯 머신이 동작 실행 여부를 결정합니다. 세 릴이 모두 일치하는 잭팟이 나올 경우에 한해 본래 의도하신 동작이 실행됩니다.",
+      en: "Each click runs an embedded slot machine that decides whether the action goes through. The intended action only fires on a jackpot — all three reels matching.",
+    },
+  },
+  paranoia: {
+    tagline: {
+      ko: "잘못된 결정을 사전에 차단하는 버튼",
+      en: "A button that intercepts misjudged decisions",
+    },
+    description: {
+      ko: "클릭이 발생할 때마다 추가 확인 단계가 뒤따릅니다. 사용자의 결정이 충분히 단호한지 다단계에 걸쳐 검증되며, 모든 단계를 통과할 때에 한해 본래 의도하신 동작이 실행됩니다. 이전 단계의 버튼은 진행과 함께 자동으로 비활성화됩니다.",
+      en: "Each click is followed by an additional verification step. The user's decision is validated across a multi-stage cascade and the originally intended action runs only after every stage has been cleared. Earlier buttons disable themselves as the cascade advances.",
     },
   },
 }
