@@ -17,16 +17,17 @@ interface MobileNavStrings {
 interface Props {
   basePath: string
   strings: MobileNavStrings
+  buttonHref: string
 }
 
-export function MobileNav({ basePath, strings }: Props) {
+export function MobileNav({ basePath, strings, buttonHref }: Props) {
   const [open, setOpen] = React.useState(false)
   const homeHref = basePath || "/"
   const sections = [
     { name: strings.introduction, href: `${basePath}/docs` },
     { name: strings.installation, href: `${basePath}/docs/installation` },
   ]
-  const components = [{ name: "Button", href: `${basePath}/docs/components/button` }]
+  const components = [{ name: "Button", href: buttonHref }]
 
   return (
     <Popover.Root open={open} onOpenChange={setOpen}>

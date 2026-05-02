@@ -12,8 +12,6 @@ const variants = defineCollection({
   }),
   schema: z.object({
     title: z.string(),
-    author: z.string().optional(),
-    instagramUrl: z.string().url().optional(),
   }),
 })
 

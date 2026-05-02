@@ -1,5 +1,6 @@
-import type { ButtonComponent } from "@/lib/types"
+import { buttonComponents } from "@/lib/button-components"
 
-export function ButtonDestructive({ Button }: { Button: ButtonComponent }) {
+export function ButtonDestructive({ slug }: { slug: string }) {
+  const Button = buttonComponents[slug]
   return <Button variant="destructive">Destructive</Button>
 }

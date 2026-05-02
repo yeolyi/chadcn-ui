@@ -1,8 +1,9 @@
 import { GitBranchIcon } from "lucide-react"
 
-import type { ButtonComponent } from "@/lib/types"
+import { buttonComponents } from "@/lib/button-components"
 
-export function ButtonWithIcon({ Button }: { Button: ButtonComponent }) {
+export function ButtonWithIcon({ slug }: { slug: string }) {
+  const Button = buttonComponents[slug]
   return (
     <Button>
       <GitBranchIcon data-icon="inline-start" />

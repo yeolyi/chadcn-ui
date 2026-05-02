@@ -19,7 +19,6 @@ import { ButtonSize } from "@/demos/button/ButtonSize"
 import { ButtonWithIcon } from "@/demos/button/ButtonWithIcon"
 import { t } from "@/i18n/strings"
 import Docs from "@/layouts/Docs.astro"
-import { buttonComponents } from "@/lib/button-components"
 import { findVariant } from "@/lib/variants"
 
 import mainSrc from "@/demos/button/ButtonMain.tsx?raw"
@@ -49,7 +48,6 @@ if (!found) {
 }
 const { entry, isFallback } = found
 const { Content } = await render(entry)
-const Button = buttonComponents[slug]
 
 const cursorSnippet = `@layer base {
   button:not(:disabled),
@@ -116,7 +114,7 @@ const description = entry.data.title
       )}
 
       <ExamplePreview>
-        <ButtonMain Button={Button} client:load slot="preview" />
+        <ButtonMain slug={slug} client:load slot="preview" />
         <Code slot="code" code={mainSrc} lang="tsx" />
       </ExamplePreview>
 
@@ -181,7 +179,7 @@ const description = entry.data.title
         <div class="space-y-4">
           <h3 id="size" class="text-lg font-semibold">{locale === "en" ? "Size" : "크기"}</h3>
           <ExamplePreview>
-            <ButtonSize Button={Button} client:load slot="preview" />
+            <ButtonSize slug={slug} client:load slot="preview" />
             <Code slot="code" code={sizeSrc} lang="tsx" />
           </ExamplePreview>
         </div>
@@ -189,7 +187,7 @@ const description = entry.data.title
         <div class="space-y-4">
           <h3 id="default" class="text-lg font-semibold">{locale === "en" ? "Default" : "기본"}</h3>
           <ExamplePreview>
-            <ButtonDefault Button={Button} client:load slot="preview" />
+            <ButtonDefault slug={slug} client:load slot="preview" />
             <Code slot="code" code={defaultSrc} lang="tsx" />
           </ExamplePreview>
         </div>
@@ -197,7 +195,7 @@ const description = entry.data.title
         <div class="space-y-4">
           <h3 id="outline" class="text-lg font-semibold">{locale === "en" ? "Outline" : "아웃라인"}</h3>
           <ExamplePreview>
-            <ButtonOutline Button={Button} client:load slot="preview" />
+            <ButtonOutline slug={slug} client:load slot="preview" />
             <Code slot="code" code={outlineSrc} lang="tsx" />
           </ExamplePreview>
         </div>
@@ -205,7 +203,7 @@ const description = entry.data.title
         <div class="space-y-4">
           <h3 id="secondary" class="text-lg font-semibold">{locale === "en" ? "Secondary" : "보조"}</h3>
           <ExamplePreview>
-            <ButtonSecondary Button={Button} client:load slot="preview" />
+            <ButtonSecondary slug={slug} client:load slot="preview" />
             <Code slot="code" code={secondarySrc} lang="tsx" />
           </ExamplePreview>
         </div>
@@ -213,7 +211,7 @@ const description = entry.data.title
         <div class="space-y-4">
           <h3 id="ghost" class="text-lg font-semibold">{locale === "en" ? "Ghost" : "고스트"}</h3>
           <ExamplePreview>
-            <ButtonGhost Button={Button} client:load slot="preview" />
+            <ButtonGhost slug={slug} client:load slot="preview" />
             <Code slot="code" code={ghostSrc} lang="tsx" />
           </ExamplePreview>
         </div>
@@ -221,7 +219,7 @@ const description = entry.data.title
         <div class="space-y-4">
           <h3 id="destructive" class="text-lg font-semibold">{locale === "en" ? "Destructive" : "위험"}</h3>
           <ExamplePreview>
-            <ButtonDestructive Button={Button} client:load slot="preview" />
+            <ButtonDestructive slug={slug} client:load slot="preview" />
             <Code slot="code" code={destructiveSrc} lang="tsx" />
           </ExamplePreview>
         </div>
@@ -229,7 +227,7 @@ const description = entry.data.title
         <div class="space-y-4">
           <h3 id="link" class="text-lg font-semibold">{locale === "en" ? "Link" : "링크"}</h3>
           <ExamplePreview>
-            <ButtonLink Button={Button} client:load slot="preview" />
+            <ButtonLink slug={slug} client:load slot="preview" />
             <Code slot="code" code={linkSrc} lang="tsx" />
           </ExamplePreview>
         </div>
@@ -237,7 +235,7 @@ const description = entry.data.title
         <div class="space-y-4">
           <h3 id="icon" class="text-lg font-semibold">{locale === "en" ? "Icon" : "아이콘"}</h3>
           <ExamplePreview>
-            <ButtonIcon Button={Button} client:load slot="preview" />
+            <ButtonIcon slug={slug} client:load slot="preview" />
             <Code slot="code" code={iconSrc} lang="tsx" />
           </ExamplePreview>
         </div>
@@ -245,7 +243,7 @@ const description = entry.data.title
         <div class="space-y-4">
           <h3 id="with-icon" class="text-lg font-semibold">{locale === "en" ? "With Icon" : "아이콘 포함"}</h3>
           <ExamplePreview>
-            <ButtonWithIcon Button={Button} client:load slot="preview" />
+            <ButtonWithIcon slug={slug} client:load slot="preview" />
             <Code slot="code" code={withIconSrc} lang="tsx" />
           </ExamplePreview>
         </div>
@@ -253,7 +251,7 @@ const description = entry.data.title
         <div class="space-y-4">
           <h3 id="rounded" class="text-lg font-semibold">{locale === "en" ? "Rounded" : "둥근 버튼"}</h3>
           <ExamplePreview>
-            <ButtonRounded Button={Button} client:load slot="preview" />
+            <ButtonRounded slug={slug} client:load slot="preview" />
             <Code slot="code" code={roundedSrc} lang="tsx" />
           </ExamplePreview>
         </div>
@@ -261,7 +259,7 @@ const description = entry.data.title
         <div class="space-y-4">
           <h3 id="as-child" class="text-lg font-semibold">{locale === "en" ? "As Child" : "자식 요소로"}</h3>
           <ExamplePreview>
-            <ButtonAsChild Button={Button} client:load slot="preview" />
+            <ButtonAsChild slug={slug} client:load slot="preview" />
             <Code slot="code" code={asChildSrc} lang="tsx" />
           </ExamplePreview>
         </div>

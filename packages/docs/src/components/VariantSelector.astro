@@ -38,13 +38,10 @@ const current = variants.find((v) => v.slug === currentSlug)
         <li>
           <a
             href={getRelativeLocaleUrl(locale, `docs/components/${component}/${v.slug}`)}
-            class={`flex items-center justify-between rounded-sm px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground ${v.slug === currentSlug ? "bg-accent text-accent-foreground" : ""}`}
+            class={`flex items-center rounded-sm px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground ${v.slug === currentSlug ? "bg-accent text-accent-foreground" : ""}`}
             role="menuitem"
           >
             <span>{v.entry.data.title}</span>
-            {v.entry.data.author && (
-              <span class="ml-3 text-xs text-muted-foreground">{v.entry.data.author}</span>
-            )}
           </a>
         </li>
       ))

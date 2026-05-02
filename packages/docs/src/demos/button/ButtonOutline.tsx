@@ -1,5 +1,6 @@
-import type { ButtonComponent } from "@/lib/types"
+import { buttonComponents } from "@/lib/button-components"
 
-export function ButtonOutline({ Button }: { Button: ButtonComponent }) {
+export function ButtonOutline({ slug }: { slug: string }) {
+  const Button = buttonComponents[slug]
   return <Button variant="outline">Outline</Button>
 }

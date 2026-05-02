@@ -5,10 +5,13 @@ import { InstagramLink } from "@/components/InstagramLink"
 import LocaleSwitcher from "@/components/LocaleSwitcher.astro"
 import { MobileNav } from "@/components/MobileNav"
 import { t } from "@/i18n/strings"
+import { listVariantsForComponent } from "@/lib/variants"
 
 const locale = Astro.currentLocale ?? "ko"
 const s = t(locale)
 const basePath = locale === "en" ? "/en" : ""
+const buttonVariants = await listVariantsForComponent("button", locale)
+const buttonHref = `${basePath}/docs/components/button/${buttonVariants[0]?.slug ?? "escape"}`
 const navStrings = {
   menu: s.menu,
   home: s.home,
@@ -31,7 +34,7 @@ try {
 <header class="sticky top-0 z-50 w-full bg-background">
   <div class="container-wrapper px-6 3xl:fixed:px-0">
     <div class="flex h-(--header-height) items-center 3xl:fixed:container">
-      <MobileNav client:load basePath={basePath} strings={navStrings} />
+      <MobileNav client:load basePath={basePath} strings={navStrings} buttonHref={buttonHref} />
       <HomeLink href={basePath || "/"} />
       <div class="ml-auto flex items-center gap-2">
         <LocaleSwitcher />

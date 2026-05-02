@@ -1,5 +1,6 @@
-import type { ButtonComponent } from "@/lib/types"
+import { buttonComponents } from "@/lib/button-components"
 
-export function ButtonLink({ Button }: { Button: ButtonComponent }) {
+export function ButtonLink({ slug }: { slug: string }) {
+  const Button = buttonComponents[slug]
   return <Button variant="link">Link</Button>
 }

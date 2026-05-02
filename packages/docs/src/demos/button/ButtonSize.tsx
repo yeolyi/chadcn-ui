@@ -1,8 +1,9 @@
 import { ArrowUpRightIcon } from "lucide-react"
 
-import type { ButtonComponent } from "@/lib/types"
+import { buttonComponents } from "@/lib/button-components"
 
-export function ButtonSize({ Button }: { Button: ButtonComponent }) {
+export function ButtonSize({ slug }: { slug: string }) {
+  const Button = buttonComponents[slug]
   return (
     <div className="flex flex-wrap items-center gap-4">
       <Button size="xs">Extra Small</Button>
