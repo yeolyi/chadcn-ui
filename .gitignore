@@ -47,3 +47,6 @@ shadcn-workspace
 
 # scaffolding artifacts
 HANDOFF.md
+
+# claude code local state
+.claude/
