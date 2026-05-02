@@ -1,0 +1,38 @@
+name: Publish @chadcn/ui
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # for creating the GitHub release
+      id-token: write   # for OIDC trusted publishing to npm
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Build @chadcn/ui
+        run: pnpm --filter @chadcn/ui build
+
+      - name: Publish to npm
+        run: npm publish --access public --provenance
+        working-directory: packages/ui
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release create "$GITHUB_REF_NAME" --generate-notes
