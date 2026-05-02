@@ -3,26 +3,150 @@
 A parody UI library based on shadcn/ui. Same components, same API, terrible UX
 disguised as legitimate features.
 
+## Stack
+
+- **Astro 5** (SSG) + React islands for interactive demos
+- **Tailwind v4** via `@tailwindcss/vite`
+- **shiki** for code blocks (custom `CodeBlock.astro`, dual theme via media query)
+- **MDX** content collections for variant page bodies
+- **Radix UI** primitives in `packages/ui`
+- **i18n**: Korean default at `/`, English at `/en/` (`prefixDefaultLocale: false`)
+- **Theme**: OS preference only — no toggle
+- **lucide-react** for all icons
+
+## Project layout
+
+```
+packages/
+  ui/                              # @chadcn/ui npm package
+    src/
+      button/
+        base.tsx                   # CVA + Radix Slot, no chad behavior
+        shy.tsx                    # variant: dodges hover (current escape rename)
+        # <slug>.tsx               # one file per variant
+      lib/utils.ts                 # cn()
+      index.ts                     # top-level Button = first/canonical variant
+    tsup.config.ts                 # multi-entry: dist/index + dist/<comp>/<slug>
+  docs/                            # Astro site
+    src/
+      content/
+        pages/                     # MDX page bodies (button.<locale>.mdx)
+          button.snippets.ts       # code shown in <CodeBlock> (see Footguns)
+        config.ts                  # zod schema, custom generateId for .ko/.en
+      i18n/
+        strings.ts                 # ko + en chrome labels
+        locale.ts                  # getLocale, tFor helpers
+      layouts/                     # Site, Docs
+      pages/                       # ko (default) + en/ mirror, body inline
+      components/
+        chrome/                    # Site header/footer, mobile nav, icons
+        docs/                      # Sidebar, Toc, ExamplePreview, InstallTabs,
+                                   #   VariantSelector, CodeBlock
+        ui/                        # shadcn primitives (Button) used by chrome
+        demos/<comp>/              # variant runtime demos (take {slug})
+      lib/
+        button-components.ts       # slug → component + variantInfo (tagline,
+                                   #   description per locale)
+.github/workflows/publish.yml      # OIDC trusted publish on v* tag push
+```
+
 ## Tone
 
 The single most important rule, and the only one not enforceable by code.
 
-**Every variant is presented as if it were a serious, useful feature.** Subtitle,
-body copy, docs prose all read like a sincere product pitch — never break the
-fourth wall.
+**Every variant is presented as if it were a serious, useful feature.** The
+tagline, description, and any prose read like a sincere product pitch — never
+break the fourth wall.
 
 - ❌ "도망가는 버튼" / "Catch me if you can"
 - ✅ "잘못된 클릭을 막아주는 버튼" / "A button that prevents accidental clicks"
 
-The `slug` (filename, dropdown label) can be playful (`escape`,
-`whack-a-mole`) — that's for devs. The user-facing `tagline` and body must be
+The `slug` (filename, dropdown label) can be playful (`shy`, `whack-a-mole`,
+`jealous`) — that's for devs. The user-facing tagline + description must be
 deadpan.
+
+## Adding a new Button variant
+
+Mechanical, ~10 minutes:
+
+1. **Library component**: `packages/ui/src/button/<slug>.tsx`
+   - Import `ButtonBase` from `./base` so the new variant inherits CVA + Radix
+     Slot. Add chad behavior via event handlers / style.
+   - Add `"use client"` at top (uses hooks).
+2. **Library exports**:
+   - `packages/ui/tsup.config.ts` — add `"button/<slug>": "src/button/<slug>.tsx"`
+   - `packages/ui/package.json#exports` — add `./button/<slug>` block
+3. **Docs map**: `packages/docs/src/lib/button-components.ts`
+   - Import the new component
+   - Add to `buttonComponents` map (slug → component reference)
+   - Add to `variantInfo` map with `tagline` + `description` (both `ko` and
+     `en` required — type-enforced)
+
+Routes (`/docs/components/button/<slug>` ko + en), dropdown, sidebar link,
+OG image and install command all auto-derive from these. No template edits.
+
+If a new example (not just a variant) is added to the Button page itself,
+update `packages/docs/src/content/pages/button.snippets.ts` too — see the MDX
+indent footgun below.
+
+## Adding a brand new component (Input, Select, etc.)
+
+The repo currently only has Button. Several pieces are Button-specific and
+need generalizing first. Concretely:
+
+- `lib/button-components.ts` — duplicate as `lib/<comp>-components.ts`
+- `lib/listButtonSlugs` / `getButtonVariant` — duplicate or generalize via a
+  registry indexed by component name
+- `components/docs/VariantSelector.astro` — currently calls `listButtonSlugs()`;
+  needs a `component` prop to know which list
+- `components/docs/Sidebar.astro` — `components` array is hardcoded; add the
+  new entry, point to first slug of new component
+- `components/chrome/MobileNav.tsx` — same hardcoded list
+- `pages/docs/components/<comp>/[variant].astro` (ko + en) — copy from button
+  variant route, swap component name, swap `listButtonSlugs` → new helper
+- `pages/docs/components/<comp>/index.astro` (ko + en) — redirect to first slug
+- `content/pages/<comp>.{ko,en}.mdx` — the shared page body
+- `content/pages/<comp>.snippets.ts` — code samples (slug-interpolated)
+- `components/demos/<comp>/<Name>.tsx` — runtime demo islands taking `{slug}`
+
+Recommended sequence: first generalize the Button-specific helpers (rename
+`listButtonSlugs` to `listSlugsFor("button")` etc.), then add the new component.
+Resist creating Button-only abstractions — assume more components will land.
+
+## Release flow
+
+```bash
+cd packages/ui
+pnpm version minor          # bumps + creates commit + tag (e.g. v0.3.0)
+git push --follow-tags
+```
+
+GitHub Actions (`.github/workflows/publish.yml`) handles the rest:
+- Builds `@chadcn/ui` via tsup
+- Publishes to npm via OIDC trusted publishing (no token, signed provenance)
+- Creates GitHub release with auto-generated notes
+
+No tokens, no OTP, no manual `npm publish` from local. See **Versioning** for
+when to use major/minor/patch.
+
+## Versioning
+
+Pre-1.0 (current; until variant set + API are stable):
+- New variant subpath = **MINOR** (0.2.0 → 0.3.0)
+- Tweak / bug fix to existing variant = **PATCH** (0.3.0 → 0.3.1)
+- Renaming or removing a variant, or changing the top-level Button alias =
+  jump to **1.0.0** to flag the breaking change
+
+After 1.0.0 (API frozen):
+- New variant = MINOR (1.1.0)
+- Bug fix = PATCH (1.1.1)
+- Breaking change = MAJOR (2.0.0)
 
 ## Footguns
 
 These will silently break things if you don't know them.
 
-### Hydration: pass `slug`, not `Button`
+### Demo hydration: pass `slug`, not `Button`
 
 Astro serializes island props as JSON; functions/components can't cross that
 boundary. Demos that take `Button` as a prop hydrate to nothing — button
@@ -31,93 +155,60 @@ disappears with no error.
 Demos take `{ slug: string }` and look up the component from
 `buttonComponents` at runtime.
 
-### Displayed code != runtime code
+### Displayed code is built as strings, not from runtime files
 
 Runtime demo files use `{ slug }` + `buttonComponents` lookup for hydration.
-The code shown in `<Code/>` blocks must NOT include this — users would see
-internal docs plumbing. The page-body file builds the displayed code as
-template strings with the variant slug interpolated into the import path:
+Users would be confused seeing that boilerplate. The MDX page imports
+`buttonSnippets(slug)` from `content/pages/button.snippets.ts` — that
+function returns idiomatic standalone code with `${slug}` interpolated into
+the import path.
 
-```ts
-const importPath = `@chadcn/ui/button/${slug}`
-const mainSrc = `import { Button } from "${importPath}"
-...
-export function ButtonDemo() { ... }`
-```
+So the user viewing the `shy` page sees
+`import { Button } from "@chadcn/ui/button/shy"` — what they'd actually write.
 
-So a user viewing `whack-a-mole` sees `import { Button } from
-"@chadcn/ui/button/whack-a-mole"` — the idiomatic standalone code they
-would actually write.
-
-### Demo labels are English regardless of locale
-
-Demo button text stays English (`"Button"`, `"Default"`) even on Korean pages.
-Matches shadcn convention. Only docs chrome (headings, paragraphs) is localized.
-
-### MDX multi-line template literals strip indent
+### MDX strips indent in multi-line template literals
 
 Upstream MDX bug ([mdx-js/mdx#2533](https://github.com/mdx-js/mdx/issues/2533)
-family): a template literal embedded in a JSX expression
-(`<CodeBlock code={`...`} />`) gets its leading whitespace re-flowed
-across parse cycles. Result: the displayed code shows wrong indent.
+family): a template literal embedded directly in an MDX JSX expression
+(`<CodeBlock code={`...`} />`) gets its leading whitespace flattened.
 
 **Workaround**: keep multi-line code samples in a sibling `.snippets.ts`
-module (e.g. `content/pages/button.snippets.ts`) as plain JS template
-literals — JS code is untouched by MDX. Import into MDX and pass via
+module — JS literals are untouched by MDX. Pass via
 `code={buttonSnippets(slug).foo}`. Single-line snippets are safe inline.
-Do not try to upstream-patch — the bug is in deep MDX deps and not worth
-the maintenance burden at this scale.
+Don't try to upstream-patch — the bug lives deep in MDX deps.
+
+### Demo labels stay in English regardless of locale
+
+Demo button text stays English (`"Button"`, `"Default"`) on Korean pages too.
+Matches shadcn convention. Only docs chrome (headings, paragraphs) is localized.
 
 ### Both locales required for every variant
 
-When you add a variant, both `ko` and `en` strings (tagline + description in
-`lib/button-components.ts`) are mandatory — the type system enforces it. No
-fallback path. Same goes for `content/pages/button.{ko,en}.mdx`: both must
-exist.
+`tagline` + `description` in `lib/button-components.ts` must have both `ko`
+and `en` — TypeScript enforces it. No fallback path.
 
-### Sidebar links go straight to a variant slug
+For shared page bodies (`content/pages/button.{ko,en}.mdx`) both files must
+exist or the variant pages won't build for the missing locale.
 
-Never link to `/docs/components/button` from chrome — it redirects to the
-first variant and the flash is visible. Compute the first variant slug at
-build time and link to `/docs/components/button/<slug>` directly.
+### Sidebar / nav link directly to a variant slug
+
+Never link to `/docs/components/button` from chrome — it 302-redirects to the
+first variant and the flash is visible. Compute the first slug at build time
+(`listButtonSlugs()[0]`) and link to `/docs/components/button/<slug>`.
 
 ### Icons: lucide-react only
 
-Use `lucide-react` for any icon — including inside `.astro` files (Astro
-renders React components to static HTML at SSG, no `client:*` needed).
-The only inline-SVG exception is the chad logo in
-`components/chrome/icons.tsx`; nothing else in lucide.
+Use `lucide-react` for any icon, including inside `.astro` files (Astro
+renders React components to static HTML at SSG, no `client:*` directive
+needed). The only inline-SVG exception is the chad logo in
+`components/chrome/icons.tsx`.
 
 ### Don't reintroduce a theme toggle
 
-Theme is OS-only by design. If you add a `.dark` class system the
-expressive-code config and the globals.css media queries will both have to
-change in lockstep — easy to half-do.
-
-## Versioning (`@chadcn/ui`)
-
-Pre-1.0 phase (until variant set + API are stable):
-- New variant subpath = MINOR bump (0.1.0 → 0.2.0)
-- Tweak/fix to existing variant = PATCH (0.2.0 → 0.2.1)
-- Removing/renaming a variant or changing the top-level Button alias =
-  jump to 1.0.0 to flag the breaking change
-
-After 1.0.0 (API frozen):
-- New variant = MINOR (1.1.0)
-- Bug fix = PATCH (1.1.1)
-- Breaking change = MAJOR (2.0.0)
-
-Each variant addition is its own version + git tag + GitHub release.
-
-## Adding a New Button Variant
-
-1. `packages/ui/src/button/<slug>.tsx` using `ButtonBase`
-2. Entry in `tsup.config.ts` + subpath in `package.json#exports`
-3. Add to `packages/docs/src/lib/button-components.ts`
-4. `packages/docs/src/content/variants/button/<slug>.ko.mdx` with `tagline`
-5. (optional) `<slug>.en.mdx`
-
-Routes, dropdown, sidebar link, install command all auto-update.
+Theme follows `prefers-color-scheme` only. CSS uses `@media` queries for
+dark colors; shiki uses dual theme via the same media query. Adding a class
+toggle requires changes in lockstep across globals.css, the shiki dual-theme
+config, and probably HTML head — easy to half-do.
 
 ## Backup
 
