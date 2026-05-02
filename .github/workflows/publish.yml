@@ -18,11 +18,8 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: pnpm
-
-      - name: Use latest npm (OIDC trusted publishing needs >=11.5)
-        run: npm install --global npm@latest
 
       - name: Install
         run: pnpm install --frozen-lockfile
