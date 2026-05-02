@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev --port 4000",
-    "build": "astro build",
+    "build": "pnpm -F @chadcn/ui build && astro build",
     "preview": "astro preview --port 4000",
     "astro": "astro"
   },
