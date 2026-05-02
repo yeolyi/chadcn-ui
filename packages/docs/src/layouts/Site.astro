@@ -1,6 +1,8 @@
 ---
 import "@/styles/globals.css"
 
+import Analytics from "@vercel/analytics/astro"
+
 import SiteFooter from "@/components/chrome/SiteFooter.astro"
 import SiteHeader from "@/components/chrome/SiteHeader.astro"
 import { getLocale, tFor } from "@/i18n/locale"
@@ -62,10 +64,8 @@ const fullTitle = title ? `${title} - ${siteConfig.name}` : siteConfig.name
       <main class="flex flex-1 flex-col"><slot /></main>
       <SiteFooter />
     </div>
+    <Analytics />
     <script>
-      import { inject } from "@vercel/analytics"
-      inject()
-
       // CodeBlock copy buttons: write to clipboard, swap to check icon for ~2s.
       document.addEventListener("click", (e) => {
         const btn = (e.target as HTMLElement | null)?.closest<HTMLButtonElement>(
