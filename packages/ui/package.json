@@ -27,10 +27,20 @@
       "import": "./dist/button/mash.js",
       "require": "./dist/button/mash.cjs"
     },
+    "./button/minesweeper": {
+      "types": "./dist/button/minesweeper.d.ts",
+      "import": "./dist/button/minesweeper.js",
+      "require": "./dist/button/minesweeper.cjs"
+    },
     "./button/flinch": {
       "types": "./dist/button/flinch.d.ts",
       "import": "./dist/button/flinch.js",
       "require": "./dist/button/flinch.cjs"
+    },
+    "./button/sponsored": {
+      "types": "./dist/button/sponsored.d.ts",
+      "import": "./dist/button/sponsored.js",
+      "require": "./dist/button/sponsored.cjs"
     },
     "./styles.css": "./dist/styles.css"
   },
@@ -58,6 +68,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
+    "es-toolkit": "^1.46.1",
     "lucide-react": "^0.468.0",
     "radix-ui": "^1.4.0",
     "tailwind-merge": "^3.0.1"

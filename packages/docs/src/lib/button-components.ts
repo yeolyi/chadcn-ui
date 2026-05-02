@@ -8,7 +8,9 @@ import type { ComponentType } from "react"
 
 import { Button as Thanos } from "@chadcn/ui/button/thanos"
 import { Button as Mash } from "@chadcn/ui/button/mash"
+import { Button as Minesweeper } from "@chadcn/ui/button/minesweeper"
 import { Button as Flinch } from "@chadcn/ui/button/flinch"
+import { Button as Sponsored } from "@chadcn/ui/button/sponsored"
 import { Button as Shy } from "@chadcn/ui/button/shy"
 
 import type { Locale } from "@/i18n/strings"
@@ -25,7 +27,9 @@ export const buttonComponents = {
   shy: Shy,
   thanos: Thanos,
   mash: Mash,
+  minesweeper: Minesweeper,
   flinch: Flinch,
+  sponsored: Sponsored,
 } satisfies Record<string, ComponentType<Parameters<typeof Shy>[0]>>
 
 // Slug → prose. Used at SSG only; not shipped to the client demos.
@@ -60,6 +64,16 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
       en: "A button that firmly verifies the user's intent to press it. The progress bar drains on its own, so the user must keep clicking to fill it — only sustained intent confirms the action.",
     },
   },
+  minesweeper: {
+    tagline: {
+      ko: "안전한 클릭만 받아들이는 버튼",
+      en: "A button that only accepts safe clicks",
+    },
+    description: {
+      ko: "버튼 표면에 작은 안전 점검 절차가 내장되어 있습니다. 폭탄을 피해 모든 안전 영역을 확인해야만 진짜 동작이 활성화됩니다.",
+      en: "A small safety check is embedded across the button surface. Only after every safe region is verified — without striking a mine — does the real action become available.",
+    },
+  },
   flinch: {
     tagline: {
       ko: "사용되지 않음으로써 가치를 보존하는 버튼",
@@ -68,6 +82,16 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
     description: {
       ko: "버튼의 가치는 눌릴 수 있다는 가능성 그 자체에 있습니다. 포인터가 닿는 순간 그 가능성은 사용자에게 이미 충분히 전달되었으므로, 더 이상 눌릴 필요 없이 버튼은 자신의 역할을 완수하고 봉인됩니다.",
       en: "A button's worth lies in the very possibility of being pressed. The instant the pointer arrives, that possibility has been sufficiently conveyed to the user — the button has fulfilled its role without needing to be pressed, and seals itself.",
+    },
+  },
+  sponsored: {
+    tagline: {
+      ko: "광고 시청을 통해 무료로 제공되는 버튼",
+      en: "A button offered free of charge via sponsored content",
+    },
+    description: {
+      ko: "이 버튼을 사용하기 위해서는 짧은 광고 시청에 동의하신 것으로 간주됩니다. 광고가 종료되면 원래 의도하신 동작이 정상적으로 실행됩니다.",
+      en: "By using this button you are deemed to have consented to viewing a brief sponsored message. The originally intended action will execute normally once the ad concludes.",
     },
   },
 }
