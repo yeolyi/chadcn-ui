@@ -1,6 +1,5 @@
-import { ClipboardIcon, PackageIcon, TerminalIcon } from "lucide-react"
+import { CheckIcon, ClipboardIcon, PackageIcon, TerminalIcon } from "lucide-react"
 import * as React from "react"
-import { toast } from "sonner"
 
 const packageManagers = {
   pnpm: "pnpm add",
@@ -16,15 +15,20 @@ export function InstallTabs({
   comingSoon,
   comingSoonLabel = "Coming Soon",
   comingSoonDescription = "Package not yet published on npm.",
-  copySuccessMessage = "Copied to clipboard",
 }: {
   pkg: string
   comingSoon?: boolean
   comingSoonLabel?: string
   comingSoonDescription?: string
-  copySuccessMessage?: string
 }) {
   const [active, setActive] = React.useState<PM>("pnpm")
+  const [copied, setCopied] = React.useState(false)
+
+  React.useEffect(() => {
+    if (!copied) return
+    const t = setTimeout(() => setCopied(false), 2000)
+    return () => clearTimeout(t)
+  }, [copied])
 
   const tabs = React.useMemo(() => {
     const out = {} as Record<PM, string>
@@ -89,12 +93,12 @@ export function InstallTabs({
           data-slot="copy-button"
           onClick={() => {
             navigator.clipboard.writeText(tabs[active])
-            toast(copySuccessMessage)
+            setCopied(true)
           }}
-          className="absolute top-2 right-2 z-10 inline-flex size-7 items-center justify-center rounded-md opacity-70 hover:bg-accent hover:opacity-100"
+          className="absolute top-2 right-2 z-10 inline-flex size-6 items-center justify-center rounded-md opacity-70 hover:bg-accent hover:opacity-100"
           aria-label="Copy"
         >
-          <ClipboardIcon className="size-3.5" />
+          {copied ? <CheckIcon className="size-3" /> : <ClipboardIcon className="size-3" />}
         </button>
       )}
     </div>
