@@ -1,12 +1,21 @@
-# chadcn/ui
-
-사용자가 신중하게 행동하도록 돕는 React 컴포넌트 라이브러리.
-
 <p align="center">
   <img src="./packages/docs/public/logo.png" alt="chadcn/ui" width="160" />
 </p>
 
-shadcn/ui와 동일한 API와 모양을 그대로 유지하면서, 각 컴포넌트는 잘못된 입력을 줄이기 위한 변형(variant)을 제공합니다. 컴포넌트마다 여러 동작 중에서 프로젝트에 맞는 것을 골라 import할 수 있습니다.
+<h1 align="center">chadcn/ui</h1>
+
+<p align="center">
+  잊을 수 없게, 인터랙티브하게.
+</p>
+
+<p align="center">
+  다른 사이트와 똑같은 컴포넌트는 그만. 사용자가 진짜로 기억할 수 있는 컴포넌트를 쓰세요.
+</p>
+
+---
+
+shadcn/ui의 드롭인 대체품입니다. 같은 API, 같은 모양, 잊을 수 없는 UX.
+모든 컴포넌트는 shadcn 원본과 시각적으로 동일하며, 독특한 인터랙션으로 당신의 사이트를 무시할 수 없게 만듭니다.
 
 ## 문서
 
@@ -18,7 +27,7 @@ shadcn/ui와 동일한 API와 모양을 그대로 유지하면서, 각 컴포넌
 pnpm add @chadcn/ui
 ```
 
-variant별 import 경로와 사용법은 [문서](https://chad-cn.com)를 참고하세요.
+자세한 사용법은 [문서](https://chad-cn.com)를 참고하세요.
 
 ## 라이선스
 
