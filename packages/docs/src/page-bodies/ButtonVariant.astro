@@ -21,19 +21,6 @@ import { t } from "@/i18n/strings"
 import Docs from "@/layouts/Docs.astro"
 import { findVariant } from "@/lib/variants"
 
-import mainSrc from "@/demos/button/ButtonMain.tsx?raw"
-import sizeSrc from "@/demos/button/ButtonSize.tsx?raw"
-import defaultSrc from "@/demos/button/ButtonDefault.tsx?raw"
-import outlineSrc from "@/demos/button/ButtonOutline.tsx?raw"
-import secondarySrc from "@/demos/button/ButtonSecondary.tsx?raw"
-import ghostSrc from "@/demos/button/ButtonGhost.tsx?raw"
-import destructiveSrc from "@/demos/button/ButtonDestructive.tsx?raw"
-import linkSrc from "@/demos/button/ButtonLink.tsx?raw"
-import iconSrc from "@/demos/button/ButtonIcon.tsx?raw"
-import withIconSrc from "@/demos/button/ButtonWithIcon.tsx?raw"
-import roundedSrc from "@/demos/button/ButtonRounded.tsx?raw"
-import asChildSrc from "@/demos/button/ButtonAsChild.tsx?raw"
-
 interface Props {
   slug: string
 }
@@ -54,6 +41,124 @@ const cursorSnippet = `@layer base {
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+}`
+
+// Displayed code is constructed inline so the variant slug can be interpolated
+// into the import path. The runtime demo files in @/demos/button/ use a slug
+// lookup for hydration; what we show in <Code/> is the idiomatic standalone
+// version a user would actually write.
+const importPath = `@chadcn/ui/button/${slug}`
+
+const mainSrc = `import { Button } from "${importPath}"
+import { ArrowUpIcon } from "lucide-react"
+
+export function ButtonDemo() {
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      <Button variant="outline">Button</Button>
+      <Button variant="outline" size="icon" aria-label="Submit">
+        <ArrowUpIcon />
+      </Button>
+    </div>
+  )
+}`
+
+const sizeSrc = `import { Button } from "${importPath}"
+import { ArrowUpRightIcon } from "lucide-react"
+
+export function ButtonSize() {
+  return (
+    <div className="flex flex-wrap items-center gap-4">
+      <Button size="xs">Extra Small</Button>
+      <Button size="xs" variant="outline"><ArrowUpRightIcon /></Button>
+      <Button size="sm">Small</Button>
+      <Button size="sm" variant="outline"><ArrowUpRightIcon /></Button>
+      <Button size="default">Default</Button>
+      <Button size="default" variant="outline"><ArrowUpRightIcon /></Button>
+      <Button size="lg">Large</Button>
+      <Button size="lg" variant="outline"><ArrowUpRightIcon /></Button>
+    </div>
+  )
+}`
+
+const defaultSrc = `import { Button } from "${importPath}"
+
+export function ButtonDefault() {
+  return <Button>Default</Button>
+}`
+
+const outlineSrc = `import { Button } from "${importPath}"
+
+export function ButtonOutline() {
+  return <Button variant="outline">Outline</Button>
+}`
+
+const secondarySrc = `import { Button } from "${importPath}"
+
+export function ButtonSecondary() {
+  return <Button variant="secondary">Secondary</Button>
+}`
+
+const ghostSrc = `import { Button } from "${importPath}"
+
+export function ButtonGhost() {
+  return <Button variant="ghost">Ghost</Button>
+}`
+
+const destructiveSrc = `import { Button } from "${importPath}"
+
+export function ButtonDestructive() {
+  return <Button variant="destructive">Destructive</Button>
+}`
+
+const linkSrc = `import { Button } from "${importPath}"
+
+export function ButtonLink() {
+  return <Button variant="link">Link</Button>
+}`
+
+const iconSrc = `import { Button } from "${importPath}"
+import { CircleFadingArrowUpIcon } from "lucide-react"
+
+export function ButtonIcon() {
+  return (
+    <Button variant="outline" size="icon" aria-label="Upload">
+      <CircleFadingArrowUpIcon />
+    </Button>
+  )
+}`
+
+const withIconSrc = `import { Button } from "${importPath}"
+import { GitBranchIcon } from "lucide-react"
+
+export function ButtonWithIcon() {
+  return (
+    <Button>
+      <GitBranchIcon data-icon="inline-start" />
+      New Branch
+    </Button>
+  )
+}`
+
+const roundedSrc = `import { Button } from "${importPath}"
+import { ArrowUpIcon } from "lucide-react"
+
+export function ButtonRounded() {
+  return (
+    <Button className="rounded-full" size="icon" variant="outline">
+      <ArrowUpIcon />
+    </Button>
+  )
+}`
+
+const asChildSrc = `import { Button } from "${importPath}"
+
+export function ButtonAsChild() {
+  return (
+    <Button asChild>
+      <a href="/login">Login</a>
+    </Button>
+  )
 }`
 
 const tocBase = locale === "en"

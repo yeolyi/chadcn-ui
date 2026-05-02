@@ -31,6 +31,24 @@ disappears with no error.
 Demos take `{ slug: string }` and look up the component from
 `buttonComponents` at runtime.
 
+### Displayed code != runtime code
+
+Runtime demo files use `{ slug }` + `buttonComponents` lookup for hydration.
+The code shown in `<Code/>` blocks must NOT include this — users would see
+internal docs plumbing. The page-body file builds the displayed code as
+template strings with the variant slug interpolated into the import path:
+
+```ts
+const importPath = `@chadcn/ui/button/${slug}`
+const mainSrc = `import { Button } from "${importPath}"
+...
+export function ButtonDemo() { ... }`
+```
+
+So a user viewing `whack-a-mole` sees `import { Button } from
+"@chadcn/ui/button/whack-a-mole"` — the idiomatic standalone code they
+would actually write.
+
 ### Demo labels are English regardless of locale
 
 Demo button text stays English (`"Button"`, `"Default"`) even on Korean pages.
