@@ -22,6 +22,14 @@
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yeolyi/chadcn-ui.git",
+    "directory": "packages/ui"
+  },
+  "homepage": "https://chad-cn.com",
+  "bugs": "https://github.com/yeolyi/chadcn-ui/issues",
+  "license": "MIT",
   "scripts": {
     "build": "tsup && pnpm build:css",
     "build:css": "tailwindcss -i src/styles.css -o dist/styles.css --content 'src/**/*.tsx' --minify",
