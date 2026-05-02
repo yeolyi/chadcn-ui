@@ -5,6 +5,8 @@ interface Props {
 }
 
 const { className = "", hasCode = true } = Astro.props
+const locale = Astro.currentLocale ?? "ko"
+const viewCodeLabel = locale === "en" ? "View Code" : "코드 보기"
 ---
 
 <div
@@ -33,7 +35,7 @@ const { className = "", hasCode = true } = Astro.props
               data-toggle
               class="relative z-10 inline-flex h-8 items-center justify-center gap-1.5 rounded-lg border bg-background px-3 text-sm font-medium text-foreground shadow-none hover:bg-muted"
             >
-              코드 보기
+              {viewCodeLabel}
             </button>
           </div>
         </div>

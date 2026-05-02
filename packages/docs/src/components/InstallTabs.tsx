@@ -16,11 +16,13 @@ export function InstallTabs({
   comingSoon,
   comingSoonLabel = "Coming Soon",
   comingSoonDescription = "Package not yet published on npm.",
+  copySuccessMessage = "Copied to clipboard",
 }: {
   pkg: string
   comingSoon?: boolean
   comingSoonLabel?: string
   comingSoonDescription?: string
+  copySuccessMessage?: string
 }) {
   const [active, setActive] = React.useState<PM>("pnpm")
 
@@ -87,7 +89,7 @@ export function InstallTabs({
           data-slot="copy-button"
           onClick={() => {
             navigator.clipboard.writeText(tabs[active])
-            toast("코드가 복사되었습니다")
+            toast(copySuccessMessage)
           }}
           className="absolute top-2 right-2 z-10 inline-flex size-7 items-center justify-center rounded-md opacity-70 hover:bg-accent hover:opacity-100"
           aria-label="Copy"

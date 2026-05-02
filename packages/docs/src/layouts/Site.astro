@@ -4,6 +4,7 @@ import "@/styles/globals.css"
 import SiteFooter from "@/components/SiteFooter.astro"
 import SiteHeader from "@/components/SiteHeader.astro"
 import { Toaster } from "@/components/Toaster"
+import { t } from "@/i18n/strings"
 import { META_THEME_COLORS, siteConfig } from "@/lib/config"
 
 interface Props {
@@ -11,12 +12,14 @@ interface Props {
   description?: string
 }
 
-const { title, description = siteConfig.description } = Astro.props
+const locale = Astro.currentLocale ?? "ko"
+const s = t(locale)
+const { title, description = s.siteDescription } = Astro.props
 const fullTitle = title ? `${title} - ${siteConfig.name}` : siteConfig.name
 ---
 
 <!doctype html>
-<html lang="ko">
+<html lang={locale}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />

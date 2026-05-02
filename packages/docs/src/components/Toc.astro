@@ -10,13 +10,15 @@ interface Props {
 }
 
 const { items } = Astro.props
+const locale = Astro.currentLocale ?? "ko"
+const onThisPage = locale === "en" ? "On This Page" : "목차"
 ---
 
 {
   items.length > 0 && (
     <div class="flex flex-col gap-2 p-4 pt-0 text-sm" data-toc>
       <p class="sticky top-0 h-6 bg-background text-xs font-medium text-muted-foreground">
-        목차
+        {onThisPage}
       </p>
       {items.map((item) => (
         <a

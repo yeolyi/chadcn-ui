@@ -4,6 +4,13 @@ import expressiveCode from "astro-expressive-code"
 import tailwindcss from "@tailwindcss/vite"
 
 export default defineConfig({
+  i18n: {
+    locales: ["ko", "en"],
+    defaultLocale: "ko",
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   integrations: [
     expressiveCode(),
     react(),

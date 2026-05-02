@@ -4,15 +4,29 @@ import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
-const sections = [
-  { name: "소개", href: "/docs" },
-  { name: "설치", href: "/docs/installation" },
-]
+interface MobileNavStrings {
+  menu: string
+  home: string
+  sections: string
+  components: string
+  introduction: string
+  installation: string
+  toggleMenu: string
+}
 
-const components = [{ name: "Button", href: "/docs/components/button" }]
+interface Props {
+  basePath: string
+  strings: MobileNavStrings
+}
 
-export function MobileNav() {
+export function MobileNav({ basePath, strings }: Props) {
   const [open, setOpen] = React.useState(false)
+  const homeHref = basePath || "/"
+  const sections = [
+    { name: strings.introduction, href: `${basePath}/docs` },
+    { name: strings.installation, href: `${basePath}/docs/installation` },
+  ]
+  const components = [{ name: "Button", href: `${basePath}/docs/components/button` }]
 
   return (
     <Popover.Root open={open} onOpenChange={setOpen}>
@@ -36,9 +50,9 @@ export function MobileNav() {
                 )}
               />
             </div>
-            <span className="sr-only">메뉴 토글</span>
+            <span className="sr-only">{strings.toggleMenu}</span>
           </div>
-          <span className="flex h-8 items-center text-lg leading-none font-medium">메뉴</span>
+          <span className="flex h-8 items-center text-lg leading-none font-medium">{strings.menu}</span>
         </Button>
       </Popover.Trigger>
       <Popover.Portal>
@@ -51,15 +65,15 @@ export function MobileNav() {
         >
           <div className="flex flex-col gap-12 overflow-auto px-6 py-6">
             <div className="flex flex-col gap-4">
-              <div className="text-sm font-medium text-muted-foreground">메뉴</div>
+              <div className="text-sm font-medium text-muted-foreground">{strings.menu}</div>
               <div className="flex flex-col gap-3">
-                <MobileLink href="/" onClose={() => setOpen(false)}>
-                  홈
+                <MobileLink href={homeHref} onClose={() => setOpen(false)}>
+                  {strings.home}
                 </MobileLink>
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <div className="text-sm font-medium text-muted-foreground">섹션</div>
+              <div className="text-sm font-medium text-muted-foreground">{strings.sections}</div>
               <div className="flex flex-col gap-3">
                 {sections.map(({ name, href }) => (
                   <MobileLink key={href} href={href} onClose={() => setOpen(false)}>
@@ -69,7 +83,7 @@ export function MobileNav() {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <div className="text-sm font-medium text-muted-foreground">컴포넌트</div>
+              <div className="text-sm font-medium text-muted-foreground">{strings.components}</div>
               <div className="flex flex-col gap-3">
                 {components.map(({ name, href }) => (
                   <MobileLink key={href} href={href} onClose={() => setOpen(false)}>

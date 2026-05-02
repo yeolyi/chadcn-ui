@@ -1,0 +1,24 @@
+---
+const locale = Astro.currentLocale ?? "ko"
+const pathname = new URL(Astro.request.url).pathname
+
+// Compute the equivalent path in the other locale
+let targetPath: string
+let targetLocale: "ko" | "en"
+if (locale === "en") {
+  targetLocale = "ko"
+  targetPath = pathname.replace(/^\/en(\/|$)/, "/") || "/"
+} else {
+  targetLocale = "en"
+  targetPath = `/en${pathname === "/" ? "" : pathname}`
+}
+const targetLabel = targetLocale === "en" ? "EN" : "한"
+---
+
+<a
+  href={targetPath}
+  class="inline-flex h-8 items-center justify-center rounded-md px-3 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+  aria-label={locale === "en" ? "한국어로 보기" : "View in English"}
+>
+  {targetLabel}
+</a>
