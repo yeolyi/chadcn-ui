@@ -2,18 +2,15 @@
 import { getRelativeLocaleUrl } from "astro:i18n"
 
 import { getLocale } from "@/i18n/locale"
-import { listVariantsForComponent } from "@/lib/variants"
+import { listButtonSlugs } from "@/lib/button-components"
 
 interface Props {
-  component: string
   currentSlug: string
 }
 
-const { component, currentSlug } = Astro.props
+const { currentSlug } = Astro.props
 const locale = getLocale(Astro)
-
-const variants = await listVariantsForComponent(component, locale)
-const current = variants.find((v) => v.slug === currentSlug)
+const slugs = listButtonSlugs()
 ---
 
 <div class="relative" data-variant-selector>
@@ -35,14 +32,14 @@ const current = variants.find((v) => v.slug === currentSlug)
     role="menu"
   >
     {
-      variants.map((v) => (
+      slugs.map((slug) => (
         <li>
           <a
-            href={getRelativeLocaleUrl(locale, `docs/components/${component}/${v.slug}`)}
-            class={`flex items-center rounded-sm px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground ${v.slug === currentSlug ? "bg-accent text-accent-foreground" : ""}`}
+            href={getRelativeLocaleUrl(locale, `docs/components/button/${slug}`)}
+            class={`flex items-center rounded-sm px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground ${slug === currentSlug ? "bg-accent text-accent-foreground" : ""}`}
             role="menuitem"
           >
-            <span>{v.slug}</span>
+            <span>{slug}</span>
           </a>
         </li>
       ))

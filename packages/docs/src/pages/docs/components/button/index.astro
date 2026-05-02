@@ -1,7 +1,5 @@
 ---
-import { listVariantsForComponent } from "@/lib/variants"
+import { listButtonSlugs } from "@/lib/button-components"
 
-const variants = await listVariantsForComponent("button", "ko")
-const first = variants[0]?.slug ?? "escape"
-return Astro.redirect(`/docs/components/button/${first}`)
+return Astro.redirect(`/docs/components/button/${listButtonSlugs()[0]}`)
 ---

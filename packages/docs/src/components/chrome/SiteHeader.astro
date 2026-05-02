@@ -1,17 +1,16 @@
 ---
-import { GitHubLink } from "@/components/GitHubLink"
-import { HomeLink } from "@/components/HomeLink"
-import { InstagramLink } from "@/components/InstagramLink"
-import LocaleSwitcher from "@/components/LocaleSwitcher.astro"
-import { MobileNav } from "@/components/MobileNav"
+import { GitHubLink } from "@/components/chrome/GitHubLink"
+import { HomeLink } from "@/components/chrome/HomeLink"
+import { InstagramLink } from "@/components/chrome/InstagramLink"
+import LocaleSwitcher from "@/components/chrome/LocaleSwitcher.astro"
+import { MobileNav } from "@/components/chrome/MobileNav"
 import { getLocale, tFor } from "@/i18n/locale"
-import { listVariantsForComponent } from "@/lib/variants"
+import { listButtonSlugs } from "@/lib/button-components"
 
 const locale = getLocale(Astro)
 const s = tFor(Astro)
 const basePath = locale === "en" ? "/en" : ""
-const buttonVariants = await listVariantsForComponent("button", locale)
-const buttonHref = `${basePath}/docs/components/button/${buttonVariants[0]?.slug ?? "escape"}`
+const buttonHref = `${basePath}/docs/components/button/${listButtonSlugs()[0]}`
 const navStrings = {
   menu: s.menu,
   home: s.home,

@@ -1,4 +1,4 @@
-import { Icons } from "@/components/icons"
+import { Icons } from "@/components/chrome/icons"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/lib/config"
 

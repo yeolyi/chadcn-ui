@@ -1,21 +1,18 @@
 ---
 import { getEntry, render } from "astro:content"
 
-import VariantSelector from "@/components/VariantSelector.astro"
+import VariantSelector from "@/components/docs/VariantSelector.astro"
 import Docs from "@/layouts/Docs.astro"
-import { findVariant, listVariantsForComponent } from "@/lib/variants"
+import { getButtonVariant, listButtonSlugs } from "@/lib/button-components"
 
-export async function getStaticPaths() {
-  const variants = await listVariantsForComponent("button", "ko")
-  return variants.map((v) => ({ params: { variant: v.slug } }))
+export function getStaticPaths() {
+  return listButtonSlugs().map((slug) => ({ params: { variant: slug } }))
 }
 
 const { variant: slug } = Astro.params as { variant: string }
 
-const found = await findVariant("button", slug, "ko")
-if (!found) return Astro.redirect("/")
-const { entry } = found
-const { Content: VariantBody } = await render(entry)
+const variant = getButtonVariant(slug, "ko")
+if (!variant) return Astro.redirect("/")
 
 const pageEntry = await getEntry("pages", "button.ko")
 if (!pageEntry) throw new Error("Missing pages/button.ko.mdx")
@@ -26,20 +23,21 @@ const toc = headings
   .map((h) => ({ id: h.slug, text: h.text, depth: h.depth as 2 | 3 }))
 ---
 
-<Docs title={`Button — ${slug}`} description={entry.data.tagline} toc={toc}>
+<Docs title={`Button — ${slug}`} description={variant.tagline} toc={toc}>
   <div class="flex min-w-0 flex-1 flex-col">
     <div class="h-(--top-spacing) shrink-0"></div>
     <div class="mx-auto flex w-full max-w-[40rem] min-w-0 flex-1 flex-col gap-8 px-4 py-6 md:px-0 lg:py-8">
       <div class="flex items-start justify-between gap-4">
         <div class="flex flex-col gap-2">
           <h1 class="scroll-m-24 text-3xl font-semibold tracking-tight">Button</h1>
-          <p class="text-[1.05rem] text-muted-foreground sm:text-base">{entry.data.tagline}</p>
+          <p class="text-[1.05rem] text-muted-foreground sm:text-base">{variant.tagline}</p>
         </div>
-        <VariantSelector component="button" currentSlug={slug} />
+        <VariantSelector currentSlug={slug} />
       </div>
 
+      <p class="text-[0.95rem] leading-7 text-muted-foreground">{variant.description}</p>
+
       <article class="prose-section [&_h2]:scroll-m-24 [&_h2]:border-b [&_h2]:pb-2 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:mt-8 [&_h3]:scroll-m-24 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:mt-6 [&_p]:text-[0.95rem] [&_p]:leading-7 [&_p]:text-muted-foreground [&_p]:my-3 [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-foreground [&_p_code]:rounded [&_p_code]:bg-muted [&_p_code]:px-1.5 [&_p_code]:py-0.5 [&_p_code]:text-sm [&_p_code]:font-mono">
-        <VariantBody />
         <PageBody slug={slug} />
       </article>
     </div>

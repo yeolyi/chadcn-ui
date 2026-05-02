@@ -2,13 +2,11 @@
 import { getRelativeLocaleUrl } from "astro:i18n"
 
 import { getLocale, tFor } from "@/i18n/locale"
-import { listVariantsForComponent } from "@/lib/variants"
+import { listButtonSlugs } from "@/lib/button-components"
 
 const locale = getLocale(Astro)
 const s = tFor(Astro)
-
-const buttonVariants = await listVariantsForComponent("button", locale)
-const buttonSlug = buttonVariants[0]?.slug ?? "escape"
+const buttonSlug = listButtonSlugs()[0]
 
 const sections = [
   { name: s.introduction, href: getRelativeLocaleUrl(locale, "docs") },

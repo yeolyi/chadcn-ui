@@ -2,14 +2,13 @@
 import { Code } from "astro-expressive-code/components"
 
 import Docs from "@/layouts/Docs.astro"
-import { listVariantsForComponent } from "@/lib/variants"
+import { listButtonSlugs } from "@/lib/button-components"
 
 const title = "Introduction"
 const description =
   "chadcn/ui is a drop-in replacement for shadcn/ui. Same components, same API, unforgettable UX."
 
-const buttonVariants = await listVariantsForComponent("button", "ko")
-const exampleSlug = buttonVariants[0]?.slug ?? "escape"
+const exampleSlug = listButtonSlugs()[0]
 const usage = `import "@chadcn/ui/styles.css"
 import { Button } from "@chadcn/ui/button/${exampleSlug}"`
 
