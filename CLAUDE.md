@@ -67,6 +67,13 @@ Never link to `/docs/components/button` from chrome — it redirects to the
 first variant and the flash is visible. Compute the first variant slug at
 build time and link to `/docs/components/button/<slug>` directly.
 
+### Icons: lucide-react only
+
+Use `lucide-react` for any icon — including inside `.astro` files (Astro
+renders React components to static HTML at SSG, no `client:*` needed).
+The only inline-SVG exception is the chad logo in
+`components/chrome/icons.tsx`; nothing else in lucide.
+
 ### Don't reintroduce a theme toggle
 
 Theme is OS-only by design. If you add a `.dark` class system the

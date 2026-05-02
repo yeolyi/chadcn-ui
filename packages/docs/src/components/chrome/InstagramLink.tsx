@@ -1,4 +1,5 @@
-import { Icons } from "@/components/chrome/icons"
+import { InstagramIcon } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/lib/config"
 
@@ -6,7 +7,7 @@ export function InstagramLink({ followers }: { followers?: string }) {
   return (
     <Button asChild size="sm" variant="ghost" className="h-8 shadow-none">
       <a href={siteConfig.links.instagram} target="_blank" rel="noreferrer">
-        <Icons.instagram />
+        <InstagramIcon />
         {followers && (
           <span className="w-fit text-xs text-muted-foreground tabular-nums">{followers}</span>
         )}

@@ -177,6 +177,12 @@
     }
   }
 
+  /* Anchors inherit color by default so Button + asChild + <a> wears the
+     button's theme color. Specific colors set via class still apply. */
+  a {
+    color: inherit;
+  }
+
   a:active,
   button:active {
     @apply opacity-60 md:opacity-100;
@@ -361,13 +367,39 @@
 
 @layer components {
   /* Shiki dual-theme: light is the inline default, dark is in CSS vars.
-     Switch by media query so OS preference picks the theme. */
+     Switch by media query so OS preference picks the theme. The wrapping
+     CodeBlock owns the visible background; shiki's own bg is suppressed
+     so padding/scroll areas paint a single color. */
+  .shiki {
+    background-color: transparent !important;
+  }
   @media (prefers-color-scheme: dark) {
     .shiki,
     .shiki span {
       color: var(--shiki-dark) !important;
-      background-color: var(--shiki-dark-bg) !important;
     }
+  }
+
+  /* Prose styles for MDX page bodies. Scoped to direct prose elements
+     (paragraphs, headings, paragraph code/anchors) so that interactive
+     demos rendered via ExamplePreview keep their own styling. */
+  .prose-section h2 {
+    @apply scroll-m-24 mt-8 border-b pb-2 text-2xl font-semibold tracking-tight;
+  }
+  .prose-section h3 {
+    @apply scroll-m-24 mt-6 text-lg font-semibold;
+  }
+  .prose-section p {
+    @apply my-3 text-[0.95rem] leading-7 text-muted-foreground;
+  }
+  .prose-section p a {
+    @apply underline underline-offset-4;
+  }
+  .prose-section p a:hover {
+    @apply text-foreground;
+  }
+  .prose-section p code {
+    @apply rounded bg-muted px-1.5 py-0.5 font-mono text-sm;
   }
 
   /* CodeBlock copy button: clipboard ↔ check via [data-copied]. */
