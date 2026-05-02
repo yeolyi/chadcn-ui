@@ -236,6 +236,9 @@ export function Button({
                   color: "rgba(255,255,255,0.95)",
                   cursor: "pointer",
                   userSelect: "none",
+                  WebkitUserSelect: "none",
+                  WebkitTouchCallout: "none",
+                  touchAction: "manipulation",
                 }}
               >
                 {flagged && !revealed ? (
