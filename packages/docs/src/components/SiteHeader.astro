@@ -1,6 +1,7 @@
 ---
 import { GitHubLink } from "@/components/GitHubLink"
 import { HomeLink } from "@/components/HomeLink"
+import { InstagramLink } from "@/components/InstagramLink"
 import { MobileNav } from "@/components/MobileNav"
 
 let stars = ""
@@ -18,6 +19,7 @@ try {
       <MobileNav client:load />
       <HomeLink />
       <div class="ml-auto flex items-center gap-2">
+        <InstagramLink followers="35k" />
         <GitHubLink stars={stars} />
       </div>
     </div>
