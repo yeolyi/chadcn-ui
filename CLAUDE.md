@@ -54,11 +54,12 @@ would actually write.
 Demo button text stays English (`"Button"`, `"Default"`) even on Korean pages.
 Matches shadcn convention. Only docs chrome (headings, paragraphs) is localized.
 
-### MDX: Korean required, English optional
+### Both locales required for every variant
 
-`<slug>.ko.mdx` is mandatory — its existence is what makes a variant exist at
-all. `<slug>.en.mdx` is optional; English pages fall back to Korean content
-with a banner if missing.
+When you add a variant, both `ko` and `en` strings (tagline + description in
+`lib/button-components.ts`) are mandatory — the type system enforces it. No
+fallback path. Same goes for `content/pages/button.{ko,en}.mdx`: both must
+exist.
 
 ### Sidebar links go straight to a variant slug
 

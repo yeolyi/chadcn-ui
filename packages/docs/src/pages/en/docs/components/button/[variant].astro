@@ -35,12 +35,6 @@ const toc = headings
         <VariantSelector currentSlug={slug} />
       </div>
 
-      {variant.isFallback && (
-        <div class="rounded-md border border-border bg-muted/40 px-4 py-3 text-sm text-muted-foreground">
-          This entry is only available in Korean.
-        </div>
-      )}
-
       <p class="text-[0.95rem] leading-7 text-muted-foreground">{variant.description}</p>
 
       <article class="prose-section [&_h2]:scroll-m-24 [&_h2]:border-b [&_h2]:pb-2 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:mt-8 [&_h3]:scroll-m-24 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:mt-6 [&_p]:text-[0.95rem] [&_p]:leading-7 [&_p]:text-muted-foreground [&_p]:my-3 [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-foreground [&_p_code]:rounded [&_p_code]:bg-muted [&_p_code]:px-1.5 [&_p_code]:py-0.5 [&_p_code]:text-sm [&_p_code]:font-mono">

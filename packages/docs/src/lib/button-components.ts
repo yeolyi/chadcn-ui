@@ -10,7 +10,7 @@ import { Button as Escape } from "@chadcn/ui/button/escape"
 
 import type { Locale } from "@/i18n/strings"
 
-type LocalizedText = { ko: string; en?: string }
+type LocalizedText = { ko: string; en: string }
 
 interface ButtonVariantInfo {
   tagline: LocalizedText
@@ -45,8 +45,5 @@ export function listButtonSlugs(): ButtonSlug[] {
 export function getButtonVariant(slug: string, locale: Locale) {
   if (!(slug in variantInfo)) return null
   const info = variantInfo[slug as ButtonSlug]
-  const tagline = info.tagline[locale] ?? info.tagline.ko
-  const description = info.description[locale] ?? info.description.ko
-  const isFallback = locale === "en" && (!info.tagline.en || !info.description.en)
-  return { tagline, description, isFallback }
+  return { tagline: info.tagline[locale], description: info.description[locale] }
 }
