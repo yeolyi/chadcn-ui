@@ -39,7 +39,6 @@ const cursorSnippet = `@layer base {
 }`
 
 const toc = [
-  { id: "how-it-works", text: "동작 방식", depth: 2 as const },
   { id: "installation", text: "설치", depth: 2 as const },
   { id: "cursor", text: "커서", depth: 2 as const },
   { id: "examples", text: "예제", depth: 2 as const },
@@ -73,21 +72,6 @@ const toc = [
         <ButtonMain client:load slot="preview" />
         <Code slot="code" code={mainSrc} lang="tsx" />
       </ExamplePreview>
-
-      <section class="space-y-4">
-        <h2 id="how-it-works" class="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
-          동작 방식
-        </h2>
-        <p class="text-[0.95rem] leading-7 text-muted-foreground">
-          이 컴포넌트는 shadcn/ui Button과 동일한 props(
-          <code class="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">variant</code>,
-          <code class="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">size</code>,
-          <code class="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">asChild</code>
-          )를 받으며, 오클릭 방지 기능이 내장되어 있습니다. 호버 시 커서에서 멀어지는 방향으로
-          <code class="rounded bg-muted px-1.5 py-0.5 text-sm font-mono">translate</code>를 사용해
-          재배치되므로 레이아웃에는 영향을 주지 않습니다. 2번 시도 후 제자리에 머뭅니다.
-        </p>
-      </section>
 
       <section class="space-y-4">
         <h2 id="installation" class="scroll-m-24 border-b pb-2 text-2xl font-semibold tracking-tight">
