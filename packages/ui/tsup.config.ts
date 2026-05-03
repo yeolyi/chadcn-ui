@@ -13,6 +13,7 @@ export default defineConfig({
     "button/paranoia": "src/button/paranoia.tsx",
     "button/anchor": "src/button/anchor.tsx",
     "button/benjamin": "src/button/benjamin.tsx",
+    "button/lottery": "src/button/lottery.tsx",
   },
   format: ["esm", "cjs"],
   dts: true,

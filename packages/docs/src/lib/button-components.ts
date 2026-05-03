@@ -16,6 +16,7 @@ import { Button as Gacha } from "@chadcn/ui/button/gacha"
 import { Button as Paranoia } from "@chadcn/ui/button/paranoia"
 import { Button as Anchor } from "@chadcn/ui/button/anchor"
 import { Button as Benjamin } from "@chadcn/ui/button/benjamin"
+import { Button as Lottery } from "@chadcn/ui/button/lottery"
 import { Button as Shy } from "@chadcn/ui/button/shy"
 
 import type { Locale } from "@/i18n/strings"
@@ -53,6 +54,7 @@ export const buttonComponents = {
   paranoia: withToast(Paranoia),
   anchor: withToast(Anchor),
   benjamin: withToast(Benjamin),
+  lottery: withToast(Lottery),
 } satisfies Record<string, ComponentType<ButtonProps>>
 
 // Slug → prose. Used at SSG only; not shipped to the client demos.
@@ -157,12 +159,22 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
       en: "Like Benjamin Button, each click rewinds the design by one era.",
     },
   },
+  lottery: {
+    tagline: {
+      ko: "다섯 번의 기회 중 한 번만 성공하는 버튼",
+      en: "A button where only one of five attempts succeeds",
+    },
+    description: {
+      ko: "클릭 시 다섯 개의 추첨 카드가 제시되며, 그중 단 하나만 본래 의도하신 동작을 실행합니다. 잘못된 카드를 선택하면 버튼은 영구적으로 사용이 중단됩니다.",
+      en: "On click, five lottery cards are presented; only one will trigger the originally intended action. Selecting the wrong card permanently retires the button.",
+    },
+  },
 }
 
 export type ButtonSlug = keyof typeof buttonComponents
 
 export function listButtonSlugs(): ButtonSlug[] {
-  return Object.keys(buttonComponents) as ButtonSlug[]
+  return (Object.keys(buttonComponents) as ButtonSlug[]).sort()
 }
 
 export function getButtonVariant(slug: string, locale: Locale) {
