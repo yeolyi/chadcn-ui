@@ -6,6 +6,7 @@ import tailwindcss from "@tailwindcss/vite"
 
 export default defineConfig({
   adapter: vercel(),
+  security: { checkOrigin: false },
   i18n: {
     locales: ["ko", "en"],
     defaultLocale: "ko",
