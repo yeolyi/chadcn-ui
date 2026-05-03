@@ -77,10 +77,10 @@
       "import": "./dist/button/follow.js",
       "require": "./dist/button/follow.cjs"
     },
-    "./button/assemble": {
-      "types": "./dist/button/assemble.d.ts",
-      "import": "./dist/button/assemble.js",
-      "require": "./dist/button/assemble.cjs"
+    "./button/drag": {
+      "types": "./dist/button/drag.d.ts",
+      "import": "./dist/button/drag.js",
+      "require": "./dist/button/drag.cjs"
     },
     "./button/mirage": {
       "types": "./dist/button/mirage.d.ts",

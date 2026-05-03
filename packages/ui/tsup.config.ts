@@ -16,7 +16,7 @@ export default defineConfig({
     "button/benjamin": "src/button/benjamin.tsx",
     "button/lottery": "src/button/lottery.tsx",
     "button/follow": "src/button/follow.tsx",
-    "button/assemble": "src/button/assemble.tsx",
+    "button/drag": "src/button/drag.tsx",
     "button/mirage": "src/button/mirage.tsx",
     "button/dodge": "src/button/dodge.tsx",
     "button/patient": "src/button/patient.tsx",

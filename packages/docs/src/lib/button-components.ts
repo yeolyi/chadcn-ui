@@ -19,7 +19,7 @@ import { Button as Page } from "@chadcn/ui/button/page"
 import { Button as Benjamin } from "@chadcn/ui/button/benjamin"
 import { Button as Lottery } from "@chadcn/ui/button/lottery"
 import { Button as Follow } from "@chadcn/ui/button/follow"
-import { Button as Assemble } from "@chadcn/ui/button/assemble"
+import { Button as Drag } from "@chadcn/ui/button/drag"
 import { Button as Mirage } from "@chadcn/ui/button/mirage"
 import { Button as Dodge } from "@chadcn/ui/button/dodge"
 import { Button as Patient } from "@chadcn/ui/button/patient"
@@ -68,7 +68,7 @@ export const buttonComponents = {
   page: Page,
   benjamin: Benjamin,
   lottery: withToast(Lottery),
-  assemble: withToast(Assemble),
+  drag: withToast(Drag),
   follow: Follow,
   mirage: Mirage,
   dodge: Dodge,
@@ -201,7 +201,7 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
       en: "A click reveals five lottery cards; only one triggers the action. The wrong card permanently retires the button.",
     },
   },
-  assemble: {
+  drag: {
     support: "desktop",
     tagline: {
       ko: "사용자가 직접 라벨을 조립해야 동작하는 버튼",
