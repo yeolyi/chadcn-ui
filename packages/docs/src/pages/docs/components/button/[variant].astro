@@ -3,6 +3,7 @@ import { getRelativeLocaleUrl } from "astro:i18n"
 import { getEntry, render } from "astro:content"
 import { MonitorIcon, SmartphoneIcon } from "lucide-react"
 
+import { CursorOverlay } from "@/components/docs/CursorOverlay"
 import { HeartButton } from "@/components/docs/HeartButton"
 import { VariantSelector } from "@/components/docs/VariantSelector"
 import { Badge } from "@/components/ui/badge"
@@ -66,4 +67,5 @@ const toc = headings
       </article>
     </div>
   </div>
+  <CursorOverlay channel={`cursors:button:${slug}`} client:idle />
 </Docs>

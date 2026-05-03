@@ -1,4 +1,5 @@
 ---
+import { CursorToggle } from "@/components/chrome/CursorToggle"
 import { GitHubLink } from "@/components/chrome/GitHubLink"
 import { HomeLink } from "@/components/chrome/HomeLink"
 import { InstagramLink } from "@/components/chrome/InstagramLink"
@@ -35,6 +36,7 @@ try {
       <MobileNav client:load basePath={basePath} strings={navStrings} buttonHref={buttonHref} />
       <HomeLink href={basePath || "/"} />
       <div class="ml-auto flex items-center gap-2">
+        <CursorToggle client:load />
         <LocaleSwitcher />
         <span class="h-4 w-px bg-border" data-slot="separator"></span>
         <InstagramLink followers="35k" />

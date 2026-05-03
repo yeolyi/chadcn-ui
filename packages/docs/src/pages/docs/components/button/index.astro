@@ -2,6 +2,7 @@
 import { MonitorIcon, SmartphoneIcon } from "lucide-react"
 
 import { ButtonMain } from "@/components/demos/button/ButtonMain"
+import { CursorOverlay } from "@/components/docs/CursorOverlay"
 import { HeartButton } from "@/components/docs/HeartButton"
 import { Badge } from "@/components/ui/badge"
 import Docs from "@/layouts/Docs.astro"
@@ -110,6 +111,7 @@ Astro.response.headers.set(
       }
     </div>
   </div>
+  <CursorOverlay channel="cursors:button" client:idle />
 </Docs>
 
 <script>
