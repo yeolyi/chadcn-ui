@@ -69,6 +69,14 @@ const fullTitle = title ? `${title} - ${siteConfig.name}` : siteConfig.name
     <Analytics />
     <Toaster client:load richColors theme="system" position="bottom-right" />
     <script>
+      // iOS Safari quirk: Radix DropdownMenu/Select use onPointerDown to open,
+      // which is silently dropped on the first interaction with certain DOM
+      // shapes (asChild/Slot). A no-op pointerdown listener on body warms up
+      // the pointer event system so the first tap registers.
+      // Ref: github.com/radix-ui/primitives/issues/2580, facebook/react#29890
+      document.body.addEventListener("pointerdown", () => {}, { passive: true })
+    </script>
+    <script>
       // CodeBlock copy buttons: write to clipboard, swap to check icon for ~2s.
       document.addEventListener("click", (e) => {
         const btn = (e.target as HTMLElement | null)?.closest<HTMLButtonElement>(
