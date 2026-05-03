@@ -126,7 +126,11 @@ export function CursorOverlay({ channel: channelName }: { channel: string }) {
       const now = performance.now()
       if (now - lastSent < 1000 / BROADCAST_HZ) return
       lastSent = now
-      lastBroadcast = { x: e.clientX, y: e.clientY }
+      // Send page coords so receivers can place the cursor over the same
+      // content regardless of their own scroll position.
+      const px = e.clientX + window.scrollX
+      const py = e.clientY + window.scrollY
+      lastBroadcast = { x: px, y: py }
       channel.send({
         type: "broadcast",
         event: "cursor",
@@ -134,8 +138,8 @@ export function CursorOverlay({ channel: channelName }: { channel: string }) {
           id: me.id,
           name: me.name,
           hue: me.hue,
-          x: e.clientX,
-          y: e.clientY,
+          x: px,
+          y: py,
         } satisfies RemoteCursor,
       })
     }
@@ -195,17 +199,33 @@ function Cursor({ cursor }: { cursor: RemoteCursor }) {
   const color = `hsl(${cursor.hue}, 75%, 50%)`
   const ref = React.useRef<HTMLDivElement>(null)
   const pcRef = React.useRef<PerfectCursor | null>(null)
+  // Latest interpolated point in PAGE coords; reused on scroll to repaint
+  // without waiting for a new broadcast.
+  const lastPageRef = React.useRef<[number, number]>([cursor.x, cursor.y])
+
+  const paint = React.useCallback(() => {
+    const el = ref.current
+    if (!el) return
+    const [px, py] = lastPageRef.current
+    el.style.transform = `translate(${px - window.scrollX}px, ${py - window.scrollY}px)`
+  }, [])
 
   if (pcRef.current === null) {
-    pcRef.current = new PerfectCursor(([x, y]) => {
-      const el = ref.current
-      if (el) el.style.transform = `translate(${x}px, ${y}px)`
+    pcRef.current = new PerfectCursor((point) => {
+      lastPageRef.current = point as [number, number]
+      paint()
     })
   }
 
   React.useEffect(() => {
     pcRef.current?.addPoint([cursor.x, cursor.y])
   }, [cursor.x, cursor.y])
+
+  React.useEffect(() => {
+    const onScroll = () => paint()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [paint])
 
   React.useEffect(
     () => () => {
@@ -222,7 +242,7 @@ function Cursor({ cursor }: { cursor: RemoteCursor }) {
         position: "absolute",
         left: 0,
         top: 0,
-        transform: `translate(${cursor.x}px, ${cursor.y}px)`,
+        transform: `translate(${cursor.x - (typeof window !== "undefined" ? window.scrollX : 0)}px, ${cursor.y - (typeof window !== "undefined" ? window.scrollY : 0)}px)`,
         willChange: "transform",
       }}
     >
