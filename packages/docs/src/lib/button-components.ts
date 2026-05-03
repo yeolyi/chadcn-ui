@@ -258,12 +258,12 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
   },
   baljak: {
     tagline: {
-      ko: "사용자의 결정이 시스템에 가하는 부담을 시각화하는 버튼",
-      en: "A button that visualizes the system stress your decision creates",
+      ko: "발작 버튼",
+      en: "Seizure button",
     },
     description: {
-      ko: "클릭하면 약 1.5초간 격렬하게 반응한 뒤 본래 동작이 실행됩니다. 사용자에게 자신의 선택이 시스템에 어떤 부하를 발생시키는지 정직하게 보여주기 위함이며, 사용자의 시스템 환경이 모션 감소를 요청한 경우에는 조용히 처리됩니다.",
-      en: "On click, the button reacts violently for about 1.5 seconds before the originally intended action runs. The display honestly conveys the load that the user's decision places on the system; if the user's system requests reduced motion, the action is dispatched quietly.",
+      ko: "발작 버튼입니다.",
+      en: "A seizure button.",
     },
   },
 }

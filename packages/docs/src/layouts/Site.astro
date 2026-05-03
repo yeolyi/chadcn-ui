@@ -2,7 +2,7 @@
 import "@/styles/globals.css"
 
 import Analytics from "@vercel/analytics/astro"
-import { Toaster } from "sonner"
+import { Toaster } from "@/components/ui/sonner"
 
 import SiteFooter from "@/components/chrome/SiteFooter.astro"
 import SiteHeader from "@/components/chrome/SiteHeader.astro"
@@ -67,7 +67,7 @@ const fullTitle = title ? `${title} - ${siteConfig.name}` : siteConfig.name
       <SiteFooter />
     </div>
     <Analytics />
-    <Toaster client:load richColors theme="system" position="bottom-right" />
+    <Toaster client:load position="bottom-right" />
     <script>
       // iOS Safari quirk: Radix DropdownMenu/Select use onPointerDown to open,
       // which is silently dropped on the first interaction with certain DOM
