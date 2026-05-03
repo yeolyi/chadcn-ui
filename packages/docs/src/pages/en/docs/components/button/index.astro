@@ -15,14 +15,43 @@ const variants = listButtonSlugs().map((slug) => {
 
 <Docs title="Button" description="Every chadcn Button variant">
   <div class="mx-auto flex w-full max-w-[60rem] min-w-0 flex-1 flex-col gap-8 px-4 py-6 lg:py-8">
-    <h1 class="scroll-m-24 text-3xl font-semibold tracking-tight">Button</h1>
+    <div class="flex items-center justify-between gap-3">
+      <h1 class="scroll-m-24 text-3xl font-semibold tracking-tight">Button</h1>
+      <div
+        role="group"
+        aria-label="Sort"
+        data-sort-toggle
+        class="inline-flex h-8 items-center rounded-md border bg-background p-0.5 text-sm"
+      >
+        <button
+          type="button"
+          data-sort="popular"
+          aria-pressed="true"
+          class="rounded-[5px] px-3 h-7 font-medium text-muted-foreground transition-colors hover:text-foreground aria-pressed:bg-accent aria-pressed:text-accent-foreground"
+        >
+          Popular
+        </button>
+        <button
+          type="button"
+          data-sort="alpha"
+          aria-pressed="false"
+          class="rounded-[5px] px-3 h-7 font-medium text-muted-foreground transition-colors hover:text-foreground aria-pressed:bg-accent aria-pressed:text-accent-foreground"
+        >
+          A–Z
+        </button>
+      </div>
+    </div>
 
-    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+    <div data-variant-grid class="grid grid-cols-1 gap-4 lg:grid-cols-2">
       {
         variants.map(({ slug, info }) => {
           if (!info) return null
           return (
-            <article class="group relative flex flex-col gap-4 rounded-xl border p-5 transition-colors hover:border-foreground/20">
+            <article
+              data-slug={slug}
+              style={`view-transition-name: vt-${slug}`}
+              class="group relative flex flex-col gap-4 rounded-xl border p-5 transition-colors hover:border-foreground/20"
+            >
               <div class="absolute right-4 top-4 z-10">
                 <HeartButton slug={slug} client:visible />
               </div>
@@ -61,3 +90,54 @@ const variants = listButtonSlugs().map((slug) => {
     </div>
   </div>
 </Docs>
+
+<script>
+  const grid = document.querySelector<HTMLElement>("[data-variant-grid]")
+  const toggle = document.querySelector<HTMLElement>("[data-sort-toggle]")
+  if (grid && toggle) {
+    let counts: Record<string, number> = {}
+
+    const sortBy = (mode: string) => {
+      const cards = Array.from(grid.children) as HTMLElement[]
+      cards.sort((a, b) => {
+        const sa = a.dataset.slug ?? ""
+        const sb = b.dataset.slug ?? ""
+        if (mode === "alpha") return sa.localeCompare(sb)
+        return (counts[sb] ?? 0) - (counts[sa] ?? 0) || sa.localeCompare(sb)
+      })
+      const apply = () => {
+        for (const c of cards) grid.appendChild(c)
+      }
+      const start = (document as any).startViewTransition?.bind(document)
+      if (start) start(apply)
+      else apply()
+    }
+
+    fetch("/api/likes")
+      .then((r) => r.json())
+      .then((d) => {
+        counts = d
+        sortBy("popular")
+      })
+      .catch(() => {})
+
+    toggle.addEventListener("click", (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>("[data-sort]")
+      if (!btn) return
+      for (const b of toggle.querySelectorAll<HTMLButtonElement>("[data-sort]")) {
+        b.setAttribute("aria-pressed", String(b === btn))
+      }
+      sortBy(btn.dataset.sort ?? "popular")
+    })
+
+    window.addEventListener("chadcn:like", (e) => {
+      const { slug, count } = (e as CustomEvent).detail as {
+        slug: string
+        count: number
+      }
+      counts[slug] = count
+      const popular = toggle.querySelector<HTMLButtonElement>('[data-sort="popular"]')
+      if (popular?.getAttribute("aria-pressed") === "true") sortBy("popular")
+    })
+  }
+</script>

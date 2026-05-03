@@ -39,6 +39,9 @@ export function HeartButton({ slug }: { slug: string }) {
       if (!r.ok) throw new Error(`HTTP ${r.status}`)
       const d: State = await r.json()
       setState(d)
+      window.dispatchEvent(
+        new CustomEvent("chadcn:like", { detail: { slug, count: d.count } }),
+      )
     } catch {
       setState(previous)
     } finally {

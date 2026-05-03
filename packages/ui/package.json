@@ -37,10 +37,10 @@
       "import": "./dist/button/minesweeper.js",
       "require": "./dist/button/minesweeper.cjs"
     },
-    "./button/flinch": {
-      "types": "./dist/button/flinch.d.ts",
-      "import": "./dist/button/flinch.js",
-      "require": "./dist/button/flinch.cjs"
+    "./button/freeze": {
+      "types": "./dist/button/freeze.d.ts",
+      "import": "./dist/button/freeze.js",
+      "require": "./dist/button/freeze.cjs"
     },
     "./button/sponsored": {
       "types": "./dist/button/sponsored.d.ts",
@@ -57,10 +57,10 @@
       "import": "./dist/button/paranoia.js",
       "require": "./dist/button/paranoia.cjs"
     },
-    "./button/anchor": {
-      "types": "./dist/button/anchor.d.ts",
-      "import": "./dist/button/anchor.js",
-      "require": "./dist/button/anchor.cjs"
+    "./button/page": {
+      "types": "./dist/button/page.d.ts",
+      "import": "./dist/button/page.js",
+      "require": "./dist/button/page.cjs"
     },
     "./button/benjamin": {
       "types": "./dist/button/benjamin.d.ts",
@@ -72,10 +72,10 @@
       "import": "./dist/button/lottery.js",
       "require": "./dist/button/lottery.cjs"
     },
-    "./button/clingy": {
-      "types": "./dist/button/clingy.d.ts",
-      "import": "./dist/button/clingy.js",
-      "require": "./dist/button/clingy.cjs"
+    "./button/follow": {
+      "types": "./dist/button/follow.d.ts",
+      "import": "./dist/button/follow.js",
+      "require": "./dist/button/follow.cjs"
     },
     "./button/assemble": {
       "types": "./dist/button/assemble.d.ts",
@@ -87,10 +87,10 @@
       "import": "./dist/button/mirage.js",
       "require": "./dist/button/mirage.cjs"
     },
-    "./button/aloof": {
-      "types": "./dist/button/aloof.d.ts",
-      "import": "./dist/button/aloof.js",
-      "require": "./dist/button/aloof.cjs"
+    "./button/dodge": {
+      "types": "./dist/button/dodge.d.ts",
+      "import": "./dist/button/dodge.js",
+      "require": "./dist/button/dodge.cjs"
     },
     "./button/patient": {
       "types": "./dist/button/patient.d.ts",

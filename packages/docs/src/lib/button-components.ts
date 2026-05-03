@@ -11,17 +11,17 @@ import { Button as Thanos } from "@chadcn/ui/button/thanos"
 import { Button as Thanos2 } from "@chadcn/ui/button/thanos2"
 import { Button as Mash } from "@chadcn/ui/button/mash"
 import { Button as Minesweeper } from "@chadcn/ui/button/minesweeper"
-import { Button as Flinch } from "@chadcn/ui/button/flinch"
+import { Button as Freeze } from "@chadcn/ui/button/freeze"
 import { Button as Sponsored } from "@chadcn/ui/button/sponsored"
 import { Button as Gacha } from "@chadcn/ui/button/gacha"
 import { Button as Paranoia } from "@chadcn/ui/button/paranoia"
-import { Button as Anchor } from "@chadcn/ui/button/anchor"
+import { Button as Page } from "@chadcn/ui/button/page"
 import { Button as Benjamin } from "@chadcn/ui/button/benjamin"
 import { Button as Lottery } from "@chadcn/ui/button/lottery"
-import { Button as Clingy } from "@chadcn/ui/button/clingy"
+import { Button as Follow } from "@chadcn/ui/button/follow"
 import { Button as Assemble } from "@chadcn/ui/button/assemble"
 import { Button as Mirage } from "@chadcn/ui/button/mirage"
-import { Button as Aloof } from "@chadcn/ui/button/aloof"
+import { Button as Dodge } from "@chadcn/ui/button/dodge"
 import { Button as Patient } from "@chadcn/ui/button/patient"
 import { Button as Baljak } from "@chadcn/ui/button/baljak"
 import { Button as Shy } from "@chadcn/ui/button/shy"
@@ -61,17 +61,17 @@ export const buttonComponents = {
   thanos2: Thanos2,
   mash: withToast(Mash),
   minesweeper: withToast(Minesweeper),
-  flinch: Flinch,
+  freeze: Freeze,
   sponsored: withToast(Sponsored),
   gacha: withToast(Gacha),
   paranoia: withToast(Paranoia),
-  anchor: Anchor,
+  page: Page,
   benjamin: Benjamin,
   lottery: withToast(Lottery),
   assemble: withToast(Assemble),
-  clingy: Clingy,
+  follow: Follow,
   mirage: Mirage,
-  aloof: Aloof,
+  dodge: Dodge,
   patient: withToast(Patient),
   baljak: withToast(Baljak),
 } satisfies Record<string, ComponentType<ButtonProps>>
@@ -130,7 +130,7 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
       en: "A small minesweeper is embedded across the surface. Reveal every safe cell without striking a mine to activate; suspected cells can be flagged with a double click.",
     },
   },
-  flinch: {
+  freeze: {
     support: "desktop",
     tagline: {
       ko: "사용되지 않음으로써 가치를 보존하는 버튼",
@@ -161,7 +161,7 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
       en: "Each click spins the embedded slot machine. The action runs only on a jackpot — all three reels matching.",
     },
   },
-  anchor: {
+  page: {
     tagline: {
       ko: "변하는 것이 자신이 아니라 페이지인 버튼",
       en: "A button where what changes is the page, not itself",
@@ -212,7 +212,7 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
       en: "Drag a single character of text from anywhere on the page onto the button to fill the next slot. Once every slot is filled, the button activates.",
     },
   },
-  clingy: {
+  follow: {
     support: "desktop",
     tagline: {
       ko: "사용자의 시선을 결코 놓치지 않는 버튼",
@@ -234,7 +234,7 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
       en: "The button fades as its position becomes precisely known. Aiming true is rewarded with its absence.",
     },
   },
-  aloof: {
+  dodge: {
     support: "desktop",
     tagline: {
       ko: "사용자와 일정 거리를 유지하는 버튼",

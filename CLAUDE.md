@@ -134,8 +134,8 @@ when to use major/minor/patch.
 Pre-1.0 (current; until variant set + API are stable):
 - New variant subpath = **MINOR** (0.2.0 → 0.3.0)
 - Tweak / bug fix to existing variant = **PATCH** (0.3.0 → 0.3.1)
-- Renaming or removing a variant, or changing the top-level Button alias =
-  jump to **1.0.0** to flag the breaking change
+- Renames and removals are also fine inside pre-1.0 — bump as MINOR or PATCH
+  depending on scope, no need to jump to 1.0.0 just to flag breakage
 
 After 1.0.0 (API frozen):
 - New variant = MINOR (1.1.0)
