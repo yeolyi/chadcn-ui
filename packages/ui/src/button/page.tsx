@@ -69,6 +69,26 @@ export function Button({
     document.body.style.transform = `scale(${target})`
     btn.style.transition = `transform ${duration}ms ${easing}`
     btn.style.transform = `scale(${1 / target})`
+
+    // When returning to idle, scale(1) is still an identity transform that
+    // makes body a containing block for position:fixed descendants —
+    // breaking portaled modals (Dialog, Sheet, Toaster). After the release
+    // transition completes, fully clear the transform so body is back to
+    // its un-transformed state.
+    if (!hovering && !pressed) {
+      const id = window.setTimeout(() => {
+        if (document.body.style.transform === "scale(1)") {
+          document.body.style.transform = ""
+          document.body.style.transformOrigin = ""
+          document.body.style.transition = ""
+        }
+        if (btn.style.transform === "scale(1)") {
+          btn.style.transform = ""
+          btn.style.transition = ""
+        }
+      }, duration + 50)
+      return () => window.clearTimeout(id)
+    }
   }, [hovering, pressed, writeOrigin])
 
   React.useEffect(

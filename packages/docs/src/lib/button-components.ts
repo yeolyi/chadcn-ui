@@ -90,7 +90,6 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
     },
   },
   thanos: {
-    support: "desktop",
     tagline: {
       ko: "타노스의 손길이 들어간 버튼",
       en: "A button touched by Thanos",
