@@ -8,6 +8,7 @@ import { type ComponentType, createElement, type MouseEvent } from "react"
 import { toast } from "sonner"
 
 import { Button as Thanos } from "@chadcn/ui/button/thanos"
+import { Button as Thanos2 } from "@chadcn/ui/button/thanos2"
 import { Button as Mash } from "@chadcn/ui/button/mash"
 import { Button as Minesweeper } from "@chadcn/ui/button/minesweeper"
 import { Button as Flinch } from "@chadcn/ui/button/flinch"
@@ -19,6 +20,7 @@ import { Button as Benjamin } from "@chadcn/ui/button/benjamin"
 import { Button as Lottery } from "@chadcn/ui/button/lottery"
 import { Button as Clingy } from "@chadcn/ui/button/clingy"
 import { Button as Assemble } from "@chadcn/ui/button/assemble"
+import { Button as Mirage } from "@chadcn/ui/button/mirage"
 import { Button as Shy } from "@chadcn/ui/button/shy"
 
 import type { Locale } from "@/i18n/strings"
@@ -48,6 +50,7 @@ function withToast(C: ComponentType<ButtonProps>): ComponentType<ButtonProps> {
 export const buttonComponents = {
   shy: withToast(Shy),
   thanos: withToast(Thanos),
+  thanos2: withToast(Thanos2),
   mash: withToast(Mash),
   minesweeper: withToast(Minesweeper),
   flinch: withToast(Flinch),
@@ -59,6 +62,7 @@ export const buttonComponents = {
   lottery: withToast(Lottery),
   assemble: withToast(Assemble),
   clingy: withToast(Clingy),
+  mirage: withToast(Mirage),
 } satisfies Record<string, ComponentType<ButtonProps>>
 
 // Slug → prose. Used at SSG only; not shipped to the client demos.
@@ -81,6 +85,16 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
     description: {
       ko: "포인터가 닿는 순간 버튼 전체가 먼지로 분해됩니다. 균형을 위한 희생이며, 한 번 사라진 버튼은 다시 돌아오지 않습니다.",
       en: "The instant the pointer touches it, the entire button crumbles into dust. A sacrifice made for balance; once gone, it does not return.",
+    },
+  },
+  thanos2: {
+    tagline: {
+      ko: "페이지 전체에 균형을 가져오는 버튼",
+      en: "A button that brings balance to the entire page",
+    },
+    description: {
+      ko: "클릭 시 페이지의 모든 말단 요소가 각자 절반의 확률로 조용히 먼지가 되며, 누가 남고 누가 지워질지는 감정 없이 결정됩니다. 핑거 스냅은 공평하며, 무작위이며, 되돌릴 수 없습니다.",
+      en: "On click, every leaf element on the page is quietly turned to dust with even odds — who remains and who is erased is decided without sentiment. The snap is impartial, random, and irreversible.",
     },
   },
   mash: {
@@ -191,6 +205,16 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
     description: {
       ko: "당신이 어디로 향하든, 이 버튼은 이미 그곳에 와 있다. 한 번 눌리고 나서야 비로소 자신의 자리로 돌아간다.",
       en: "Wherever you go, this button is already there. Only once it has been pressed does it return to its place.",
+    },
+  },
+  mirage: {
+    tagline: {
+      ko: "다가갈수록 멀어지는 버튼",
+      en: "A button that recedes as you approach",
+    },
+    description: {
+      ko: "버튼은 위치가 정확해질수록 옅어진다. 정확한 조준은 곧 그것의 부재로 보상된다.\n\n포인터 좌표에 의존하므로 데스크톱 환경에서만 동작합니다.",
+      en: "The button fades as its position becomes precisely known. Aiming true is rewarded with its absence.\n\nRelies on pointer coordinates and is therefore desktop-only.",
     },
   },
 }

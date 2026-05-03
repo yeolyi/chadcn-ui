@@ -22,6 +22,11 @@
       "import": "./dist/button/thanos.js",
       "require": "./dist/button/thanos.cjs"
     },
+    "./button/thanos2": {
+      "types": "./dist/button/thanos2.d.ts",
+      "import": "./dist/button/thanos2.js",
+      "require": "./dist/button/thanos2.cjs"
+    },
     "./button/mash": {
       "types": "./dist/button/mash.d.ts",
       "import": "./dist/button/mash.js",
@@ -76,6 +81,11 @@
       "types": "./dist/button/assemble.d.ts",
       "import": "./dist/button/assemble.js",
       "require": "./dist/button/assemble.cjs"
+    },
+    "./button/mirage": {
+      "types": "./dist/button/mirage.d.ts",
+      "import": "./dist/button/mirage.js",
+      "require": "./dist/button/mirage.cjs"
     },
     "./styles.css": "./dist/styles.css"
   },
