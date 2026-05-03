@@ -8,14 +8,24 @@ const SESSION_KEY = "chadcn:cursor-identity"
 const BROADCAST_HZ = 30
 const FADE_AFTER_MS = 4000
 
-const NAME_POOL = [
+const ADJECTIVE_POOL = [
+  "shy", "smug", "patient", "eager", "sleepy", "grumpy", "anxious", "wise",
+  "chatty", "quiet", "nervous", "calm", "brave", "cautious", "lazy",
+  "cheerful", "polite", "blunt", "modest", "flashy", "somber", "jovial",
+  "restless", "focused", "distracted", "witty", "stoic", "earnest",
+  "humble", "stubborn",
+]
+
+const COMPONENT_POOL = [
   "Button", "Card", "Sheet", "Dialog", "Input", "Select", "Tabs", "Badge",
   "Avatar", "Toast", "Tooltip", "Popover", "Switch", "Slider", "Checkbox",
   "Radio", "Textarea", "Form", "Label", "Calendar", "Command", "Drawer",
   "Menubar", "Pagination", "Progress", "ScrollArea", "Separator",
-  "Skeleton", "Sonner", "Table", "Toggle", "Carousel", "Alert", "Accordion",
+  "Skeleton", "Table", "Toggle", "Carousel", "Alert", "Accordion",
   "Breadcrumb", "Collapsible", "HoverCard", "Resizable", "Combobox", "Chart",
 ]
+
+const pick = <T,>(arr: readonly T[]): T => arr[Math.floor(Math.random() * arr.length)]
 
 interface Identity {
   id: string
@@ -40,7 +50,7 @@ function loadIdentity(): Identity {
     } catch {}
   }
   const id = crypto.randomUUID()
-  const name = NAME_POOL[Math.floor(Math.random() * NAME_POOL.length)]
+  const name = `${pick(ADJECTIVE_POOL)} ${pick(COMPONENT_POOL)}`
   const hue = Math.floor(Math.random() * 360)
   const identity: Identity = { id, name, hue }
   window.sessionStorage.setItem(SESSION_KEY, JSON.stringify(identity))
