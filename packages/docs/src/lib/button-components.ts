@@ -162,12 +162,12 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
   },
   page: {
     tagline: {
-      ko: "변하는 것이 자신이 아니라 페이지인 버튼",
-      en: "A button where what changes is the page, not itself",
+      ko: "사용자 입력에 페이지 전체로 응답하는 버튼",
+      en: "A button that responds to input through the entire page",
     },
     description: {
-      ko: "사용자가 버튼을 누른다는 인상은 매우 일관된 환상일 뿐이다. 실제로 움직인 것은 버튼이 아니라 그것을 둘러싼 페이지다.",
-      en: "The impression that the user presses the button is a very persistent illusion. What actually moves is not the button, but the page around it.",
+      ko: "사용자가 호버하거나 클릭하면 버튼은 그대로 유지되고 주변 페이지가 미세하게 반응합니다. 입력 피드백을 환경 전체의 변화로 표현해 사용자의 인지 부담을 분산시킵니다.",
+      en: "On hover or click, the button stays put while the surrounding page reacts subtly. Routing the feedback through the environment distributes the user's cognitive load.",
     },
   },
   paranoia: {
@@ -214,23 +214,23 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
   follow: {
     support: "desktop",
     tagline: {
-      ko: "사용자의 시선을 결코 놓치지 않는 버튼",
-      en: "A button that never loses sight of the user",
+      ko: "사용자의 포인터를 항상 따라다니는 버튼",
+      en: "A button that always follows the user's pointer",
     },
     description: {
-      ko: "당신이 어디로 향하든, 이 버튼은 이미 그곳에 와 있다. 한 번 눌리고 나서야 비로소 자신의 자리로 돌아간다.",
-      en: "Wherever you go, this button is already there. Only once it has been pressed does it return to its place.",
+      ko: "포인터가 이동할 때마다 버튼이 함께 움직여 항상 즉시 누를 수 있는 거리를 유지합니다. 한 번 눌린 후에는 본래 자리로 복귀합니다.",
+      en: "The button shadows the pointer to stay within immediate reach. Once it has been pressed, it returns to its original position.",
     },
   },
   mirage: {
     support: "desktop",
     tagline: {
-      ko: "다가갈수록 멀어지는 버튼",
-      en: "A button that recedes as you approach",
+      ko: "포인터가 접근하면 가시성이 낮아지는 버튼",
+      en: "A button whose visibility decreases as the pointer approaches",
     },
     description: {
-      ko: "버튼은 위치가 정확해질수록 옅어진다. 정확한 조준은 곧 그것의 부재로 보상된다.",
-      en: "The button fades as its position becomes precisely known. Aiming true is rewarded with its absence.",
+      ko: "포인터가 가까워질수록 버튼의 불투명도가 감소합니다. 충동적인 클릭을 의도적으로 어렵게 설계해 사용자의 신중한 조작을 유도합니다.",
+      en: "The button's opacity decreases as the pointer draws nearer. Impulsive clicks are made deliberately difficult to encourage careful operation.",
     },
   },
   dodge: {
@@ -257,12 +257,12 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
   },
   baljak: {
     tagline: {
-      ko: "발작 버튼",
-      en: "Seizure button",
+      ko: "사용자의 시각적 주의를 강력하게 확보하는 버튼",
+      en: "A button that emphatically captures the user's visual attention",
     },
     description: {
-      ko: "발작 버튼입니다.",
-      en: "A seizure button.",
+      ko: "클릭하면 짧은 시간 동안 버튼의 색상과 위치가 빠르게 변동하며 사용자의 주의를 환기합니다. 휘도 변화 없이 색상만 순환하므로 광과민성 사용자에게도 비교적 안전하며, prefers-reduced-motion 환경에서는 효과가 자동으로 비활성화됩니다.",
+      en: "On click, the button briefly varies its color and position to capture attention. Lightness stays constant — only hue cycles — keeping it relatively safe for photosensitive users; the effect is automatically disabled when prefers-reduced-motion is on.",
     },
   },
 }
