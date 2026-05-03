@@ -6,7 +6,7 @@ import { cn } from "../lib/utils"
 import { ButtonBase, type ButtonBaseProps, buttonVariants } from "./base"
 
 const SHAKE_KEYFRAMES = `
-@keyframes assemble-shake {
+@keyframes drag-shake {
   0%, 100% { transform: translateX(0); }
   20%, 60% { transform: translateX(-4px); }
   40%, 80% { transform: translateX(4px); }
@@ -172,7 +172,7 @@ export function Button({
         )}
         style={
           shaking
-            ? { ...style, animation: "assemble-shake 0.35s ease-in-out" }
+            ? { ...style, animation: "drag-shake 0.35s ease-in-out" }
             : style
         }
         {...props}
