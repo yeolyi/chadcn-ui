@@ -1,7 +1,11 @@
 ---
+import { getRelativeLocaleUrl } from "astro:i18n"
 import { getEntry, render } from "astro:content"
+import { MonitorIcon, SmartphoneIcon } from "lucide-react"
 
-import VariantSelector from "@/components/docs/VariantSelector.astro"
+import { HeartButton } from "@/components/docs/HeartButton"
+import { VariantSelector } from "@/components/docs/VariantSelector"
+import { Badge } from "@/components/ui/badge"
 import Docs from "@/layouts/Docs.astro"
 import { getButtonVariant, listButtonSlugs } from "@/lib/button-components"
 
@@ -27,18 +31,38 @@ const toc = headings
   <div class="flex min-w-0 flex-1 flex-col">
     <div class="h-(--top-spacing) shrink-0"></div>
     <div class="mx-auto flex w-full max-w-[40rem] min-w-0 flex-1 flex-col gap-8 px-4 py-6 md:px-0 lg:py-8">
-      <div class="flex items-start justify-between gap-4">
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center justify-between gap-2">
+          <VariantSelector
+            currentSlug={slug}
+            items={listButtonSlugs().map((s) => ({
+              slug: s,
+              href: getRelativeLocaleUrl("en", `docs/components/button/${s}`),
+            }))}
+            client:load
+          />
+          <HeartButton slug={slug} client:load />
+        </div>
         <div class="flex flex-col gap-2">
           <h1 class="scroll-m-24 text-3xl font-semibold tracking-tight">Button</h1>
+          {variant.support === "desktop" && (
+            <Badge variant="outline">
+              <MonitorIcon />
+              Desktop only
+            </Badge>
+          )}
+          {variant.support === "mobile" && (
+            <Badge variant="outline">
+              <SmartphoneIcon />
+              Mobile only
+            </Badge>
+          )}
           <p class="text-[1.05rem] text-muted-foreground sm:text-base">{variant.tagline}</p>
         </div>
-        <VariantSelector currentSlug={slug} />
       </div>
 
-      <p class="text-[0.95rem] leading-7 text-muted-foreground">{variant.description}</p>
-
       <article class="prose-section">
-        <PageBody slug={slug} />
+        <PageBody slug={slug} description={variant.description} />
       </article>
     </div>
   </div>

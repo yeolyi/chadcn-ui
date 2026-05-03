@@ -203,6 +203,49 @@ renders React components to static HTML at SSG, no `client:*` directive
 needed). The only inline-SVG exception is the chad logo in
 `components/chrome/icons.tsx`.
 
+### asChild + multi-child label
+
+`ButtonBase` uses Radix `Slot.Root` when `asChild` is true, and Slot enforces
+`React.Children.only` on the element it wraps. This means **any variant that
+wants to render more than one child inside the button** (e.g. an icon + label,
+a progress overlay + label, a badge + label, a flip-card front+back) **will
+crash with `React.Children.only` whenever the consumer uses `asChild`** — the
+extra children land directly under Slot, which then sees an array.
+
+The fix in every such variant:
+
+1. Destructure `asChild` from the variant's props
+2. Build the multi-child content as a fragment (or array) in a local var
+3. If `asChild && React.isValidElement(children)`, clone the user-provided
+   element and inject the multi-child content as **its** children — that way
+   the cloned element is still a single React element when handed to Slot
+4. Otherwise (regular button), pass the multi-child content directly
+
+```tsx
+const inner = (
+  <>
+    <Overlay />
+    <Label>{counting ? "9.8s" : labelText}</Label>
+  </>
+)
+
+const buttonChildren =
+  asChild && React.isValidElement(children)
+    ? React.cloneElement(children, undefined, inner)
+    : inner
+
+return (
+  <ButtonBase asChild={asChild} ...>
+    {buttonChildren}
+  </ButtonBase>
+)
+```
+
+Reference variants that already do this: `sponsored.tsx`, `assemble.tsx`,
+`patient.tsx`. Copy the pattern. The error only shows up at SSR/hydrate time
+of the `ButtonAsChild` demo, so it's easy to ship a regression — always check
+the asChild example after touching label rendering in a variant.
+
 ### Don't reintroduce a theme toggle
 
 Theme follows `prefers-color-scheme` only. CSS uses `@media` queries for

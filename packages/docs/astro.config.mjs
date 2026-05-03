@@ -1,9 +1,11 @@
 import { defineConfig } from "astro/config"
 import mdx from "@astrojs/mdx"
 import react from "@astrojs/react"
+import vercel from "@astrojs/vercel"
 import tailwindcss from "@tailwindcss/vite"
 
 export default defineConfig({
+  adapter: vercel(),
   i18n: {
     locales: ["ko", "en"],
     defaultLocale: "ko",

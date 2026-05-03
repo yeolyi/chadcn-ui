@@ -1,7 +1,13 @@
-import { Popover } from "radix-ui"
 import * as React from "react"
 
 import { Button } from "@/components/ui/button"
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 import { cn } from "@/lib/utils"
 
 interface MobileNavStrings {
@@ -30,8 +36,8 @@ export function MobileNav({ basePath, strings, buttonHref }: Props) {
   const components = [{ name: "Button", href: buttonHref }]
 
   return (
-    <Popover.Root open={open} onOpenChange={setOpen}>
-      <Popover.Trigger asChild>
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger asChild>
         <Button
           variant="ghost"
           className="extend-touch-target h-8 touch-manipulation items-center justify-start gap-2.5 p-0! hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent lg:hidden dark:hover:bg-transparent"
@@ -53,50 +59,61 @@ export function MobileNav({ basePath, strings, buttonHref }: Props) {
             </div>
             <span className="sr-only">{strings.toggleMenu}</span>
           </div>
-          <span className="flex h-8 items-center text-lg leading-none font-medium">{strings.menu}</span>
+          <span className="flex h-8 items-center text-lg leading-none font-medium">
+            {strings.menu}
+          </span>
         </Button>
-      </Popover.Trigger>
-      <Popover.Portal>
-        <Popover.Content
-          className="no-scrollbar z-50 h-(--radix-popper-available-height) w-(--radix-popper-available-width) overflow-y-auto rounded-none border-none bg-background/90 p-0 shadow-none backdrop-blur duration-100 data-[state=open]:animate-none!"
-          align="start"
-          side="bottom"
-          alignOffset={-16}
-          sideOffset={14}
-        >
-          <div className="flex flex-col gap-12 overflow-auto px-6 py-6">
-            <div className="flex flex-col gap-4">
-              <div className="text-sm font-medium text-muted-foreground">{strings.menu}</div>
-              <div className="flex flex-col gap-3">
-                <MobileLink href={homeHref} onClose={() => setOpen(false)}>
-                  {strings.home}
-                </MobileLink>
-              </div>
+      </SheetTrigger>
+      <SheetContent side="left" className="w-full max-w-xs p-0 sm:max-w-sm">
+        <SheetHeader className="sr-only">
+          <SheetTitle>{strings.menu}</SheetTitle>
+        </SheetHeader>
+        <div className="flex flex-col gap-12 overflow-auto px-6 py-6">
+          <div className="flex flex-col gap-4">
+            <div className="text-sm font-medium text-muted-foreground">
+              {strings.menu}
             </div>
-            <div className="flex flex-col gap-4">
-              <div className="text-sm font-medium text-muted-foreground">{strings.sections}</div>
-              <div className="flex flex-col gap-3">
-                {sections.map(({ name, href }) => (
-                  <MobileLink key={href} href={href} onClose={() => setOpen(false)}>
-                    {name}
-                  </MobileLink>
-                ))}
-              </div>
-            </div>
-            <div className="flex flex-col gap-4">
-              <div className="text-sm font-medium text-muted-foreground">{strings.components}</div>
-              <div className="flex flex-col gap-3">
-                {components.map(({ name, href }) => (
-                  <MobileLink key={href} href={href} onClose={() => setOpen(false)}>
-                    {name}
-                  </MobileLink>
-                ))}
-              </div>
+            <div className="flex flex-col gap-3">
+              <MobileLink href={homeHref} onClose={() => setOpen(false)}>
+                {strings.home}
+              </MobileLink>
             </div>
           </div>
-        </Popover.Content>
-      </Popover.Portal>
-    </Popover.Root>
+          <div className="flex flex-col gap-4">
+            <div className="text-sm font-medium text-muted-foreground">
+              {strings.sections}
+            </div>
+            <div className="flex flex-col gap-3">
+              {sections.map(({ name, href }) => (
+                <MobileLink
+                  key={href}
+                  href={href}
+                  onClose={() => setOpen(false)}
+                >
+                  {name}
+                </MobileLink>
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-col gap-4">
+            <div className="text-sm font-medium text-muted-foreground">
+              {strings.components}
+            </div>
+            <div className="flex flex-col gap-3">
+              {components.map(({ name, href }) => (
+                <MobileLink
+                  key={href}
+                  href={href}
+                  onClose={() => setOpen(false)}
+                >
+                  {name}
+                </MobileLink>
+              ))}
+            </div>
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
   )
 }
 

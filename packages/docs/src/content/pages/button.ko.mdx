@@ -20,6 +20,12 @@ import { buttonSnippets } from "./button.snippets"
   <CodeBlock slot="code" lang="tsx" code={buttonSnippets(props.slug).main} />
 </ExamplePreview>
 
+{props.description && (
+  <p className="not-prose whitespace-pre-line text-[0.95rem] leading-7 text-muted-foreground">
+    {props.description}
+  </p>
+)}
+
 ## 설치
 
 <InstallTabs client:load pkg="@chadcn/ui" />

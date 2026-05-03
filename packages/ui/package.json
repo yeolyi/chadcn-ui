@@ -92,6 +92,11 @@
       "import": "./dist/button/aloof.js",
       "require": "./dist/button/aloof.cjs"
     },
+    "./button/patient": {
+      "types": "./dist/button/patient.d.ts",
+      "import": "./dist/button/patient.js",
+      "require": "./dist/button/patient.cjs"
+    },
     "./styles.css": "./dist/styles.css"
   },
   "files": [

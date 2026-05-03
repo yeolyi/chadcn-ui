@@ -19,6 +19,7 @@ export default defineConfig({
     "button/assemble": "src/button/assemble.tsx",
     "button/mirage": "src/button/mirage.tsx",
     "button/aloof": "src/button/aloof.tsx",
+    "button/patient": "src/button/patient.tsx",
   },
   format: ["esm", "cjs"],
   dts: true,

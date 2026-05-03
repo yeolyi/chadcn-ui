@@ -42,12 +42,6 @@ const fullTitle = title ? `${title} - ${siteConfig.name}` : siteConfig.name
     <meta name="twitter:image" content={siteConfig.ogImage} />
     <title>{fullTitle}</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
-      rel="stylesheet"
-    />
     <link
       rel="preload"
       href="/fonts/silkscreen-400.woff2"
@@ -63,13 +57,6 @@ const fullTitle = title ? `${title} - ${siteConfig.name}` : siteConfig.name
       crossorigin
     />
 
-    <style is:global>
-      :root {
-        --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
-        --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
-      }
-    </style>
-
   </head>
   <body
     class="group/body overscroll-none bg-background text-foreground antialiased [--footer-height:calc(var(--spacing)*14)] [--header-height:calc(var(--spacing)*14)] xl:[--footer-height:calc(var(--spacing)*24)]"
@@ -80,7 +67,7 @@ const fullTitle = title ? `${title} - ${siteConfig.name}` : siteConfig.name
       <SiteFooter />
     </div>
     <Analytics />
-    <Toaster client:load richColors position="bottom-right" />
+    <Toaster client:load richColors theme="system" position="bottom-right" />
     <script>
       // CodeBlock copy buttons: write to clipboard, swap to check icon for ~2s.
       document.addEventListener("click", (e) => {
