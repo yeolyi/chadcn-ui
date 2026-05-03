@@ -6,11 +6,31 @@ import { HeartButton } from "@/components/docs/HeartButton"
 import { Badge } from "@/components/ui/badge"
 import Docs from "@/layouts/Docs.astro"
 import { getButtonVariant, listButtonSlugs } from "@/lib/button-components"
+import { fetchLikeCounts } from "@/lib/likes"
 
-const variants = listButtonSlugs().map((slug) => {
-  const info = getButtonVariant(slug, "ko")
-  return { slug, info }
-})
+export const prerender = false
+
+const sort: "popular" | "alpha" =
+  Astro.url.searchParams.get("sort") === "alpha" ? "alpha" : "popular"
+
+const counts = await fetchLikeCounts().catch(() => ({}))
+
+const variants = listButtonSlugs()
+  .map((slug) => ({
+    slug,
+    info: getButtonVariant(slug, "ko"),
+    count: counts[slug] ?? 0,
+  }))
+  .sort((a, b) =>
+    sort === "alpha"
+      ? a.slug.localeCompare(b.slug)
+      : b.count - a.count || a.slug.localeCompare(b.slug),
+  )
+
+Astro.response.headers.set(
+  "cache-control",
+  "public, s-maxage=60, stale-while-revalidate=300",
+)
 ---
 
 <Docs title="Button" description="chadcn의 모든 Button 변형">
@@ -26,7 +46,7 @@ const variants = listButtonSlugs().map((slug) => {
         <button
           type="button"
           data-sort="popular"
-          aria-pressed="true"
+          aria-pressed={sort === "popular"}
           class="rounded-[5px] px-3 h-7 font-medium text-muted-foreground transition-colors hover:text-foreground aria-pressed:bg-accent aria-pressed:text-accent-foreground"
         >
           인기순
@@ -34,7 +54,7 @@ const variants = listButtonSlugs().map((slug) => {
         <button
           type="button"
           data-sort="alpha"
-          aria-pressed="false"
+          aria-pressed={sort === "alpha"}
           class="rounded-[5px] px-3 h-7 font-medium text-muted-foreground transition-colors hover:text-foreground aria-pressed:bg-accent aria-pressed:text-accent-foreground"
         >
           이름순
@@ -44,11 +64,12 @@ const variants = listButtonSlugs().map((slug) => {
 
     <div data-variant-grid class="grid grid-cols-1 gap-4 lg:grid-cols-2">
       {
-        variants.map(({ slug, info }) => {
+        variants.map(({ slug, info, count }) => {
           if (!info) return null
           return (
             <article
               data-slug={slug}
+              data-like-count={count}
               style={`view-transition-name: vt-${slug}`}
               class="group relative flex flex-col gap-4 rounded-xl border p-5 transition-colors hover:border-foreground/20"
             >
@@ -95,7 +116,11 @@ const variants = listButtonSlugs().map((slug) => {
   const grid = document.querySelector<HTMLElement>("[data-variant-grid]")
   const toggle = document.querySelector<HTMLElement>("[data-sort-toggle]")
   if (grid && toggle) {
-    let counts: Record<string, number> = {}
+    // Seed counts from SSR data attrs so reorders work without an extra fetch.
+    const counts: Record<string, number> = {}
+    for (const card of Array.from(grid.children) as HTMLElement[]) {
+      counts[card.dataset.slug ?? ""] = Number(card.dataset.likeCount ?? 0)
+    }
 
     const sortBy = (mode: string) => {
       const cards = Array.from(grid.children) as HTMLElement[]
@@ -113,21 +138,31 @@ const variants = listButtonSlugs().map((slug) => {
       else apply()
     }
 
-    fetch("/api/likes")
-      .then((r) => r.json())
-      .then((d) => {
-        counts = d
-        sortBy("popular")
-      })
-      .catch(() => {})
+    const setPressed = (mode: string) => {
+      for (const b of toggle.querySelectorAll<HTMLButtonElement>("[data-sort]")) {
+        b.setAttribute("aria-pressed", String(b.dataset.sort === mode))
+      }
+    }
 
     toggle.addEventListener("click", (e) => {
       const btn = (e.target as HTMLElement).closest<HTMLButtonElement>("[data-sort]")
       if (!btn) return
-      for (const b of toggle.querySelectorAll<HTMLButtonElement>("[data-sort]")) {
-        b.setAttribute("aria-pressed", String(b === btn))
-      }
-      sortBy(btn.dataset.sort ?? "popular")
+      const mode = btn.dataset.sort ?? "popular"
+      setPressed(mode)
+      const url = new URL(window.location.href)
+      if (mode === "alpha") url.searchParams.set("sort", "alpha")
+      else url.searchParams.delete("sort")
+      history.pushState(null, "", url.toString())
+      sortBy(mode)
+    })
+
+    window.addEventListener("popstate", () => {
+      const mode =
+        new URL(window.location.href).searchParams.get("sort") === "alpha"
+          ? "alpha"
+          : "popular"
+      setPressed(mode)
+      sortBy(mode)
     })
 
     window.addEventListener("chadcn:like", (e) => {
