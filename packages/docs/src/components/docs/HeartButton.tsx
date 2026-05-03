@@ -8,8 +8,21 @@ interface State {
   liked: boolean
 }
 
-export function HeartButton({ slug }: { slug: string }) {
-  const [state, setState] = React.useState<State | null>(null)
+export function HeartButton({
+  slug,
+  initialCount,
+}: {
+  slug: string
+  initialCount?: number
+}) {
+  // Seed `count` from SSR so the heart never flashes "—". `liked` stays
+  // unknown (false) until the per-user fetch resolves — server-rendered
+  // liked state would leak across visitors via Edge caching.
+  const [state, setState] = React.useState<State | null>(
+    initialCount !== undefined
+      ? { count: initialCount, liked: false }
+      : null,
+  )
   const [pending, setPending] = React.useState(false)
 
   React.useEffect(() => {
