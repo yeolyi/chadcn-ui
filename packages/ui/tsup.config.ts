@@ -18,6 +18,7 @@ export default defineConfig({
     "button/clingy": "src/button/clingy.tsx",
     "button/assemble": "src/button/assemble.tsx",
     "button/mirage": "src/button/mirage.tsx",
+    "button/aloof": "src/button/aloof.tsx",
   },
   format: ["esm", "cjs"],
   dts: true,

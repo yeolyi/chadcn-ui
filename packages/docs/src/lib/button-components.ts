@@ -21,6 +21,7 @@ import { Button as Lottery } from "@chadcn/ui/button/lottery"
 import { Button as Clingy } from "@chadcn/ui/button/clingy"
 import { Button as Assemble } from "@chadcn/ui/button/assemble"
 import { Button as Mirage } from "@chadcn/ui/button/mirage"
+import { Button as Aloof } from "@chadcn/ui/button/aloof"
 import { Button as Shy } from "@chadcn/ui/button/shy"
 
 import type { Locale } from "@/i18n/strings"
@@ -63,6 +64,7 @@ export const buttonComponents = {
   assemble: withToast(Assemble),
   clingy: withToast(Clingy),
   mirage: withToast(Mirage),
+  aloof: withToast(Aloof),
 } satisfies Record<string, ComponentType<ButtonProps>>
 
 // Slug → prose. Used at SSG only; not shipped to the client demos.
@@ -215,6 +217,16 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
     description: {
       ko: "버튼은 위치가 정확해질수록 옅어진다. 정확한 조준은 곧 그것의 부재로 보상된다.\n\n포인터 좌표에 의존하므로 데스크톱 환경에서만 동작합니다.",
       en: "The button fades as its position becomes precisely known. Aiming true is rewarded with its absence.\n\nRelies on pointer coordinates and is therefore desktop-only.",
+    },
+  },
+  aloof: {
+    tagline: {
+      ko: "사용자와 일정 거리를 유지하는 버튼",
+      en: "A button that maintains a steady distance from the user",
+    },
+    description: {
+      ko: "포인터가 일정 반경 이내로 접근하면 버튼은 자동으로 반대 방향으로 이동하여 안전 거리를 유지합니다. 이 거리는 잘못된 클릭을 사전에 차단하기 위한 최소 안전 마진으로 설계되었습니다.\n\n포인터 좌표에 의존하므로 데스크톱 환경에서만 동작합니다.",
+      en: "Whenever the pointer enters a fixed radius around the button, the button glides away in the opposite direction to preserve a safe gap. The radius is calibrated as the minimum safety margin to preclude unintended clicks.\n\nRelies on pointer coordinates and is therefore desktop-only.",
     },
   },
 }

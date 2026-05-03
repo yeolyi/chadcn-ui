@@ -87,6 +87,11 @@
       "import": "./dist/button/mirage.js",
       "require": "./dist/button/mirage.cjs"
     },
+    "./button/aloof": {
+      "types": "./dist/button/aloof.d.ts",
+      "import": "./dist/button/aloof.js",
+      "require": "./dist/button/aloof.cjs"
+    },
     "./styles.css": "./dist/styles.css"
   },
   "files": [
