@@ -39,9 +39,9 @@ const toc = headings
               slug: s,
               href: getRelativeLocaleUrl("ko", `docs/components/button/${s}`),
             }))}
-            client:load
+            client:idle
           />
-          <HeartButton slug={slug} client:load />
+          <HeartButton slug={slug} client:idle />
         </div>
         <div class="flex flex-col gap-2">
           <h1 class="scroll-m-24 text-3xl font-semibold tracking-tight">Button</h1>

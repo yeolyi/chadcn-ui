@@ -18,8 +18,12 @@ export default defineConfig({
   devToolbar: { enabled: false },
   vite: {
     plugins: [tailwindcss()],
+    server: {
+      allowedHosts: [".trycloudflare.com"],
+    },
   },
   server: {
     port: 4000,
+    host: true,
   },
 })
