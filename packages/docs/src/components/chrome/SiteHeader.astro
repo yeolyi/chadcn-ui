@@ -5,12 +5,11 @@ import { InstagramLink } from "@/components/chrome/InstagramLink"
 import LocaleSwitcher from "@/components/chrome/LocaleSwitcher.astro"
 import { MobileNav } from "@/components/chrome/MobileNav"
 import { getLocale, tFor } from "@/i18n/locale"
-import { listButtonSlugs } from "@/lib/button-components"
 
 const locale = getLocale(Astro)
 const s = tFor(Astro)
 const basePath = locale === "en" ? "/en" : ""
-const buttonHref = `${basePath}/docs/components/button/${listButtonSlugs()[0]}`
+const buttonHref = `${basePath}/docs/components/button`
 const navStrings = {
   menu: s.menu,
   home: s.home,

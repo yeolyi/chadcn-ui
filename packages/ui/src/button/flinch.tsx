@@ -5,7 +5,7 @@ import * as React from "react"
 import { ButtonBase, type ButtonBaseProps, buttonVariants } from "./base"
 
 export function Button({
-  onMouseDown,
+  onMouseEnter,
   onMouseLeave,
   onClick,
   disabled,
@@ -14,9 +14,8 @@ export function Button({
 }: ButtonBaseProps) {
   const [sealed, setSealed] = React.useState(false)
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
-    onMouseDown?.(e)
-    e.preventDefault()
+  const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
+    onMouseEnter?.(e)
     setSealed(true)
   }
 
@@ -38,7 +37,7 @@ export function Button({
 
   return (
     <ButtonBase
-      onMouseDown={handleMouseDown}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
       disabled={disabled}

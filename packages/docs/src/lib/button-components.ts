@@ -23,6 +23,7 @@ import { Button as Assemble } from "@chadcn/ui/button/assemble"
 import { Button as Mirage } from "@chadcn/ui/button/mirage"
 import { Button as Aloof } from "@chadcn/ui/button/aloof"
 import { Button as Patient } from "@chadcn/ui/button/patient"
+import { Button as Baljak } from "@chadcn/ui/button/baljak"
 import { Button as Shy } from "@chadcn/ui/button/shy"
 
 import type { Locale } from "@/i18n/strings"
@@ -72,6 +73,7 @@ export const buttonComponents = {
   mirage: Mirage,
   aloof: Aloof,
   patient: withToast(Patient),
+  baljak: withToast(Baljak),
 } satisfies Record<string, ComponentType<ButtonProps>>
 
 // Slug → prose. Used at SSG only; not shipped to the client demos.
@@ -252,6 +254,16 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
     description: {
       ko: "10초간 안정적으로 호버해야 활성화됩니다. 포인터가 떠나면 카운트다운은 처음부터 다시 시작됩니다.",
       en: "Activates only after a steady ten-second hover. Leaving the button restarts the countdown from zero.",
+    },
+  },
+  baljak: {
+    tagline: {
+      ko: "사용자의 결정이 시스템에 가하는 부담을 시각화하는 버튼",
+      en: "A button that visualizes the system stress your decision creates",
+    },
+    description: {
+      ko: "클릭하면 약 1.5초간 격렬하게 반응한 뒤 본래 동작이 실행됩니다. 사용자에게 자신의 선택이 시스템에 어떤 부하를 발생시키는지 정직하게 보여주기 위함이며, 사용자의 시스템 환경이 모션 감소를 요청한 경우에는 조용히 처리됩니다.",
+      en: "On click, the button reacts violently for about 1.5 seconds before the originally intended action runs. The display honestly conveys the load that the user's decision places on the system; if the user's system requests reduced motion, the action is dispatched quietly.",
     },
   },
 }

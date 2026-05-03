@@ -97,6 +97,11 @@
       "import": "./dist/button/patient.js",
       "require": "./dist/button/patient.cjs"
     },
+    "./button/baljak": {
+      "types": "./dist/button/baljak.d.ts",
+      "import": "./dist/button/baljak.js",
+      "require": "./dist/button/baljak.cjs"
+    },
     "./styles.css": "./dist/styles.css"
   },
   "files": [

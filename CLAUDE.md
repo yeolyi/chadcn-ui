@@ -190,12 +190,6 @@ and `en` — TypeScript enforces it. No fallback path.
 For shared page bodies (`content/pages/button.{ko,en}.mdx`) both files must
 exist or the variant pages won't build for the missing locale.
 
-### Sidebar / nav link directly to a variant slug
-
-Never link to `/docs/components/button` from chrome — it 302-redirects to the
-first variant and the flash is visible. Compute the first slug at build time
-(`listButtonSlugs()[0]`) and link to `/docs/components/button/<slug>`.
-
 ### Icons: lucide-react only
 
 Use `lucide-react` for any icon, including inside `.astro` files (Astro

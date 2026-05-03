@@ -1,5 +1,63 @@
 ---
-import { listButtonSlugs } from "@/lib/button-components"
+import { MonitorIcon, SmartphoneIcon } from "lucide-react"
 
-return Astro.redirect(`/docs/components/button/${listButtonSlugs()[0]}`)
+import { ButtonMain } from "@/components/demos/button/ButtonMain"
+import { HeartButton } from "@/components/docs/HeartButton"
+import { Badge } from "@/components/ui/badge"
+import Docs from "@/layouts/Docs.astro"
+import { getButtonVariant, listButtonSlugs } from "@/lib/button-components"
+
+const variants = listButtonSlugs().map((slug) => {
+  const info = getButtonVariant(slug, "ko")
+  return { slug, info }
+})
 ---
+
+<Docs title="Button" description="chadcn의 모든 Button 변형">
+  <div class="mx-auto flex w-full max-w-[60rem] min-w-0 flex-1 flex-col gap-8 px-4 py-6 lg:py-8">
+    <h1 class="scroll-m-24 text-3xl font-semibold tracking-tight">Button</h1>
+
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      {
+        variants.map(({ slug, info }) => {
+          if (!info) return null
+          return (
+            <article class="group relative flex flex-col gap-4 rounded-xl border p-5 transition-colors hover:border-foreground/20">
+              <div class="absolute right-4 top-4 z-10">
+                <HeartButton slug={slug} client:visible />
+              </div>
+
+              <a
+                href={`/docs/components/button/${slug}`}
+                class="flex flex-col gap-3 pr-16"
+              >
+                <div class="flex flex-wrap items-center gap-2">
+                  <h2 class="text-lg font-semibold tracking-tight group-hover:underline">
+                    {slug}
+                  </h2>
+                  {info.support === "desktop" && (
+                    <Badge variant="outline">
+                      <MonitorIcon />
+                      Desktop only
+                    </Badge>
+                  )}
+                  {info.support === "mobile" && (
+                    <Badge variant="outline">
+                      <SmartphoneIcon />
+                      Mobile only
+                    </Badge>
+                  )}
+                </div>
+                <p class="text-sm leading-6 text-muted-foreground">{info.tagline}</p>
+              </a>
+
+              <div class="relative mt-auto flex min-h-[88px] items-center justify-center rounded-lg border bg-muted/30 p-6">
+                <ButtonMain slug={slug} client:visible />
+              </div>
+            </article>
+          )
+        })
+      }
+    </div>
+  </div>
+</Docs>

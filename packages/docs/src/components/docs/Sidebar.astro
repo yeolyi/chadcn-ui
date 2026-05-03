@@ -2,11 +2,9 @@
 import { getRelativeLocaleUrl } from "astro:i18n"
 
 import { getLocale, tFor } from "@/i18n/locale"
-import { listButtonSlugs } from "@/lib/button-components"
 
 const locale = getLocale(Astro)
 const s = tFor(Astro)
-const buttonSlug = listButtonSlugs()[0]
 
 const sections = [
   { name: s.introduction, href: getRelativeLocaleUrl(locale, "docs") },
@@ -14,7 +12,7 @@ const sections = [
 ]
 
 const components = [
-  { name: "Button", href: getRelativeLocaleUrl(locale, `docs/components/button/${buttonSlug}`) },
+  { name: "Button", href: getRelativeLocaleUrl(locale, "docs/components/button") },
 ]
 
 const pathname = new URL(Astro.request.url).pathname

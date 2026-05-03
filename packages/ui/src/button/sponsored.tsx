@@ -1,6 +1,5 @@
 "use client"
 
-import { CheckIcon, MegaphoneIcon } from "lucide-react"
 import { Dialog } from "radix-ui"
 import * as React from "react"
 
@@ -145,13 +144,13 @@ export function Button({
 }
 
 function SponsoredBadge({ watched }: { watched: boolean }) {
-  const Icon = watched ? CheckIcon : MegaphoneIcon
+  if (watched) return null
   return (
     <span
       aria-hidden
-      className="pointer-events-none absolute -right-1.5 -top-1.5 flex size-4 items-center justify-center rounded-full bg-foreground text-background ring-2 ring-background"
+      className="pointer-events-none absolute -right-2 -top-2 inline-flex items-center rounded-md border-transparent bg-amber-400 px-1.5 py-0.5 text-[9px] font-bold uppercase leading-none tracking-wider text-amber-950 ring-2 ring-background dark:bg-amber-300"
     >
-      <Icon className="size-2.5" />
+      AD
     </span>
   )
 }

@@ -20,6 +20,7 @@ export default defineConfig({
     "button/mirage": "src/button/mirage.tsx",
     "button/aloof": "src/button/aloof.tsx",
     "button/patient": "src/button/patient.tsx",
+    "button/baljak": "src/button/baljak.tsx",
   },
   format: ["esm", "cjs"],
   dts: true,
