@@ -1,4 +1,4 @@
-import { MousePointer2Icon, MousePointerBanIcon } from "lucide-react"
+import { MousePointer2Icon, MousePointer2OffIcon } from "lucide-react"
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
@@ -33,7 +33,7 @@ export function CursorToggle() {
     window.dispatchEvent(new Event(TOGGLE_EVENT))
   }
 
-  const Icon = disabled ? MousePointerBanIcon : MousePointer2Icon
+  const Icon = disabled ? MousePointer2OffIcon : MousePointer2Icon
 
   return (
     <button
