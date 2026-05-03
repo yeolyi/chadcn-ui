@@ -21,6 +21,9 @@ export default defineConfig({
     server: {
       allowedHosts: [".trycloudflare.com"],
     },
+    ssr: {
+      noExternal: ["perfect-cursors"],
+    },
   },
   server: {
     port: 4000,

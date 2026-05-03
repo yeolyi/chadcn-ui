@@ -1,4 +1,5 @@
 import { createClient, type RealtimeChannel } from "@supabase/supabase-js"
+import { PerfectCursor } from "perfect-cursors"
 import * as React from "react"
 
 const STORAGE_KEY = "chadcn:cursors-disabled"
@@ -182,14 +183,36 @@ export function CursorOverlay({ channel: channelName }: { channel: string }) {
 
 function Cursor({ cursor }: { cursor: RemoteCursor }) {
   const color = `hsl(${cursor.hue}, 75%, 50%)`
+  const ref = React.useRef<HTMLDivElement>(null)
+  const pcRef = React.useRef<PerfectCursor | null>(null)
+
+  if (pcRef.current === null) {
+    pcRef.current = new PerfectCursor(([x, y]) => {
+      const el = ref.current
+      if (el) el.style.transform = `translate(${x}px, ${y}px)`
+    })
+  }
+
+  React.useEffect(() => {
+    pcRef.current?.addPoint([cursor.x, cursor.y])
+  }, [cursor.x, cursor.y])
+
+  React.useEffect(
+    () => () => {
+      pcRef.current?.dispose()
+      pcRef.current = null
+    },
+    [],
+  )
+
   return (
     <div
+      ref={ref}
       style={{
         position: "absolute",
         left: 0,
         top: 0,
         transform: `translate(${cursor.x}px, ${cursor.y}px)`,
-        transition: "transform 80ms linear",
         willChange: "transform",
       }}
     >
