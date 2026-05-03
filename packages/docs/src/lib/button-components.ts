@@ -17,6 +17,8 @@ import { Button as Paranoia } from "@chadcn/ui/button/paranoia"
 import { Button as Anchor } from "@chadcn/ui/button/anchor"
 import { Button as Benjamin } from "@chadcn/ui/button/benjamin"
 import { Button as Lottery } from "@chadcn/ui/button/lottery"
+import { Button as Clingy } from "@chadcn/ui/button/clingy"
+import { Button as Assemble } from "@chadcn/ui/button/assemble"
 import { Button as Shy } from "@chadcn/ui/button/shy"
 
 import type { Locale } from "@/i18n/strings"
@@ -55,6 +57,8 @@ export const buttonComponents = {
   anchor: withToast(Anchor),
   benjamin: withToast(Benjamin),
   lottery: withToast(Lottery),
+  assemble: withToast(Assemble),
+  clingy: withToast(Clingy),
 } satisfies Record<string, ComponentType<ButtonProps>>
 
 // Slug → prose. Used at SSG only; not shipped to the client demos.
@@ -105,8 +109,8 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
       en: "A button that preserves its value by remaining unused",
     },
     description: {
-      ko: "버튼의 가치는 눌릴 수 있다는 가능성 그 자체에 있습니다. 포인터가 닿는 순간 그 가능성은 사용자에게 이미 충분히 전달되었으므로, 더 이상 눌릴 필요 없이 버튼은 자신의 역할을 완수하고 봉인됩니다.",
-      en: "A button's worth lies in the very possibility of being pressed. The instant the pointer arrives, that possibility has been sufficiently conveyed to the user — the button has fulfilled its role without needing to be pressed, and seals itself.",
+      ko: "버튼의 가치는 눌릴 수 있다는 가능성 그 자체에 있습니다. 사용자가 누르려는 의도를 보이는 순간 그 가능성은 이미 충분히 전달되었으므로, 실제로 눌릴 필요 없이 버튼은 자신의 역할을 완수하고 봉인됩니다. 포인터가 떠나면 버튼은 다시 가능성의 상태로 복원됩니다.",
+      en: "A button's worth lies in the very possibility of being pressed. The instant the user signals intent to press, that possibility has been sufficiently conveyed — the button fulfills its role without an actual press and seals itself. Once the pointer leaves, the button is restored to its state of possibility.",
     },
   },
   sponsored: {
@@ -167,6 +171,26 @@ const variantInfo: Record<keyof typeof buttonComponents, ButtonVariantInfo> = {
     description: {
       ko: "클릭 시 다섯 개의 추첨 카드가 제시되며, 그중 단 하나만 본래 의도하신 동작을 실행합니다. 잘못된 카드를 선택하면 버튼은 영구적으로 사용이 중단됩니다.",
       en: "On click, five lottery cards are presented; only one will trigger the originally intended action. Selecting the wrong card permanently retires the button.",
+    },
+  },
+  assemble: {
+    tagline: {
+      ko: "사용자가 직접 라벨을 조립해야 동작하는 버튼",
+      en: "A button the user must assemble before it works",
+    },
+    description: {
+      ko: "이 버튼은 자신의 라벨을 페이지의 다른 곳에서 직접 가져와야 활성화됩니다. 텍스트를 한 글자씩 선택해 버튼 위로 드래그하면 라벨에 필요한 글자가 차례로 채워지며, 모든 글자가 채워지면 버튼이 활성화됩니다.\n\n브라우저의 네이티브 드래그 동작에 의존하므로 데스크톱 환경에서만 동작합니다.",
+      en: "This button must be assembled from text elsewhere on the page. Select one character at a time and drag it onto the button — each matching slot fills in turn, and the button activates only after every slot is filled.\n\nRelies on the browser's native drag behavior and is therefore desktop-only.",
+    },
+  },
+  clingy: {
+    tagline: {
+      ko: "사용자의 시선을 결코 놓치지 않는 버튼",
+      en: "A button that never loses sight of the user",
+    },
+    description: {
+      ko: "당신이 어디로 향하든, 이 버튼은 이미 그곳에 와 있다. 한 번 눌리고 나서야 비로소 자신의 자리로 돌아간다.",
+      en: "Wherever you go, this button is already there. Only once it has been pressed does it return to its place.",
     },
   },
 }

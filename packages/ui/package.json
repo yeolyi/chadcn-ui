@@ -67,6 +67,16 @@
       "import": "./dist/button/lottery.js",
       "require": "./dist/button/lottery.cjs"
     },
+    "./button/clingy": {
+      "types": "./dist/button/clingy.d.ts",
+      "import": "./dist/button/clingy.js",
+      "require": "./dist/button/clingy.cjs"
+    },
+    "./button/assemble": {
+      "types": "./dist/button/assemble.d.ts",
+      "import": "./dist/button/assemble.js",
+      "require": "./dist/button/assemble.cjs"
+    },
     "./styles.css": "./dist/styles.css"
   },
   "files": [

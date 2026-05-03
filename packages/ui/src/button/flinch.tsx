@@ -5,29 +5,45 @@ import * as React from "react"
 import { ButtonBase, type ButtonBaseProps, buttonVariants } from "./base"
 
 export function Button({
-  onMouseEnter,
-  onClick: _onClick,
+  onMouseDown,
+  onMouseLeave,
+  onClick,
   disabled,
   style,
-  tabIndex,
   ...props
 }: ButtonBaseProps) {
-  const [flinched, setFlinched] = React.useState(false)
+  const [sealed, setSealed] = React.useState(false)
 
-  const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
-    onMouseEnter?.(e)
-    setFlinched(true)
+  const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
+    onMouseDown?.(e)
+    e.preventDefault()
+    setSealed(true)
   }
 
-  const sealed = disabled || flinched
+  const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
+    onMouseLeave?.(e)
+    setSealed(false)
+  }
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (sealed) {
+      e.preventDefault()
+      e.stopPropagation()
+      return
+    }
+    onClick?.(e)
+  }
+
+  const inert = disabled || sealed
 
   return (
     <ButtonBase
-      onMouseEnter={handleMouseEnter}
-      disabled={sealed}
-      aria-disabled={sealed || undefined}
-      tabIndex={sealed ? -1 : tabIndex}
-      style={sealed ? { ...style, pointerEvents: "none", opacity: 0.5 } : style}
+      onMouseDown={handleMouseDown}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
+      disabled={disabled}
+      aria-disabled={inert || undefined}
+      style={inert ? { ...style, opacity: 0.5 } : style}
       {...props}
     />
   )

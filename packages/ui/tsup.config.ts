@@ -14,6 +14,8 @@ export default defineConfig({
     "button/anchor": "src/button/anchor.tsx",
     "button/benjamin": "src/button/benjamin.tsx",
     "button/lottery": "src/button/lottery.tsx",
+    "button/clingy": "src/button/clingy.tsx",
+    "button/assemble": "src/button/assemble.tsx",
   },
   format: ["esm", "cjs"],
   dts: true,
