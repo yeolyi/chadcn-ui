@@ -16,9 +16,21 @@ const KINDS = new Set(["pageview", "event", "engage"])
 // Chrome's maximum cookie lifetime (400 days). Re-set on every visit to extend it.
 const MAX_AGE = 400 * 24 * 60 * 60
 
-export const POST: APIRoute = async ({ request, cookies, url }) => {
-  if (request.headers.get("origin") !== url.origin)
-    return new Response(null, { status: 403 })
+// Same-origin only. Compare with the Host header: inside the Vercel function, `url` is not the public
+// address, so comparing with url.origin rejected every real request.
+function sameOrigin(request: Request) {
+  const origin = request.headers.get("origin")
+  const host =
+    request.headers.get("x-forwarded-host") ?? request.headers.get("host")
+  try {
+    return !!origin && !!host && new URL(origin).host === host
+  } catch {
+    return false
+  }
+}
+
+export const POST: APIRoute = async ({ request, cookies }) => {
+  if (!sameOrigin(request)) return new Response(null, { status: 403 })
 
   let body: Record<string, unknown>
   try {
