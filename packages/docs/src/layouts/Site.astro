@@ -67,6 +67,11 @@ const fullTitle = title ? `${title} - ${siteConfig.name}` : siteConfig.name
       <SiteFooter />
     </div>
     <Analytics />
+    <script>
+      // Visits for yeolyi.com stats (stats.yeolyi.com) as site "chadcn" (src/lib/track.ts, src/pages/api/track.ts)
+      import { startTracking } from "@/lib/track"
+      startTracking()
+    </script>
     <Toaster client:load position="bottom-right" />
     <script>
       // iOS Safari quirk: Radix DropdownMenu/Select use onPointerDown to open,
